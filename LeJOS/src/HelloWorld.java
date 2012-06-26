@@ -5,7 +5,7 @@ import lejos.nxt.Motor;
 
 public class HelloWorld {
   public static void main (String[] args) {
-    System.out.println("Hello!");
+    System.out.println("Hello Hello! Hellooooo!");
     Motor.A.forward();
     try {
 		Thread.sleep(2000L);
@@ -14,6 +14,6 @@ public class HelloWorld {
 	}
     Motor.A.stop();
     Button.waitForAnyPress();
-    
+
   }
 }
