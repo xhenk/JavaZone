@@ -3,7 +3,7 @@ import lejos.nxt.Motor;
 
 public class HelloWorld {
   public static void main (String[] args) {
-    System.out.println("Hææææææææææææææææææææææææææææææææææææælo!");
+    System.out.println("Hei.");
     Motor.A.forward();
     try {
 		Thread.sleep(2000L);
