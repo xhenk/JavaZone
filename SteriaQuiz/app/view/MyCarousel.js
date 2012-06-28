@@ -20,6 +20,27 @@ Ext.define('MyApp.view.MyCarousel', {
         id: 'carousel',
         items: [
             {
+                xtype: 'panel',
+                id: 'titlePage',
+                items: [
+                    {
+                        xtype: 'titlebar',
+                        docked: 'top',
+                        id: 'titleBar',
+                        title: 'Steria Quiz'
+                    },
+                    {
+                        xtype: 'container',
+                        centered: true,
+                        height: 221,
+                        html: '<a href="#" onClick="Ext.create(\'MyApp.view.MyCarousel\', {fullscreen: true});"><img src="sterialogo.gif"></a>',
+                        id: 'logoContainer',
+                        width: 184,
+                        hideOnMaskTap: false
+                    }
+                ]
+            },
+            {
                 xtype: 'formpanel',
                 id: 'question1Panel',
                 items: [
@@ -388,7 +409,8 @@ Ext.define('MyApp.view.MyCarousel', {
                     {
                         xtype: 'titlebar',
                         docked: 'top',
-                        id: 'titleBar'
+                        id: 'titleBar',
+                        title: 'Ferdig!'
                     },
                     {
                         xtype: 'fieldset',

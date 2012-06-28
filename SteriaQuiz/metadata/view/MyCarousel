@@ -7,14 +7,72 @@
     },
     "codeClass": null,
     "userConfig": {
+        "designer|initialView": true,
         "id": "carousel",
         "designer|userClassName": "MyCarousel"
     },
     "customConfigs": [],
     "designerId": "83c7be60-bc72-4210-bc06-9f4658ad8eff",
-    "$viewOrder": 1,
-    "expanded": false,
+    "$viewOrder": 0,
+    "expanded": true,
     "cn": [
+        {
+            "id": "ExtBox1-ext-gen21446",
+            "type": "panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "titlePage",
+                "designer|userClassName": "MyPanel"
+            },
+            "customConfigs": [],
+            "expanded": true,
+            "cn": [
+                {
+                    "id": "ExtBox1-ext-gen21605",
+                    "type": "titlebar",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "contentEl": null,
+                        "data": null,
+                        "docked": "top",
+                        "id": "titleBar",
+                        "title": "Steria Quiz",
+                        "designer|userClassName": "MyTitleBar",
+                        "container|pack": null
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                },
+                {
+                    "id": "ExtBox1-ext-gen22548",
+                    "type": "container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "centered": true,
+                        "height": 221,
+                        "html": "<a href=\"#\" onClick=\"Ext.create('MyApp.view.MyCarousel', {fullscreen: true});\"><img src=\"sterialogo.gif\"></a>",
+                        "id": "logoContainer",
+                        "width": 184,
+                        "hideOnMaskTap": false,
+                        "designer|userClassName": "MyContainer1"
+                    },
+                    "customConfigs": [],
+                    "expanded": true
+                }
+            ]
+        },
         {
             "id": "ExtBox1-ext-gen4653",
             "type": "formpanel",
@@ -958,7 +1016,7 @@
                 "designer|userClassName": "MyPanel1"
             },
             "customConfigs": [],
-            "expanded": false,
+            "expanded": true,
             "cn": [
                 {
                     "id": "ExtBox1-ext-gen27506",
@@ -1006,6 +1064,7 @@
                     "userConfig": {
                         "docked": "top",
                         "id": "titleBar",
+                        "title": "Ferdig!",
                         "designer|userClassName": "MyTitleBar1"
                     },
                     "customConfigs": [],

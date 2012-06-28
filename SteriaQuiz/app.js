@@ -18,25 +18,14 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
-    models: [
-        'QuizQuestion',
-        'Quizzer'
-    ],
-    stores: [
-        'QuestionStore'
-    ],
     views: [
-        'MyCarousel',
-        'MyPanel'
+        'MyCarousel'
     ],
     name: 'MyApp',
-    controllers: [
-        'QuestionController'
-    ],
 
     launch: function() {
 
-        Ext.create('MyApp.view.MyPanel', {fullscreen: true});
+        Ext.create('MyApp.view.MyCarousel', {fullscreen: true});
     }
 
 });

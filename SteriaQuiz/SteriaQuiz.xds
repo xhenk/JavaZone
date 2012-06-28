@@ -19,14 +19,6 @@
     "xdsBuild": "442",
     "framework": "touch20",
     "topInstanceFileMap": {
-        "229c5eb4-5f23-4ea9-94f4-49fb2035a385": {
-            "paths": [
-                "metadata/view/MyPanel",
-                "app/view/override/MyPanel.js",
-                "app/view/MyPanel.js"
-            ],
-            "className": "MyPanel"
-        },
         "83c7be60-bc72-4210-bc06-9f4658ad8eff": {
             "paths": [
                 "metadata/view/MyCarousel",
@@ -34,38 +26,6 @@
                 "app/view/MyCarousel.js"
             ],
             "className": "MyCarousel"
-        },
-        "e6e48c0e-5ab0-4186-8dea-198e0ca25464": {
-            "paths": [
-                "metadata/store/QuestionStore",
-                "app/store/override/QuestionStore.js",
-                "app/store/QuestionStore.js"
-            ],
-            "className": "QuestionStore"
-        },
-        "e1189865-ba27-4c25-a11a-00df5bd73ab1": {
-            "paths": [
-                "metadata/controller/QuestionController",
-                "app/controller/override/QuestionController.js",
-                "app/controller/QuestionController.js"
-            ],
-            "className": "QuestionController"
-        },
-        "885773c1-2036-420e-b40d-52096f55ebc9": {
-            "paths": [
-                "metadata/model/QuizQuestion",
-                "app/model/override/QuizQuestion.js",
-                "app/model/QuizQuestion.js"
-            ],
-            "className": "QuizQuestion"
-        },
-        "ce71ce93-17a2-4e4c-8302-b50d4cbdce4e": {
-            "paths": [
-                "metadata/model/Quizzer",
-                "app/model/override/Quizzer.js",
-                "app/model/Quizzer.js"
-            ],
-            "className": "Quizzer"
         }
     },
     "expandedState": {

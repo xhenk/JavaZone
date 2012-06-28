@@ -7,21 +7,13 @@
     },
     "codeClass": null,
     "userConfig": {
-        "models": [
-            "QuizQuestion",
-            "Quizzer"
-        ],
-        "stores": [
-            "QuestionStore"
-        ],
+        "models": null,
+        "stores": null,
         "views": [
-            "MyCarousel",
-            "MyPanel"
+            "MyCarousel"
         ],
         "name": "MyApp",
-        "controllers": [
-            "QuestionController"
-        ]
+        "controllers": null
     },
     "customConfigs": [],
     "designerId": "application",
