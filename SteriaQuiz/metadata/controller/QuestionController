@@ -1,0 +1,47 @@
+{
+    "id": "ExtBox1-ext-gen9013",
+    "type": "controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "QuestionController"
+    },
+    "customConfigs": [],
+    "designerId": "e1189865-ba27-4c25-a11a-00df5bd73ab1",
+    "$viewOrder": 0,
+    "expanded": true,
+    "cn": [
+        {
+            "id": "ExtBox1-ext-gen9316",
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "init",
+                "designer|params": [
+                    "application"
+                ],
+                "implHandler": [
+                    "var me = this;\r",
+                    "Ext.Viewport.setMasked({ message: 'Laster spørsmål...' });\r",
+                    "// get the question... {\r",
+                    "me.getQuestion(id, function (store) {\r",
+                    "    // then bind data to list and show it\r",
+                    "    me.getDataList().setStore(store);\r",
+                    "    Ext.Viewport.setMasked(false);\r",
+                    "});"
+                ],
+                "designer|userClassName": "init"
+            },
+            "customConfigs": [],
+            "iconCls": "icon-basic-function",
+            "expanded": true
+        }
+    ]
+}
