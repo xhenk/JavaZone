@@ -143,12 +143,12 @@ function createCarousel() {
 /**
  * This function takes a variable number of arguments, using arguments[n] for
  * access.
- * 
+ *
  * Format is: Question, CorrectAnswer#, Answer1, Answer2, ..., Answer N. Returns
  * a questionPanel to put into the carousel.
  */
 function addQuestionToCarousel() {
-// console.log(arguments);
+// console.log(arguments);// console.log(arguments);
 	// An array of radio buttons
 	var ansRadioArray = new Array();
 	var tmpCnt = 0;
