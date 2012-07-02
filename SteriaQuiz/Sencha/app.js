@@ -209,9 +209,8 @@ function createQuestionsCarousel(quizPath) {
 							.getElementsByTagName('correct')[0].textContent;
 					var pan = addQuestionToCarousel(title, correctNum, tmpWrong);
 					carouselPanels[q++] = pan;
-					alert(i);
+					
 					if (i == allQuestions.length - 1) {
-						alert('hallo');
 						var answerButton = Ext.create('Ext.Button', {
 							text : 'Bra jobba!',
 							listeners : {
