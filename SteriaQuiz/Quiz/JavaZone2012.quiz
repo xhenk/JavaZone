@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="yes" ?>
+<quiz>
+	<question>
+		<title>Hva er forskjellen på måker og kråker?</title>
+		<correct>1</correct>
+		<answer>Forskjellig farge</answer>
+		<answer>Måker er ikke fugler</answer>
+		<answer>Kråker er ikke fugler</answer>
+		<answer>Alle er riktige</answer>
+	</question>
+	<question>
+		<title>Spørsmål 2</title>
+		<correct>3</correct>
+		<answer>Svar1</answer>
+		<answer>Svar2</answer>
+		<answer>Svar3</answer>
+		<answer>Svar4</answer>
+		<answer>Svar5</answer>
+		<answer>Svar6</answer>
+	</question>
+	<question>
+		<title>Spørsmål 3</title>
+		<correct>4</correct>
+		<answer>Svar1</answer>
+		<answer>Svar2</answer>
+		<answer>Svar3</answer>
+		<answer>Svar4</answer>
+		<answer>Svar5</answer>
+		<answer>Svar6</answer>
+	</question>
+</quiz>
