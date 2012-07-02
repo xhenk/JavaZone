@@ -23,7 +23,6 @@ Ext.application({
 		createQuestionsCarousel('../Quiz/JavaZone2012.quiz');
 		// addQuestionToCarousel('Question 1', 'Answer 1', 'Answer 2', 'Answer
 		// 3', 'Answer 4', 0);
-
 		switchTo(firstPage);
 	}
 });
@@ -155,17 +154,19 @@ function addQuestionToCarousel() {
 	var tmpCnt = 0;
 	for (var i = 0; i < arguments[2].length; i++) {
 		ansRadioArray[i] = {
-	            xtype: 'radiofield',
-	            name : 'color',
-	            value: arguments[2][i],
-	            label: arguments[2][i],
-	            labelWidth: '100',
-	            checked: true
-	        };
+            xtype: 'radiofield',
+            name : 'color',
+            value: arguments[2][i],
+            label: arguments[2][i],
+            checked: true
+        };
 	}
 	var questionPanel = Ext.create('Ext.form.Panel', {
-		title: arguments[0],
-	    items: ansRadioArray
+	    items: [{
+	    	xtype: 'fieldset',
+			title: arguments[0],
+	    	items: ansRadioArray
+	    }]
 	});
 	return questionPanel;
 }
