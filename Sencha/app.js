@@ -6,8 +6,10 @@ var carousel;
 var regPage;
 var allQuestions;
 
+var regPath = '../reg.php?';
+var scoreboardPath = '../scoreboard.xml';
+var scoreboard = '';
 var globQuestCnt = 0;
-
 
 var emptyQuestion = Ext.create('Ext.Container', {
 	title : 'EmptyQuestion'
@@ -46,6 +48,7 @@ function createFirstPage() {
 		items : [ {
 			xtype : 'button',
 			handler : function(button, event) {
+				loadScoreboard();
 				switchTo(carousel);
 			},
 			centered : true,
@@ -79,52 +82,124 @@ function createFirstPage() {
 
 function createRegPage() {
 
-	return Ext.create('Ext.Container', {
-		title : 'SteriaQuiz',
-		items : [ {
-			xtype : 'fieldset',
-			instructions : 'Registrer deg for &#xE5; bli med i trekningen!',
-			layout : {
-				align : 'stretchmax',
-				type : 'vbox'
-			},
-			items : [ {
-				xtype : 'textfield',
-				id : 'navn',
-				label : 'Navn'
-			}, {
-				xtype : 'emailfield',
-				id : 'epost',
-				label : 'Epost'
-			}, {
-				xtype : 'numberfield',
-				id : 'telefon',
-				label : 'Telefon'
-			}, {
-				xtype : 'button',
-				handler : function(button, event) {
-					switchTo(firstPage);
-				},
-				itemId : 'fjern',
-				text : 'Fjern'
-			}, {
-				xtype : 'button',
-				itemId : 'registrer',
-				text : 'Registrer'
-			} ]
-		}, {
-			xtype : 'panel',
-			defaults : {
-				xtype : 'button',
-				style : 'margin: 0.1em',
-				flex : 1
-			},
-			layout : {
-				pack : 'end',
-				type : 'hbox'
-			}
-		} ]
+	var nameField = Ext.create('Ext.field.Text', {
+		id : 'name',
+		label : 'Navn'
 	});
+	var emailField = Ext.create('Ext.field.Email', {
+		id : 'email',
+		label : 'Epost'
+	});
+	var phoneField = Ext.create('Ext.field.Number', {
+		id : 'number',
+		label : 'Telefon'
+	});
+	return Ext
+			.create(
+					'Ext.Container',
+					{
+						title : 'SteriaQuiz',
+						items : [
+								{
+									xtype : 'fieldset',
+									instructions : 'Registrer deg for &#xE5; bli med i trekningen!<br/>Personinformasjon lagres hos Steria fram til trekningen.',
+									layout : {
+										align : 'stretchmax',
+										type : 'vbox'
+									},
+									items : [
+											nameField,
+											emailField,
+											phoneField,
+											{
+												xtype : 'button',
+												handler : function(button,
+														event) {
+													nameField.setValue('');
+													emailField.setValue('');
+													phoneField.setValue('');
+												},
+												itemId : 'fjern',
+												text : 'Fjern',
+											},
+											{
+												xtype : 'button',
+												itemId : 'registrer',
+												text : 'Registrer',
+												handler : function(button,
+														event) {
+													var path = createRegPath(
+															nameField
+																	.getValue(),
+															emailField
+																	.getValue(),
+															phoneField
+																	.getValue(),
+															getCorrectAnswers());
+													var xmlhttp = new XMLHttpRequest();
+													if (!path) {
+														button
+																.setDisabled(true);
+														button.setValue('Allerede registrert!');
+														return;
+													}
+													;
+													xmlhttp.open("GET", path,
+															true);
+													xmlhttp.send(null);
+													xmlhttp.onreadystatechange = function() {
+														Ext.Msg.alert('Suksess!',xmlhttp.responseText, Ext.emptyFn);
+														if (xmlhttp.responseText.indexOf("registrert!",0)) button.setDisabled(true);
+													};
+												}
+											} ]
+								}, {
+									xtype : 'panel',
+									defaults : {
+										xtype : 'button',
+										style : 'margin: 0.1em',
+										flex : 1,
+									},
+									layout : {
+										pack : 'end',
+										type : 'hbox',
+									}
+								} ]
+					});
+}
+
+function createRegPath(name, email, phone, score) {
+	var retval = regPath;
+	if (existsAlready(name, email, phone)) {
+		Ext.Msg.alert('Ai ai ai!',
+				"Det ser ut som om du allerede har v&#xE6; rt med i konkurransen! ",
+				Ext.emptyFn);
+		return 0;
+	}
+	retval += 'name=' + name;
+	retval += '&email=' + email;
+	retval += '&phone=' + phone;
+	retval += '&score=' + score;
+	return retval;
+}
+
+/**
+ * Compares the information against what's stored on the scoreboard.
+ */
+function existsAlready() {
+
+	var retval = false;
+	answered = true;
+	for (var i = 0; i < arguments.length; i++) {
+		if (scoreboard.indexOf(arguments[i], 0) != -1) {
+			retval = true;
+		}	
+	}
+	return retval;
+}
+/** TODO */
+function getCorrectAnswers() {
+	return Math.floor(Math.random() * 400);
 }
 
 function createCarousel() {
@@ -139,30 +214,29 @@ function createCarousel() {
 /**
  * This function takes a variable number of arguments, using arguments[n] for
  * access.
- *
+ * 
  * Format is: Question, CorrectAnswer#, Answer1, Answer2, ..., Answer N. Returns
  * a questionPanel to put into the carousel.
  */
 function addQuestionToCarousel() {
-// console.log(arguments);// console.log(arguments);
+	// console.log(arguments);// console.log(arguments);
 	// An array of radio buttons
 	var ansRadioArray = new Array();
-	var tmpCnt = 0;
-	for (var i = 0; i < arguments[2].length; i++) {
+	for ( var i = 0; i < arguments[2].length; i++) {
 		ansRadioArray[i] = {
-            xtype: 'radiofield',
-            name : 'color',
-            value: arguments[2][i],
-            label: arguments[2][i],
-            checked: true
-        };
+			xtype : 'radiofield',
+			name : 'color',
+			value : arguments[2][i],
+			label : arguments[2][i],
+			checked : true
+		};
 	}
 	var questionPanel = Ext.create('Ext.form.Panel', {
-	    items: [{
-	    	xtype: 'fieldset',
-			title: arguments[0],
-	    	items: ansRadioArray
-	    }]
+		items : [ {
+			xtype : 'fieldset',
+			title : arguments[0],
+			items : ansRadioArray
+		} ]
 	});
 	return questionPanel;
 }
@@ -179,7 +253,6 @@ function createQuestionsCarousel(quizPath) {
 		// the correct answer
 		var correctNum;
 		var carouselPanels = new Array();
-		console.log('foo');
 		xmlhttp.open("GET", quizPath, true);
 		xmlhttp.send(null);
 		var q = 0;
@@ -207,12 +280,13 @@ function createQuestionsCarousel(quizPath) {
 							.getElementsByTagName('correct')[0].textContent;
 					var pan = addQuestionToCarousel(title, correctNum, tmpWrong);
 					carouselPanels[q++] = pan;
-					
+
 					if (i == allQuestions.length - 1) {
 						var answerButton = Ext.create('Ext.Button', {
 							text : 'Bra jobba!',
 							listeners : {
 								tap : function() {
+									console.log(scoreboard);
 									switchTo(regPage);
 								}
 							}
@@ -224,4 +298,18 @@ function createQuestionsCarousel(quizPath) {
 			}
 		};
 	}
+}
+
+function loadScoreboard () {
+	console.log('Loading scoreboard!');
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET", scoreboardPath, true);
+	xmlhttp.send(null);
+	xmlhttp.onreadystatechange = function() {
+		console.log("state: " + xmlhttp.readyState);
+		if (xmlhttp.readyState == 4) {
+			scoreboard = xmlhttp.responseText;
+			console.log(scoreboard);
+		}
+	};
 }

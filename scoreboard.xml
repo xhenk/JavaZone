@@ -1,0 +1,16 @@
+<entry>
+	<time>1341314621</time>
+	<useragent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11</useragent>
+	<name>Testmann</name>
+	<phone>90090090</phone>
+	<email>a@b.c</email>
+	<score>158</score>
+</entry>
+<entry>
+	<time>1341314896</time>
+	<useragent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11</useragent>
+	<name>Mr. Test</name>
+	<phone>90909090</phone>
+	<email>abc@def.ghi</email>
+	<score>96</score>
+</entry>
