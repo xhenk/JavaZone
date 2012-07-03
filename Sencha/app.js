@@ -83,7 +83,7 @@ function createRegPage() {
 		title : 'SteriaQuiz',
 		items : [ {
 			xtype : 'fieldset',
-			instructions : 'Registrer deg for å bli med i trekningen!',
+			instructions : 'Registrer deg for &#xE5; bli med i trekningen!',
 			layout : {
 				align : 'stretchmax',
 				type : 'vbox'
@@ -107,10 +107,6 @@ function createRegPage() {
 				},
 				itemId : 'fjern',
 				text : 'Fjern'
-			}, {
-				xtype : 'button',
-				itemId : 'mybutton2',
-				text : 88
 			}, {
 				xtype : 'button',
 				itemId : 'registrer',
@@ -174,7 +170,6 @@ function addQuestionToCarousel() {
 function createQuestionsCarousel(quizPath) {
 
 	if (quizPath) {
-
 		var xmlhttp = new XMLHttpRequest();
 		var xmlDocument;
 		// Array of all questions:
@@ -184,11 +179,13 @@ function createQuestionsCarousel(quizPath) {
 		// the correct answer
 		var correctNum;
 		var carouselPanels = new Array();
+		console.log('foo');
 		xmlhttp.open("GET", quizPath, true);
 		xmlhttp.send(null);
 		var q = 0;
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4) {
+				console.log('bar');
 				// Read contents
 				xmlDocument = xmlhttp.responseText;
 				var parser = new DOMParser();
@@ -196,6 +193,7 @@ function createQuestionsCarousel(quizPath) {
 				allQuestions = doc.documentElement
 						.getElementsByTagName('question');
 				for ( var i = 0; i < allQuestions.length; i++) {
+					console.log('baz');
 					var title = allQuestions[i].getElementsByTagName('title')
 							.item(0).textContent;
 					allWrongAnswers = allQuestions[i]
@@ -214,7 +212,7 @@ function createQuestionsCarousel(quizPath) {
 						var answerButton = Ext.create('Ext.Button', {
 							text : 'Bra jobba!',
 							listeners : {
-								tap : function () {
+								tap : function() {
 									switchTo(regPage);
 								}
 							}
