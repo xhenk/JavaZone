@@ -214,7 +214,7 @@ function createQuestionsCarousel(quizPath) {
 						var answerButton = Ext.create('Ext.Button', {
 							text : 'Bra jobba!',
 							listeners : {
-								tap : function() {
+								tap : function () {
 									switchTo(regPage);
 								}
 							}
