@@ -5,18 +5,45 @@
 	$phone = $_GET['phone'];
 	$email = $_GET['email'];
 	$score = $_GET['score'];
+	$doc = new DOMDocument();
 
-	$file = fopen("scoreboard.xml",  "a");
-	fwrite($file, "<entry>\n");
-	fwrite($file, "\t<time>$time</time>\n");
-	fwrite($file, "\t<useragent>$ua</useragent>\n");
-	fwrite($file, "\t<name>$name</name>\n");
-	fwrite($file, "\t<phone>$phone</phone>\n");
-	fwrite($file, "\t<email>$email</email>\n");
-	fwrite($file, "\t<score>$score</score>\n");
-	fwrite($file, "</entry>\n");
-	fclose($file);
-	print("Dine $score poeng er registrert!");
+	$doc->load( 'scoreboard.xml' );
+
+	$entries = $doc->getElementsByTagName( "entry" );
+	$already = false;
+	foreach( $entries as $entry ) {
+
+		$n = $entry->getElementsByTagName("name")->item(0)->textContent;
+		$p = $entry->getElementsByTagName("phone")->item(0)->textContent;
+		$e = $entry->getElementsByTagName("email")->item(0)->textContent;
+		if (strcmp($n, $name) == 0) {
+			$already = true;
+		} else if (strcmp($p, $phone) == 0) {
+			$already = true;
+		} else if (strcmp($e, $email) == 0) {
+			$already = true;
+		}
+	}
+	if ($already) {
+		print("En med samme navn, telefonnummer eller epost har allerede konkurrert!<br/>Ikke bruk kunstnernavn eller tulletelefonnummer!");
+	} else {
+		$scoreboard = $doc->getElementsByTagName("scoreboard")->item(0);
+		$element = $doc->createElement('entry');
+		$scoreboard->appendChild($element);
+		$foo = $doc->createElement('name', $name);
+		$bar = $doc->createElement('phone', $phone);
+		$baz = $doc->createElement('email', $email);
+		$qux = $doc->createElement('score', $score);
+		$element->appendChild($foo);
+		$element->appendChild($bar);
+		$element->appendChild($baz);
+		$element->appendChild($qux);
+		$output = $doc->saveXML();
+		$file = fopen("scoreboard.xml",  "w");
+		fwrite($file, $output);
+		fclose($file);
+		print("Dine $score poeng er registrert!");
+	}
 ?>
 
 

@@ -4,16 +4,15 @@ var firstPage;
 var menuBtn;
 var carousel;
 var regPage;
-var allQuestions;
+var allOrdinaryRadioButtonQuestions = new Array();
+/* Correct answers to all ordinary radio button questions */
+var allOrdinaryRadioButtonCorrectAnswers = new Array();
+/* User's answers to all ordinary radio button questions */
+var allOrdinaryRadioButtonAnswers = new Array();
 
 var regPath = '../reg.php?';
-var scoreboardPath = '../scoreboard.xml';
-var scoreboard = '';
+var globAnsCnt = 0;
 var globQuestCnt = 0;
-
-var emptyQuestion = Ext.create('Ext.Container', {
-	title : 'EmptyQuestion'
-});
 
 Ext.application({
 	name : 'SteriaQuiz',
@@ -48,7 +47,6 @@ function createFirstPage() {
 		items : [ {
 			xtype : 'button',
 			handler : function(button, event) {
-				loadScoreboard();
 				switchTo(carousel);
 			},
 			centered : true,
@@ -69,7 +67,6 @@ function createFirstPage() {
 			align : 'right',
 			listeners : {
 				tap : function() {
-					console.log('tries switching to ' + firstPage);
 					switchTo(firstPage);
 				}
 			}
@@ -137,19 +134,22 @@ function createRegPage() {
 																	.getValue(),
 															getCorrectAnswers());
 													var xmlhttp = new XMLHttpRequest();
-													if (!path) {
-														button
-																.setDisabled(true);
-														button.setValue('Allerede registrert!');
-														return;
-													}
-													;
 													xmlhttp.open("GET", path,
 															true);
 													xmlhttp.send(null);
 													xmlhttp.onreadystatechange = function() {
-														Ext.Msg.alert('Suksess!',xmlhttp.responseText, Ext.emptyFn);
-														if (xmlhttp.responseText.indexOf("registrert!",0)) button.setDisabled(true);
+														Ext.Msg
+																.alert(
+																		'Registreringsserveren forteller:',
+																		xmlhttp.responseText,
+																		Ext.emptyFn);
+														if (xmlhttp.responseText
+																.indexOf(
+																		"registrert!",
+																		0) != -1) {
+															button
+																	.setDisabled(true);
+														}
 													};
 												}
 											} ]
@@ -170,12 +170,6 @@ function createRegPage() {
 
 function createRegPath(name, email, phone, score) {
 	var retval = regPath;
-	if (existsAlready(name, email, phone)) {
-		Ext.Msg.alert('Ai ai ai!',
-				"Det ser ut som om du allerede har v&#xE6; rt med i konkurransen! ",
-				Ext.emptyFn);
-		return 0;
-	}
 	retval += 'name=' + name;
 	retval += '&email=' + email;
 	retval += '&phone=' + phone;
@@ -183,23 +177,29 @@ function createRegPath(name, email, phone, score) {
 	return retval;
 }
 
-/**
- * Compares the information against what's stored on the scoreboard.
- */
-function existsAlready() {
-
-	var retval = false;
-	answered = true;
-	for (var i = 0; i < arguments.length; i++) {
-		if (scoreboard.indexOf(arguments[i], 0) != -1) {
-			retval = true;
-		}	
-	}
-	return retval;
-}
 /** TODO */
 function getCorrectAnswers() {
-	return Math.floor(Math.random() * 400);
+	var tmp, retval = 0, num;
+	console.log('===========Get' + allOrdinaryRadioButtonCorrectAnswers.length
+			+ 'CorrectAnswers===========');
+	for ( var i = 0; i < allOrdinaryRadioButtonCorrectAnswers.length; i++) {
+		num = allOrdinaryRadioButtonCorrectAnswers[i]-1; // Because question number begins at 1, cboxes at 0.
+		console.log('Answer number  ' + num + ' is correct for question ' + i);
+		// selects the radio button that is supposed to be checked
+		tmp = Ext.getCmp('cbox' + num);
+		// and controls it.
+		if (tmp.getChecked()) {
+			retval++;
+		}
+		console.log('cbox' + num + ' was ' + (tmp.getChecked() ? '' : 'un')
+				+ 'checked');
+	}
+	console.log('checking boxes: ')
+	for ( var i = 0; i < allOrdinaryRadioButtonAnswers; i++) {
+		tmp = Ext.getCmp('cbox' + num);
+		console.log('cbox' + num + ' ' + tmp.getChecked());
+	}
+	return retval;
 }
 
 function createCarousel() {
@@ -218,18 +218,26 @@ function createCarousel() {
  * Format is: Question, CorrectAnswer#, Answer1, Answer2, ..., Answer N. Returns
  * a questionPanel to put into the carousel.
  */
-function addQuestionToCarousel() {
-	// console.log(arguments);// console.log(arguments);
+function addOrdinaryQuestionToCarousel() {
+
+	// Register the correct question: globQuestCnt is used to get the correct
+	// question offset.
+	console.log('registers answer ' + arguments[1] + '(+' + globQuestCnt
+			+ ') as correct in aORBCA['+globAnsCnt+']');
+	allOrdinaryRadioButtonCorrectAnswers[globAnsCnt] = (parseInt(arguments[1]) + globQuestCnt);
+	console.log('allOrdinaryRadioButtonCorrectAnswers[globAnsCnt] = ' + allOrdinaryRadioButtonCorrectAnswers[globAnsCnt]);
 	// An array of radio buttons
 	var ansRadioArray = new Array();
 	for ( var i = 0; i < arguments[2].length; i++) {
 		ansRadioArray[i] = {
 			xtype : 'radiofield',
-			name : 'color',
+			name : 'answer',
+			id : 'cbox' + (globQuestCnt),
 			value : arguments[2][i],
 			label : arguments[2][i],
-			checked : true
+			check : false
 		};
+		globQuestCnt++;
 	}
 	var questionPanel = Ext.create('Ext.form.Panel', {
 		items : [ {
@@ -238,6 +246,7 @@ function addQuestionToCarousel() {
 			items : ansRadioArray
 		} ]
 	});
+	globAnsCnt++;
 	return questionPanel;
 }
 
@@ -249,7 +258,7 @@ function createQuestionsCarousel(quizPath) {
 		// Array of all questions:
 		var allQuestions;
 		// Array of all answers:
-		var allWrongAnswers;
+		var allAnswers;
 		// the correct answer
 		var correctNum;
 		var carouselPanels = new Array();
@@ -258,7 +267,6 @@ function createQuestionsCarousel(quizPath) {
 		var q = 0;
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4) {
-				console.log('bar');
 				// Read contents
 				xmlDocument = xmlhttp.responseText;
 				var parser = new DOMParser();
@@ -266,27 +274,27 @@ function createQuestionsCarousel(quizPath) {
 				allQuestions = doc.documentElement
 						.getElementsByTagName('question');
 				for ( var i = 0; i < allQuestions.length; i++) {
-					console.log('baz');
 					var title = allQuestions[i].getElementsByTagName('title')
 							.item(0).textContent;
-					allWrongAnswers = allQuestions[i]
-							.getElementsByTagName('answer');
+					allAnswers = allQuestions[i].getElementsByTagName('answer');
 					var tmpWrong = new Array();
 					// Make wrong answers into a string array
-					for ( var j = 0; j < allWrongAnswers.length; j++) {
-						tmpWrong[j] = allWrongAnswers[j].textContent;
+					for ( var j = 0; j < allAnswers.length; j++) {
+						tmpWrong[j] = allAnswers[j].textContent;
 					}
 					correctNum = allQuestions[i]
 							.getElementsByTagName('correct')[0].textContent;
-					var pan = addQuestionToCarousel(title, correctNum, tmpWrong);
-					carouselPanels[q++] = pan;
+					var pan = addOrdinaryQuestionToCarousel(title, correctNum,
+							tmpWrong);
+					carouselPanels[q] = pan;
+					allOrdinaryRadioButtonQuestions[q] = title;
+					q++;
 
 					if (i == allQuestions.length - 1) {
 						var answerButton = Ext.create('Ext.Button', {
 							text : 'Bra jobba!',
 							listeners : {
 								tap : function() {
-									console.log(scoreboard);
 									switchTo(regPage);
 								}
 							}
@@ -298,18 +306,4 @@ function createQuestionsCarousel(quizPath) {
 			}
 		};
 	}
-}
-
-function loadScoreboard () {
-	console.log('Loading scoreboard!');
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET", scoreboardPath, true);
-	xmlhttp.send(null);
-	xmlhttp.onreadystatechange = function() {
-		console.log("state: " + xmlhttp.readyState);
-		if (xmlhttp.readyState == 4) {
-			scoreboard = xmlhttp.responseText;
-			console.log(scoreboard);
-		}
-	};
 }

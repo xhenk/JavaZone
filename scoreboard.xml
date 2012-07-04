@@ -1,16 +1,3 @@
-<entry>
-	<time>1341314621</time>
-	<useragent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11</useragent>
-	<name>Testmann</name>
-	<phone>90090090</phone>
-	<email>a@b.c</email>
-	<score>158</score>
-</entry>
-<entry>
-	<time>1341314896</time>
-	<useragent>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11</useragent>
-	<name>Mr. Test</name>
-	<phone>90909090</phone>
-	<email>abc@def.ghi</email>
-	<score>96</score>
-</entry>
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="scoreboard-style.xsl"?>
+<scoreboard><entry><name>Frankenstein Testmann</name><phone>3240989434</phone><email>test@foo.org</email><score>0</score></entry><entry><name>George Testenberg</name><phone>95843759805</phone><email>george@test.org</email><score>1</score></entry><entry><name>Hello</name><phone>89980509853</phone><email>test@eogrgr.og</email><score>1</score></entry><entry><name>Foo</name><phone>303</phone><email>bar</email><score>3</score></entry></scoreboard>

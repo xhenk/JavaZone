@@ -9,23 +9,23 @@
 		<answer>Alle er riktige</answer>
 	</question>
 	<question>
-		<title>Sp&#xF8;rsm&#xE5;l 2</title>
-		<correct>3</correct>
-		<answer>Svar1</answer>
-		<answer>Svar2</answer>
-		<answer>Svar3</answer>
-		<answer>Svar4</answer>
-		<answer>Svar5</answer>
-		<answer>Svar6</answer>
+		<title>Hvor mange trappetrinn er det i posthuset?</title>
+		<correct>7</correct>
+		<answer>300</answer>
+		<answer>3000</answer>
+		<answer>30000</answer>
+		<answer>300000</answer>
+		<answer>3000000</answer>
+		<answer>30000000</answer>
+		<answer>Noe helt annet</answer>
 	</question>
 	<question>
-		<title>Sp&#xF8;rsm&#xE5;l 3</title>
-		<correct>4</correct>
-		<answer>Svar1</answer>
-		<answer>Svar2</answer>
-		<answer>Svar3</answer>
-		<answer>Svar4</answer>
-		<answer>Svar5</answer>
-		<answer>Svar6</answer>
+		<title>I hvilken etasje finner man den godterikastende legoroboten?</title>
+		<correct>3</correct>
+		<answer>1. </answer>
+		<answer>2. </answer>
+		<answer>22. </answer>
+		<answer>23. </answer>
+		<answer>24. </answer>
 	</question>
 </quiz>
