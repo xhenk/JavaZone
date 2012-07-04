@@ -6,7 +6,7 @@ body {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 26px;
 	margin: 45px;
-	color: f9fbff; text-shadow: black 0.1em 0.1em 0.2em
+	color: #000080; text-shadow: black 0.1em 0.1em 0.2em
 }
 
 #tab
@@ -14,15 +14,15 @@ body {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
 	margin: 45px;
-	width: 480px;
+	width: 700px;
 	text-align: left;
 	border-collapse: collapse;
 }
-#tab thead th.rounded-company
+#tab thead th.left
 {
 	background: #b9c9fe url('left.png') left -1px no-repeat;
 }
-#tab thead th.rounded-q4
+#tab thead th.right
 {
 	background: #b9c9fe url('right.png') right -1px no-repeat;
 }
@@ -52,4 +52,5 @@ body {
 #tab tbody tr:hover td
 {
 	background: #d0dafd;
+	text-shadow: black 0em 0em 3em;
 }

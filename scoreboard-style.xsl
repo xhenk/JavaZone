@@ -13,11 +13,11 @@
 					<table id="tab" summary="Deltakerliste Sterias surrequiz 2012">
 						<thead>
 							<tr>
-								<th scope="col" class="rounded-company">Levert</th>
-								<th scope="col" class="rounded-q1">Fornavn</th>
-								<th scope="col" class="rounded-q2">Telefon</th>
-								<th scope="col" class="rounded-q3">Epost</th>
-								<th scope="col" class="rounded-q4">Poengsum</th>
+								<th scope="col" class="left">Levert</th>
+								<th scope="col">Fornavn</th>
+								<th scope="col">Telefon</th>
+								<th scope="col">Epost</th>
+								<th scope="col" class="right">Poengsum</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -50,7 +50,7 @@
 										<xsl:value-of select="email"/>
 									</td>
 									<td>
-										<xsl:value-of select="score"/>
+										<div style="text-align: right;"><xsl:value-of select="score"/></div>
 									</td>
 								</tr>
 							</xsl:for-each>

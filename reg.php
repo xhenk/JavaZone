@@ -30,6 +30,14 @@
 			$already = true;
 		}
 	}
+	$invalidemail = 0;
+	if (strpos($email, '@') == NULL) {
+		$invalidemail = 1;
+	} else {
+		if (strpos($email, '.') == NULL) {
+			$invalidemail = 2;
+		}
+	}
 	if ($score > $MAX_POINTS) {
 		print("Du prøvde &#xE5 snike til deg flere poeng enn det er mulig &#xE5 f&#xE5 til. Juks og fanteri!\n");
 		$name = $name." (Tatt for juks!)";
@@ -41,6 +49,10 @@
 		print("Obs: En eller flere verdier er ikke utfylt!");
 	} else if (strlen($phone) != 8) {
 		print("Obs: Vi pr&#xF8vde &#xE5 ringe deg, men telefonnummeret ditt fungerer ikke! Pr&#xF8v &#xE5tte tegn!");
+	} else if ($invalidemail == 2) {
+		 print("Obs: Epost uten punktum? Aldri h&#xF8rt om. Pr&#xF8v p&#xE5 nytt.");
+	} else if ($invalidemail == 1) {
+		 print("Obs: Du har glemt @ i epostadressen");
 	} else {
 		$scoreboard = $doc->getElementsByTagName("scoreboard")->item(0);
 		$element = $doc->createElement('entry');
