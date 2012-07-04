@@ -7,13 +7,10 @@ var regPage;
 var allOrdinaryRadioButtonQuestions = new Array();
 /* Correct answers to all ordinary radio button questions */
 var allOrdinaryRadioButtonCorrectAnswers = new Array();
-/* User's answers to all ordinary radio button questions */
-var allOrdinaryRadioButtonAnswers = new Array();
 
 var regPath = '../reg.php?';
 var globAnsCnt = 0;
 var globQuestCnt = 0;
-
 Ext.application({
 	name : 'SteriaQuiz',
 
@@ -143,13 +140,25 @@ function createRegPage() {
 																		'Registreringsserveren forteller:',
 																		xmlhttp.responseText,
 																		Ext.emptyFn);
+														// Hvis feilmelding, la
+														// personen registrere
+														// på nytt.
+														console.log('OBS? ' + xmlhttp.responseText
+																.indexOf(
+																		"Obs",
+																		0));
 														if (xmlhttp.responseText
 																.indexOf(
-																		"registrert!",
-																		0) != -1) {
+																		"Obs",
+																		0) == -1) {
 															button
 																	.setDisabled(true);
+															// Gå til
+															// avslutningsskjerm?
+														} else {
+															button.setDisabled(false);
 														}
+
 													};
 												}
 											} ]
@@ -183,7 +192,9 @@ function getCorrectAnswers() {
 	console.log('===========Get' + allOrdinaryRadioButtonCorrectAnswers.length
 			+ 'CorrectAnswers===========');
 	for ( var i = 0; i < allOrdinaryRadioButtonCorrectAnswers.length; i++) {
-		num = allOrdinaryRadioButtonCorrectAnswers[i]-1; // Because question number begins at 1, cboxes at 0.
+		num = allOrdinaryRadioButtonCorrectAnswers[i] - 1; // Because question
+		// number begins at
+		// 1, cboxes at 0.
 		console.log('Answer number  ' + num + ' is correct for question ' + i);
 		// selects the radio button that is supposed to be checked
 		tmp = Ext.getCmp('cbox' + num);
@@ -193,11 +204,6 @@ function getCorrectAnswers() {
 		}
 		console.log('cbox' + num + ' was ' + (tmp.getChecked() ? '' : 'un')
 				+ 'checked');
-	}
-	console.log('checking boxes: ')
-	for ( var i = 0; i < allOrdinaryRadioButtonAnswers; i++) {
-		tmp = Ext.getCmp('cbox' + num);
-		console.log('cbox' + num + ' ' + tmp.getChecked());
 	}
 	return retval;
 }
@@ -223,9 +229,10 @@ function addOrdinaryQuestionToCarousel() {
 	// Register the correct question: globQuestCnt is used to get the correct
 	// question offset.
 	console.log('registers answer ' + arguments[1] + '(+' + globQuestCnt
-			+ ') as correct in aORBCA['+globAnsCnt+']');
+			+ ') as correct in aORBCA[' + globAnsCnt + ']');
 	allOrdinaryRadioButtonCorrectAnswers[globAnsCnt] = (parseInt(arguments[1]) + globQuestCnt);
-	console.log('allOrdinaryRadioButtonCorrectAnswers[globAnsCnt] = ' + allOrdinaryRadioButtonCorrectAnswers[globAnsCnt]);
+	console.log('allOrdinaryRadioButtonCorrectAnswers[globAnsCnt] = '
+			+ allOrdinaryRadioButtonCorrectAnswers[globAnsCnt]);
 	// An array of radio buttons
 	var ansRadioArray = new Array();
 	for ( var i = 0; i < arguments[2].length; i++) {
@@ -291,14 +298,38 @@ function createQuestionsCarousel(quizPath) {
 					q++;
 
 					if (i == allQuestions.length - 1) {
-						var answerButton = Ext.create('Ext.Button', {
-							text : 'Bra jobba!',
-							listeners : {
-								tap : function() {
-									switchTo(regPage);
-								}
-							}
-						});
+						var answerButton = Ext
+								.create(
+										'Ext.Button',
+										{
+											text : 'Bra jobba!',
+											listeners : {
+												tap : function() {
+													var cnt = 0;
+													for ( var i = 0; i < globQuestCnt; i++) {
+														tmp = Ext.getCmp('cbox'
+																+ i);
+														if (tmp.getChecked())
+															cnt++;
+														console
+																.log('cbox'
+																		+ i
+																		+ ' '
+																		+ tmp
+																				.getChecked());
+													}
+													if (cnt == allOrdinaryRadioButtonCorrectAnswers.length)
+														switchTo(regPage);
+													else {
+														Ext.Msg
+																.alert(
+																		'Obs!',
+																		'Du m&#xE5 svare p&#xE5 alle sp&#xF8rsm&#xE5l',
+																		Ext.emptyFn);
+													}
+												}
+											}
+										});
 						pan.add(answerButton);
 					}
 					carousel.add(pan);
