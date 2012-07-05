@@ -9,6 +9,7 @@
 				<script src="scoreboard.js" />
 			</head>
 			<body>
+				
 				<center>
 					<h1 id="h1heading">Deltakerliste Sterias surrequiz 2012</h1>
 					<h3 id="winnerheading"></h3>

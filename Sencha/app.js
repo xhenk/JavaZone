@@ -206,7 +206,8 @@ function addOrdinaryQuestionToCarousel() {
 			id : 'cbox' + (globQuestCnt),
 			value : arguments[2][i],
 			label : arguments[2][i],
-			check : false
+			check : false,
+			labelWidth: '90 %'
 		};
 		globQuestCnt++;
 	}
