@@ -1,2 +1,0 @@
-serviceClass: no.steria.javazone.quizapp.client.QuizService
-path: 0CFD6477C4BDE603F2B745B0FCA24E97.gwt.rpc
