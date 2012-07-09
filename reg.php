@@ -1,6 +1,5 @@
 <?php
-	$MAX_POINTS = 3;
-
+	$MAX_POINTS = 0;
 	$time = $_SERVER['REQUEST_TIME'];
 	date_default_timezone_set('Europe/Oslo');
 	$time = date('H:i:s', $time);
@@ -11,8 +10,12 @@
 	$score = $_GET['score'];
 	$doc = new DOMDocument();
 
+	$doc->load( './Quiz/JavaZone2012.quiz' );
+	$foos = $doc->getElementsByTagName( "question" );
+	foreach( $foos as $foo) {
+		$MAX_POINTS = $MAX_POINTS+1;
+	}
 	$doc->load( 'scoreboard.xml' );
-
 	$entries = $doc->getElementsByTagName( "entry" );
 	$already = false;
 	$nulls = false;
@@ -54,6 +57,13 @@
 	} else if ($invalidemail == 1) {
 		 print("Obs: Du har glemt @ i epostadressen");
 	} else {
+
+		$name = str_replace("æ", "&#xE6;", $name);
+		$name = str_replace("Æ", "&#xC6;", $name);
+		$name = str_replace("ø", "&#xF8;", $name);
+		$name = str_replace("Ø", "&#xD8;", $name);
+		$name = str_replace("å", "&#xE5;", $name);
+		$name = str_replace("Å", "&#xC5;", $name);
 		$scoreboard = $doc->getElementsByTagName("scoreboard")->item(0);
 		$element = $doc->createElement('entry');
 		$scoreboard->appendChild($element);

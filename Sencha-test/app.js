@@ -1,9 +1,23 @@
-var titleBar;
+var titlebar;
 var currentPage;
 var firstPage;
 var menuBtn;
 var carousel;
 var regPage;
+
+/**
+ * All Map-related variables. Requires one set per map-question!
+ */
+var mapPage;
+var gmap;
+var marker;
+var cap;
+var flat, flng;
+var mapCenter;
+var lastEvent = new Date();
+var mapQnum = 'Spørsmål ';
+var mapQQ;
+
 var allOrdinaryRadioButtonQuestions = new Array();
 /* Correct answers to all ordinary radio button questions */
 var allOrdinaryRadioButtonCorrectAnswers = new Array();
@@ -15,10 +29,12 @@ Ext.application({
 	name : 'SteriaQuiz',
 
 	launch : function() {
+		titlebar = createTitlebar();
 		firstPage = createFirstPage();
 		regPage = createRegPage();
 		carousel = createCarousel();
 		createQuestionsCarousel('../Quiz/JavaZone2012.quiz');
+		mapPage = createMapPage();
 		// addQuestionToCarousel('Question 1', 'Answer 1', 'Answer 2', 'Answer
 		// 3', 'Answer 4', 0);
 		switchTo(firstPage);
@@ -37,25 +53,9 @@ function switchTo(to) {
 
 }
 
-function createFirstPage() {
+function createTitlebar() {
 
-	firstPage = Ext.create('Ext.Container', {
-		title : 'SteriaQuiz',
-		items : [ {
-			xtype : 'button',
-			handler : function(button, event) {
-				switchTo(carousel);
-			},
-			centered : true,
-			height : 250,
-			html : '<img src="sterialogo.gif" />',
-			width : 250,
-			iconAlign : 'center',
-			text : ''
-		} ]
-	});
-	Ext.Viewport.add({
-		xtype : 'titlebar',
+	return new Ext.TitleBar({
 		docked : 'top',
 		title : 'SteriaQuiz',
 		items : [ {
@@ -67,13 +67,131 @@ function createFirstPage() {
 					switchTo(firstPage);
 				}
 			}
-		} ],
+		} ]
 	});
+}
+function createMapPage(question) {
+
+	var pos = new google.maps.LatLng(65.83878, 13.88672);
+	var x = (document.height - 75);
+	gmap = Ext.create('Ext.Map', {
+		xtype : 'map',
+		useCurrentLocation : false,
+		height : 400, // TODO!!!
+		mapOptions : {
+			center : pos,
+			zoom : 4
+		},
+		listeners : {
+			centerchange : function(comp, map) {
+				mapCenter = map.getCenter();
+				delay(handleMovement());
+			},
+			maprender : function(comp, map) {
+				setTimeout(function() {
+					map.panTo(pos);
+				}, 1000);
+			},
+
+		}
+	});
+	var mapPanel = new Ext.Panel({
+		iconCls : 'map',
+		title : 'Map',
+		ui : 'light',
+		items : [ {
+			xtype : 'container',
+			items : gmap
+		}, {
+			xtype : 'button',
+			text : 'Fornøyd',
+			docked : 'bottom',
+			listeners : {
+				tap : function(button, event) {
+					titlebar.setTitle("SteriaQuiz");
+					switchTo(carousel);
+				}
+			}
+		} ]
+	});
+
+	return mapPanel;
+}
+function handleMovement() {
+	if (lastEvent.getTime() + 500 > new Date().getTime())
+		return;
+	var _map = gmap.getMap();
+	if (marker) {
+		marker.setMap(null);
+	}
+	marker = new google.maps.Marker({
+		position : mapCenter,
+		title : mapCenter.toString(),
+		map : _map,
+		listeners : {
+			click : function(me) {
+				console.log('foo');
+				var locationBubble = new google.maps.InfoWindow();
+				locationBubble.setContent(_map.getCenter().toString);
+				locationBubble.open(gmap, marker);
+			}
+		}
+	});
+	if (cap) {
+		cap.setMap(null);
+	}
+	// Add circle overlay and bind to marker
+	cap = new google.maps.Circle({
+		map : _map,
+		radius : 150,
+		clickable : false,
+		fillOpacity : 0.3,
+		strokeWeight : 1,
+		strokeColor : '#DD0000',
+		fillColor : '#AA0000'
+	});
+	cap.bindTo('center', marker, 'position');
+	flat = (Math.floor(mapCenter.lat() * 1000) / 1000);
+	flng = (Math.floor(mapCenter.lng() * 1000) / 1000);
+
+	titlebar.setTitle(flat + ' x ' + flng);
+}
+
+function delay(func) {
+	lastEvent = new Date();
+	setTimeout(func, 500);
+}
+
+function placeMarker(location) {
+	marker = new google.maps.Marker({
+		// position : location,
+		map : gmap
+	});
+}
+
+function createFirstPage() {
+
+	firstPage = Ext.create('Ext.Container', {
+		title : 'SteriaQuiz',
+		items : [ {
+			xtype : 'button',
+			handler : function(button, event) {
+				switchTo(mapPage);
+				Ext.Msg.alert(mapQnum, mapQQ, Ext.emptyFn);
+			},
+			centered : true,
+			height : 250,
+			html : '<img src="sterialogo.gif" />',
+			width : 250,
+			iconAlign : 'center',
+			text : ''
+		} ]
+	});
+	Ext.Viewport.add(titlebar);
 
 	return firstPage;
 
 }
-
 
 function createRegPage() {
 
@@ -121,7 +239,6 @@ function createRegPage() {
 						// Hvis feilmelding, la
 						// personen registrere
 						// pÃ¥ nytt.
-						console.log('OBS? ' + xmlhttp.responseText.indexOf("Obs", 0));
 						if (xmlhttp.responseText.indexOf("Obs", 0) == -1) {
 							button.setDisabled(true);
 							// GÃ¥ til
@@ -161,19 +278,16 @@ function createRegPath(name, email, phone, score) {
 /** TODO */
 function getCorrectAnswers() {
 	var tmp, retval = 0, num;
-	console.log('===========Get' + allOrdinaryRadioButtonCorrectAnswers.length + 'CorrectAnswers===========');
 	for ( var i = 0; i < allOrdinaryRadioButtonCorrectAnswers.length; i++) {
 		num = allOrdinaryRadioButtonCorrectAnswers[i] - 1; // Because question
 		// number begins at
 		// 1, cboxes at 0.
-		console.log('Answer number  ' + num + ' is correct for question ' + i);
 		// selects the radio button that is supposed to be checked
 		tmp = Ext.getCmp('cbox' + num);
 		// and controls it.
 		if (tmp.getChecked()) {
 			retval++;
 		}
-		console.log('cbox' + num + ' was ' + (tmp.getChecked() ? '' : 'un') + 'checked');
 	}
 	return retval;
 }
@@ -209,7 +323,7 @@ function addOrdinaryQuestionToCarousel() {
 			value : arguments[2][i],
 			label : arguments[2][i],
 			check : false,
-			labelWidth: '90 %'
+			labelWidth : '90 %'
 		};
 		globQuestCnt++;
 	}
@@ -240,6 +354,7 @@ function createQuestionsCarousel(quizPath) {
 		xmlhttp.open("GET", quizPath, true);
 		xmlhttp.send(null);
 		var q = 0;
+		var numOrdQuestions = 0;
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4) {
 				// Read contents
@@ -247,43 +362,55 @@ function createQuestionsCarousel(quizPath) {
 				var parser = new DOMParser();
 				var doc = parser.parseFromString(xmlDocument, 'text/xml');
 				allQuestions = doc.documentElement.getElementsByTagName('question');
-				for ( var i = 0; i < allQuestions.length; i++) {
-					var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
-					allAnswers = allQuestions[i].getElementsByTagName('answer');
-					var tmpWrong = new Array();
-					// Make wrong answers into a string array
-					for ( var j = 0; j < allAnswers.length; j++) {
-						tmpWrong[j] = allAnswers[j].textContent;
-					}
-					correctNum = allQuestions[i].getElementsByTagName('correct')[0].textContent;
-					var pan = addOrdinaryQuestionToCarousel(title, correctNum, tmpWrong);
-					carouselPanels[q] = pan;
-					allOrdinaryRadioButtonQuestions[q] = title;
-					q++;
 
-					if (i == allQuestions.length - 1) {
-						var answerButton = Ext.create('Ext.Button', {
-							text : 'Trykk for &#xE5 levere!',
-							listeners : {
-								tap : function() {
-									var cnt = 0;
-									for ( var i = 0; i < globQuestCnt; i++) {
-										tmp = Ext.getCmp('cbox' + i);
-										if (tmp.getChecked())
-											cnt++;
-										console.log('cbox' + i + ' ' + tmp.getChecked());
-									}
-									if (cnt == allOrdinaryRadioButtonCorrectAnswers.length)
-										switchTo(regPage);
-									else {
-										Ext.Msg.alert('Obs!', 'Du m&#xE5 svare p&#xE5 alle sp&#xF8rsm&#xE5l', Ext.emptyFn);
+				for ( var i = 0; i < allQuestions.length; i++) {
+					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "ordinary") {
+						numOrdQuestions++;
+					}
+				}
+				for ( var i = 0; i < allQuestions.length; i++) {
+					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "ordinary") {
+						var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
+						allAnswers = allQuestions[i].getElementsByTagName('answer');
+						var tmpWrong = new Array();
+						// Make wrong answers into a string array
+						for ( var j = 0; j < allAnswers.length; j++) {
+							tmpWrong[j] = allAnswers[j].textContent;
+						}
+						correctNum = allQuestions[i].getElementsByTagName('correct')[0].textContent;
+						var pan = addOrdinaryQuestionToCarousel(title, correctNum, tmpWrong);
+						carouselPanels[q] = pan;
+						allOrdinaryRadioButtonQuestions[q] = title;
+						q++;
+						
+						// Last ordinary question.
+						if (i == numOrdQuestions-1) {
+							var answerButton = Ext.create('Ext.Button', {
+								text : 'Trykk for &#xE5 levere!',
+								listeners : {
+									tap : function() {
+										var cnt = 0;
+										for ( var i = 0; i < globQuestCnt; i++) {
+											tmp = Ext.getCmp('cbox' + i);
+											if (tmp.getChecked())
+												cnt++;
+										}
+										if (cnt == allOrdinaryRadioButtonCorrectAnswers.length)
+											switchTo(regPage);
+										else {
+											Ext.Msg.alert('Obs!', 'Du m&#xE5 svare p&#xE5 alle sp&#xF8rsm&#xE5l', Ext.emptyFn);
+										}
 									}
 								}
-							}
-						});
-						pan.add(answerButton);
+							});
+							pan.add(answerButton);
+						}
+						carousel.add(pan);
+					} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "map") {
+						var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
+						mapQnum += i;
+						mapQQ = title;
 					}
-					carousel.add(pan);
 				}
 			}
 		};

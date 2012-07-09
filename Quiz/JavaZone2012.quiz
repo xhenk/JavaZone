@@ -1,6 +1,7 @@
 <?xml version="1.0" standalone="yes" ?>
 <quiz>
 	<question>
+		<type>ordinary</type>
 		<title>Hva er forskjellen p&#xE5; m&#xE5;ker og kr&#xE5;ker?</title>
 		<correct>1</correct>
 		<answer>Forskjellig farge</answer>
@@ -9,6 +10,7 @@
 		<answer>Alle er riktige</answer>
 	</question>
 	<question>
+		<type>ordinary</type>
 		<title>Hvor mange trappetrinn er det i posthuset?</title>
 		<correct>7</correct>
 		<answer>300</answer>
@@ -20,6 +22,7 @@
 		<answer>Noe helt annet.</answer>
 	</question>
 	<question>
+		<type>ordinary</type>
 		<title>I hvilken etasje finner man den godterikastende legoroboten?</title>
 		<correct>3</correct>
 		<answer>1. </answer>
@@ -27,5 +30,14 @@
 		<answer>22. </answer>
 		<answer>23. </answer>
 		<answer>24. </answer>
+	</question>
+	<question>
+		<type>map</type>
+		<title>Finn Sterias norske hovedkontor</title>
+		<correct>
+			<lat>59.911</lat>
+			<lng>10.754</lng>
+		</correct>
+		<threshold>0.03</threshold>
 	</question>
 </quiz>
