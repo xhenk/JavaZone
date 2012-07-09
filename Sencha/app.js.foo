@@ -13,8 +13,6 @@ var gmap;
 var marker;
 var cap;
 var flat, flng;
-var CORR_lat, CORR_lng;
-var THRESH;
 var mapCenter;
 var lastEvent = new Date();
 var mapQnum = 'Spørsmål ';
@@ -81,7 +79,7 @@ function createMapPage(question) {
 	gmap = Ext.create('Ext.Map', {
 		xtype : 'map',
 		useCurrentLocation : false,
-		height : 600, // TODO!!!
+		height : 400, // TODO!!!
 		mapOptions : {
 			center : pos,
 			zoom : 4
@@ -293,17 +291,6 @@ function getCorrectAnswers() {
 			retval++;
 		}
 	}
-	// TODO support more map questions!
-	console.log('Sjekker kart: CORR_lat: ' + CORR_lat + 'CORR_lng: ' + CORR_lng + ' Gitte verdier: ' + flat + ' ' + flng);
-	var lat_d = CORR_lat - flat;
-	var lng_d = CORR_lng - flng;
-	console.log('Diffs er ' + lat_d + ' og ' + lng_d);
-	if ((lat_d <= THRESH) && (lng_d <= THRESH)) {
-		// Increase correct by diff to thresh.
-		console.log('Poeng! ' + retval);
-		retval += Math.floor(3 - (lat_d + lng_d)/2);
-		console.log('Mer! ' + retval);
-	}
 	return retval;
 }
 
@@ -342,7 +329,7 @@ function addOrdinaryQuestionToCarousel() {
 		};
 		globQuestCnt++;
 	}
-	
+	console.log(globAnsCnt + '---' + numOrdQuestions);
 	var instr = '<center>Dra i siden for &#xE5; komme videre!<br /><font size=12>';
 	if (globAnsCnt == numOrdQuestions - 1)
 		instr += '&#8592;</font></center>';
@@ -434,10 +421,6 @@ function createQuestionsCarousel(quizPath) {
 						var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
 						mapQnum += i;
 						mapQQ = title;
-						THRESH = allQuestions[i].getElementsByTagName('threshold')[0].textContent;
-						CORR_lat = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lat')[0].textContent;
-						CORR_lng = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lng')[0].textContent;
-						
 					}
 				}
 			}

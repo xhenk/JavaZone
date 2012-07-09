@@ -1,4 +1,0 @@
-JavaZone
-========
-
-JavaZone-profilering
