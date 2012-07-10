@@ -38,6 +38,6 @@
 			<lat>59.911</lat>
 			<lng>10.754</lng>
 		</correct>
-		<threshold>0.03</threshold>
+		<threshold>0.002</threshold>
 	</question>
 </quiz>

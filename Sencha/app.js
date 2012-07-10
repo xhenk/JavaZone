@@ -17,12 +17,12 @@ var CORR_lat, CORR_lng;
 var THRESH;
 var mapCenter;
 var lastEvent = new Date();
-var mapQnum = 'Spørsmål ';
 var mapQQ;
 
 var allOrdinaryRadioButtonQuestions = new Array();
 /* Correct answers to all ordinary radio button questions */
 var allOrdinaryRadioButtonCorrectAnswers = new Array();
+var answers = new Array();
 
 var regPath = '../reg.php?';
 var globAnsCnt = 0;
@@ -64,6 +64,7 @@ function createTitlebar() {
 		title : 'SteriaQuiz',
 		items : [ {
 			iconCls : 'home',
+			id : 'hjem',
 			iconMask : true,
 			align : 'right',
 			listeners : {
@@ -112,7 +113,8 @@ function createMapPage(question) {
 			docked : 'bottom',
 			listeners : {
 				tap : function(button, event) {
-					titlebar.setTitle("SteriaQuiz");
+					answers.push(mapCenter);
+					titlebar.setTitle('SteriaQuiz');
 					switchTo(carousel);
 				}
 			}
@@ -147,9 +149,9 @@ function handleMovement() {
 	// Add circle overlay and bind to marker
 	cap = new google.maps.Circle({
 		map : _map,
-		radius : 150,
+		radius : 500,
 		clickable : false,
-		fillOpacity : 0.3,
+		fillOpacity : 0.2,
 		strokeWeight : 1,
 		strokeColor : '#DD0000',
 		fillColor : '#AA0000'
@@ -179,9 +181,10 @@ function createFirstPage() {
 		title : 'SteriaQuiz',
 		items : [ {
 			xtype : 'button',
+			id : 'startknapp',
 			handler : function(button, event) {
 				switchTo(mapPage);
-				Ext.Msg.alert(mapQnum, mapQQ, Ext.emptyFn);
+				Ext.Msg.alert('Kartoppgave', mapQQ, Ext.emptyFn);
 			},
 			centered : true,
 			height : 250,
@@ -222,6 +225,7 @@ function createRegPage() {
 			},
 			items : [ nameField, emailField, phoneField, {
 				xtype : 'button',
+				id : 'fjern',
 				handler : function(button, event) {
 					nameField.setValue('');
 					emailField.setValue('');
@@ -231,19 +235,20 @@ function createRegPage() {
 				text : 'Fjern',
 			}, {
 				xtype : 'button',
+				id : 'registrer',
 				itemId : 'registrer',
 				text : 'Registrer',
 				handler : function(button, event) {
 					var path = createRegPath(nameField.getValue(), emailField.getValue(), phoneField.getValue(), getCorrectAnswers());
 					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.open("GET", path, true);
+					xmlhttp.open('GET', path, true);
 					xmlhttp.send(null);
 					xmlhttp.onreadystatechange = function() {
 						Ext.Msg.alert('Registreringsserveren forteller:', xmlhttp.responseText, Ext.emptyFn);
 						// Hvis feilmelding, la
 						// personen registrere
 						// pÃ¥ nytt.
-						if (xmlhttp.responseText.indexOf("Obs", 0) == -1) {
+						if (xmlhttp.responseText.indexOf('Obs', 0) == -1) {
 							button.setDisabled(true);
 							// GÃ¥ til
 							// avslutningsskjerm?
@@ -276,6 +281,11 @@ function createRegPath(name, email, phone, score) {
 	retval += '&email=' + email;
 	retval += '&phone=' + phone;
 	retval += '&score=' + score;
+	var ans = '';
+	for (var i = 0; i < answers.length(); i++) {
+		ans += answers[i];
+	}
+	retval += '&answers=' + ans;
 	return retval;
 }
 
@@ -290,20 +300,24 @@ function getCorrectAnswers() {
 		tmp = Ext.getCmp('cbox' + num);
 		// and controls it.
 		if (tmp.getChecked()) {
+			answers.push(num);
 			retval++;
 		}
 	}
 	// TODO support more map questions!
-	console.log('Sjekker kart: CORR_lat: ' + CORR_lat + 'CORR_lng: ' + CORR_lng + ' Gitte verdier: ' + flat + ' ' + flng);
-	var lat_d = CORR_lat - flat;
-	var lng_d = CORR_lng - flng;
-	console.log('Diffs er ' + lat_d + ' og ' + lng_d);
-	if ((lat_d <= THRESH) && (lng_d <= THRESH)) {
-		// Increase correct by diff to thresh.
-		console.log('Poeng! ' + retval);
-		retval += Math.floor(3 - (lat_d + lng_d)/2);
-		console.log('Mer! ' + retval);
-	}
+	var lat_d = Math.abs(CORR_lat - flat);
+	var lng_d = Math.abs(CORR_lng - flng);
+	var snitt = (lat_d + lng_d) / 2;
+	console.log('diff: ' + lat_d + ' ' + lng_d + ' ' + snitt);
+	if (snitt <= THRESH)
+		retval += 3;
+	else if (snitt <= 3 * THRESH)
+		retval += 2;
+	else if (snitt <= 10 * THRESH)
+		retval += 1;
+
+	console.log('!!! Poeng !!! ' + retval);
+
 	return retval;
 }
 
@@ -342,7 +356,7 @@ function addOrdinaryQuestionToCarousel() {
 		};
 		globQuestCnt++;
 	}
-	
+
 	var instr = '<center>Dra i siden for &#xE5; komme videre!<br /><font size=12>';
 	if (globAnsCnt == numOrdQuestions - 1)
 		instr += '&#8592;</font></center>';
@@ -375,7 +389,7 @@ function createQuestionsCarousel(quizPath) {
 		// the correct answer
 		var correctNum;
 		var carouselPanels = new Array();
-		xmlhttp.open("GET", quizPath, true);
+		xmlhttp.open('GET', quizPath, true);
 		xmlhttp.send(null);
 		var q = 0;
 		numOrdQuestions = 0;
@@ -388,12 +402,12 @@ function createQuestionsCarousel(quizPath) {
 				allQuestions = doc.documentElement.getElementsByTagName('question');
 
 				for ( var i = 0; i < allQuestions.length; i++) {
-					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "ordinary") {
+					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'ordinary') {
 						numOrdQuestions++;
 					}
 				}
 				for ( var i = 0; i < allQuestions.length; i++) {
-					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "ordinary") {
+					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'ordinary') {
 						var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
 						allAnswers = allQuestions[i].getElementsByTagName('answer');
 						var tmpWrong = new Array();
@@ -411,6 +425,7 @@ function createQuestionsCarousel(quizPath) {
 						if (i == numOrdQuestions - 1) {
 							var answerButton = Ext.create('Ext.Button', {
 								text : 'Trykk for &#xE5 levere!',
+								id : 'lever',
 								listeners : {
 									tap : function() {
 										var cnt = 0;
@@ -430,14 +445,13 @@ function createQuestionsCarousel(quizPath) {
 							pan.add(answerButton);
 						}
 						carousel.add(pan);
-					} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "map") {
+					} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'map') {
 						var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
-						mapQnum += i;
 						mapQQ = title;
 						THRESH = allQuestions[i].getElementsByTagName('threshold')[0].textContent;
 						CORR_lat = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lat')[0].textContent;
 						CORR_lng = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lng')[0].textContent;
-						
+
 					}
 				}
 			}

@@ -1,4 +1,4 @@
-	<?php
+<?php
 	$MAX_POINTS = 0;
 	$time = $_SERVER['REQUEST_TIME'];
 	date_default_timezone_set('Europe/Oslo');
@@ -96,5 +96,5 @@
 		else
 			print("Gratulerer, $name, du fikk $score poeng!");
 	}
-	?>
+?>
 	
