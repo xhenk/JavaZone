@@ -33,11 +33,16 @@
 	</question>
 	<question>
 		<type>map</type>
-		<title>Finn Sterias norske hovedkontor</title>
+		<title>Finn Sterias norske hovedkontor; Zoom inn p&#xE5; kartet</title>
 		<correct>
 			<lat>59.911</lat>
 			<lng>10.754</lng>
 		</correct>
 		<threshold>0.002</threshold>
+	</question>
+	<question>
+		<type>slider</type>
+		<title>Hvor h&#xF8;yt er bygget hvor Steria har sitt norske hovedkontor?</title>
+		<correct>26</correct>
 	</question>
 </quiz>

@@ -240,6 +240,7 @@ function createRegPage() {
 					var path = createRegPath(nameField.getValue(), emailField.getValue(), phoneField.getValue(), getCorrectAnswers());
 					var xmlhttp = new XMLHttpRequest();
 					xmlhttp.open('GET', path, true);
+	  				xmlhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
 					xmlhttp.send(null);
 					xmlhttp.onreadystatechange = function() {
 						Ext.Msg.alert('Registreringsserveren forteller:', xmlhttp.responseText, Ext.emptyFn);
@@ -382,6 +383,7 @@ function createQuestionsCarousel(quizPath) {
 		var correctNum;
 		var carouselPanels = new Array();
 		xmlhttp.open('GET', quizPath, true);
+		xmlhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
 		xmlhttp.send(null);
 		var q = 0;
 		numOrdQuestions = 0;

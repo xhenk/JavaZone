@@ -25,28 +25,23 @@ function drawWinner() {
 			highScore = contestants[i];
 		}
 	}
-	// console.log(highScore + ' is highScore');
+
 	// Find contestants with high score
 	var len = contestants.length;
 	for ( var i = 0; i < len; i++) {
 		if (contestants[i] == highScore) {
 			// Those with enough points make it to the second round.
 			secondRound.push(i);
-			// console.log(i + ' made it');
+
 		}
 	}
-	// console.log('=== With highscores: === ' + secondRound.length);
-	// for (var i = 0; i < secondRound.length; i++) {
-	// console.log(secondRound[i]);
-	// }
 
 	// Winner selected between 1 and #rows
 	winner = (Math.floor(Math.random() * secondRound.length) + 1);
 	secondRound.pop(winner);
-	// console.log(winner + ' won');
 	highlightLosers();
 	setTimeout("highlight(" + winner + ");", maxWait + 600);
-	
+
 
 }
 
@@ -54,7 +49,6 @@ function drawWinner() {
  * Highlights the selected table line.
  */
 function highlight(number) {
-	// console.log('Winner is highlighted: ' + number);
 	// number+1 to avoid header
 	var winnerItem = document.getElementById("tab").getElementsByTagName("tr")[number + 1].getElementsByTagName("td");
 	document.styleSheets[0].insertRule('#tr' + (number) + ' { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',
@@ -62,19 +56,17 @@ function highlight(number) {
 	document.getElementById("winnerheading").innerHTML = 	winnerItem[1].innerHTML + ' vant med ' + winnerItem[4].getElementsByTagName("div")[0].innerHTML + ' poeng!'
 	document.styleSheets[0].insertRule('winnerheading { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',
 			document.styleSheets[0]['rules'].length);
-	
+
 }
 
 /**
  * Highlights losers with black loser-colour!
  */
 function highlightLosers() {
-	console.log('Highlighting losers: ' + rows);
 	var rnd = 0;
 	for ( var i = 1; i < rows; i++) {
 		if (i !== winner) {
 			rnd = (Math.floor(Math.random() * 1000) + 100);
-			console.log('loser: ' + i + ' waits ' + rnd + ' for highlight');
 			if (rnd > maxWait) {
 				maxWait = rnd;
 			}

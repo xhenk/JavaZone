@@ -8,18 +8,21 @@
 	$phone = $_GET['phone'];
 	$email = $_GET['email'];
 	$score = $_GET['score'];
+	$answers = $_GET['answers'];
 	$doc = new DOMDocument();
-	
+
 	$doc -> load('./Quiz/JavaZone2012.quiz');
 	$foos = $doc -> getElementsByTagName("question");
 	foreach ($foos as $foo) {
 		// Map questions are +3 points
 		if (strcmp($foo->getElementsByTagName("type")->item(0)->textContent, "map") == 0)
 			$MAX_POINTS = $MAX_POINTS + 3;
+		else if (strcmp($foo->getElementsByTagName("type")->item(0)->textContent, "slider") == 0)
+			$MAX_POINTS = $MAX_POINTS + 3;
 		else
 			$MAX_POINTS = $MAX_POINTS + 1;
 	}
-	
+
 	$doc -> load('scoreboard.xml');
 	$entries = $doc -> getElementsByTagName("entry");
 	$already = false;
@@ -31,10 +34,10 @@
 	if (strlen($email) == 0)
 		$nulls = true;
 	foreach ($entries as $entry) {
-	
+
 		$p = $entry -> getElementsByTagName("phone") -> item(0) -> textContent;
 		$e = $entry -> getElementsByTagName("email") -> item(0) -> textContent;
-	
+
 		if (strcmp($p, $phone) == 0) {
 			$already = true;
 		} else if (strcmp($e, $email) == 0) {
@@ -50,7 +53,7 @@
 		}
 	}
 	if ($score > $MAX_POINTS) {
-		print("Du prøvde &#xE5 snike til deg flere poeng enn det er mulig &#xE5 f&#xE5 til. Juks og fanteri!\n");
+		print("Du pr&#xF8;vde &#xE5 snike til deg flere poeng enn det er mulig &#xE5 f&#xE5 til. Juks og fanteri!\n");
 		$name = $name . " (Tatt for juks!)";
 		$score = -1000;
 	}
@@ -65,7 +68,7 @@
 	} else if ($invalidemail == 1) {
 		print("Obs: Du har glemt @ i epostadressen");
 	} else {
-	
+
 		$name = str_replace("æ", "&#xE6;", $name);
 		$name = str_replace("Æ", "&#xC6;", $name);
 		$name = str_replace("ø", "&#xF8;", $name);
@@ -80,11 +83,13 @@
 		$baz = $doc -> createElement('phone', $phone);
 		$qux = $doc -> createElement('email', $email);
 		$quux = $doc -> createElement('score', $score);
+		$quuux = $doc -> createElement('answers', $answers);
 		$element -> appendChild($foo);
 		$element -> appendChild($bar);
 		$element -> appendChild($baz);
 		$element -> appendChild($qux);
 		$element -> appendChild($quux);
+		$element -> appendChild($quuux);
 		$output = $doc -> saveXML();
 		$file = fopen("scoreboard.xml", "w");
 		fwrite($file, $output);
@@ -97,4 +102,4 @@
 			print("Gratulerer, $name, du fikk $score poeng!");
 	}
 ?>
-	
+
