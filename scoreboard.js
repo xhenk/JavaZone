@@ -42,7 +42,6 @@ function drawWinner() {
 	highlightLosers();
 	setTimeout("highlight(" + winner + ");", maxWait + 600);
 
-
 }
 
 /**
@@ -51,12 +50,11 @@ function drawWinner() {
 function highlight(number) {
 	// number+1 to avoid header
 	var winnerItem = document.getElementById("tab").getElementsByTagName("tr")[number + 1].getElementsByTagName("td");
-	document.styleSheets[0].insertRule('#tr' + (number) + ' { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',
+	document.styleSheets[0].insertRule('#tf' + (number) + ' { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',
 			document.styleSheets[0]['rules'].length);
-	document.getElementById("winnerheading").innerHTML = 	winnerItem[1].innerHTML + ' vant med ' + winnerItem[4].getElementsByTagName("div")[0].innerHTML + ' poeng!'
-	document.styleSheets[0].insertRule('winnerheading { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',
-			document.styleSheets[0]['rules'].length);
-
+	document.getElementById("winnerheading").innerHTML = winnerItem[1].innerHTML + ' vant med '
+			+ winnerItem[4].getElementsByTagName("div")[0].innerHTML + ' poeng!'
+			
 }
 
 /**
@@ -70,8 +68,7 @@ function highlightLosers() {
 			if (rnd > maxWait) {
 				maxWait = rnd;
 			}
-			setTimeout("document.styleSheets[0].insertRule('#tr" + i
-					+ " { text-shadow: black 0em 0em 2em; }', document.styleSheets[0]['rules'].length);", rnd);
+			setTimeout("document.styleSheets[0].insertRule('#tf" + i + "{ text-shadow: black 0em 0em 3em; }', document.styleSheets[0]['rules'].length);", rnd);
 		}
 	}
 }

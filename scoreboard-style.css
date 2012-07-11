@@ -1,57 +1,89 @@
+
 body {
-	background-color: #f7f9ff;
+	background-color: #FFFFFF;
+	margin: 0;
 }
 
 #h1heading {
-	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-	font-size: 26px;
-	margin: 45px;
-	color: #000080; text-shadow: black 0.1em 0.1em 0.2em
+	
+	height: 4em;
+	width: 100%;
+	text-align:center;
+	font-family: sans-serif;
+	font-size: 3em;
+	color: #FFFFFF;
+	background: #04315B;
+	font-weight:bolder;
+}
+
+#smallborder {
+	padding: 1em;
+	background: #FFBA00;	
+}
+
+
+#arrowed {
+	background-image: url('steria-arrow.png');
+	background-repeat:no-repeat;
+	background-position-x: 7em;
+	background-position-y: 0.1em;
+	width: 100px;
+	height: 100px;
+}
+
+#winnerheading {
+	font-family: sans-serif;
+	font-size: 2em;
+	color: #FFFFFF;
+	height:2em;
+	/*document.styleSheets[0].insertRule('winnerheading { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',*/
+	background: #FFBA00;
+	font-weight:bolder;
+}
+
+
+#tabcontainer {
+	padding: 45px;
+	background: #FFBA00;
 }
 
 #tab
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
-	margin: 45px;
-	width: 700px;
+	width: 100%;
 	text-align: left;
 	border-collapse: collapse;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
-#tab thead th.left
-{
-	background: #b9c9fe url('left.png') left -1px no-repeat;
-}
-#tab thead th.right
-{
-	background: #b9c9fe url('right.png') right -1px no-repeat;
-}
-#tab th
+#tab thead th
 {
 	padding: 8px;
 	font-weight: normal;
-	font-size: 13px;
+	font-size: 1.75em;
 	color: #039;
-	background: #b9c9fe;
+	background: #FFDD33;
 }
+
+#tab thead th.right
+{
+	text-align:right;
+}
+
 #tab td
 {
 	padding: 8px;
-	background: #e8edff;
+	background: #FFFFBB;
 	border-top: 1px solid #fff;
-	color: #669;
+	color: #017E9F;
+	font-size: 1.25em;
 }
-#tab tfoot td.rounded-foot-left
+
+
+#tab tr:hover td
 {
-	background: #e8edff url('botleft.png') left bottom no-repeat;
-}
-#tab tfoot td.rounded-foot-right
-{
-	background: #e8edff url('botright.png') right bottom no-repeat;
-}
-#tab tbody tr:hover td
-{
-	background: #d0dafd;
+	background: #FFFFAE;
 	text-shadow: black 0em 0em 3em;
 }
 

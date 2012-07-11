@@ -61,8 +61,8 @@
 		print("Obs: En luring (kanskje deg?) med samme telefonnummer eller epost har allerede konkurrert!<br/>Ikke bruk kunstnernavn eller tulletelefonnummer!");
 	} else if ($nulls) {
 		print("Obs: En eller flere verdier er ikke utfylt!");
-	} else if (strlen($phone) != 8) {
-		print("Obs: Vi pr&#xF8vde &#xE5 ringe deg, men telefonnummeret ditt fungerer ikke! Pr&#xF8v &#xE5tte tegn!");
+	} else if (strlen($phone) <= 8) {
+		print("Obs: Vi pr&#xF8vde &#xE5 ringe deg, men telefonnummeret ditt fungerer ikke! Pr&#xF8v &#xE5tte tegn (eller mer!)!");
 	} else if ($invalidemail == 2) {
 		print("Obs: Epost uten punktum? Aldri h&#xF8rt om. Pr&#xF8v p&#xE5 nytt.");
 	} else if ($invalidemail == 1) {

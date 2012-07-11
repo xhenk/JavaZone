@@ -5,8 +5,6 @@ var menuBtn;
 var carousel;
 var regPage;
 
-var questionsAreLoaded = false;
-
 /**
  * All Map-related variables. Requires one set per map-question!
  */
@@ -15,35 +13,14 @@ var gmap;
 var marker;
 var cap;
 var flat, flng;
-var CORR_lat, CORR_lng;
-var THRESH;
 var mapCenter;
 var lastEvent = new Date();
+var mapQnum = 'Sp¯rsmÂl ';
 var mapQQ;
-
-/**
- * All slider-related variables (House)
- */
-var house_house;
-var house_value = 0;
-var house_okBtn;
-var house_MAX = 170;
-var house_CORR;
-var house_QQ;
-
-/**
- * All image-selector variables
- */
-var img_panel;
-var img_QQ;
-var img_CORR;
-var img_src = new Array();
-var img_txt = new Array();
 
 var allOrdinaryRadioButtonQuestions = new Array();
 /* Correct answers to all ordinary radio button questions */
 var allOrdinaryRadioButtonCorrectAnswers = new Array();
-var answers = new Array();
 
 var regPath = '../reg.php?';
 var globAnsCnt = 0;
@@ -54,32 +31,18 @@ Ext.application({
 	name : 'SteriaQuiz',
 
 	launch : function() {
-
-		initStep1();
+		titlebar = createTitlebar();
+		firstPage = createFirstPage();
+		regPage = createRegPage();
+		carousel = createCarousel();
+		createQuestionsCarousel('../Quiz/JavaZone2012.quiz');
+		mapPage = createMapPage();
+		// addQuestionToCarousel('Question 1', 'Answer 1', 'Answer 2', 'Answer
+		// 3', 'Answer 4', 0);
+		switchTo(firstPage);
 	}
 });
-function initStep1() {
-	titlebar = createTitlebar();
-	firstPage = createFirstPage();
-	regPage = createRegPage();
-	carousel = createCarousel();
-	// Asynchronous; relies on XMLHttpRequest. Next functions must wait a short
-	// while to be executed. Therefore continued in step2.
-	getQuestions('../Quiz/JavaZone2012.quiz');
-}
 
-/**
- * Called by getQuestions()....
- */
-function initStep2() {
-	mapPage = createMapPage();
-	house_house = createSlider();
-	img_panel = createImageSelector();
-	// addQuestionToCarousel('Question 1', 'Answer 1', 'Answer 2', 'Answer
-	// 3', 'Answer 4', 0);
-	document.onclick = getMousePosition;
-	switchTo(firstPage);
-}
 function switchTo(to) {
 
 	if (currentPage && currentPage == to)
@@ -99,7 +62,6 @@ function createTitlebar() {
 		title : 'SteriaQuiz',
 		items : [ {
 			iconCls : 'home',
-			id : 'hjem',
 			iconMask : true,
 			align : 'right',
 			listeners : {
@@ -117,7 +79,7 @@ function createMapPage(question) {
 	gmap = Ext.create('Ext.Map', {
 		xtype : 'map',
 		useCurrentLocation : false,
-		height : x, // TODO!!!
+		height : 400, // TODO!!!
 		mapOptions : {
 			center : pos,
 			zoom : 4
@@ -145,13 +107,11 @@ function createMapPage(question) {
 		}, {
 			xtype : 'button',
 			text : 'Forn¯yd',
-			id : 'happy',
 			docked : 'bottom',
 			listeners : {
 				tap : function(button, event) {
-					answers.push(mapCenter);
-					Ext.Msg.alert('Oppgave 2', house_QQ, Ext.emptyFn);
-					switchTo(house_house);
+					titlebar.setTitle("SteriaQuiz");
+					switchTo(carousel);
 				}
 			}
 		} ]
@@ -159,7 +119,6 @@ function createMapPage(question) {
 
 	return mapPanel;
 }
-
 function handleMovement() {
 	if (lastEvent.getTime() + 500 > new Date().getTime())
 		return;
@@ -186,9 +145,9 @@ function handleMovement() {
 	// Add circle overlay and bind to marker
 	cap = new google.maps.Circle({
 		map : _map,
-		radius : 500,
+		radius : 150,
 		clickable : false,
-		fillOpacity : 0.2,
+		fillOpacity : 0.3,
 		strokeWeight : 1,
 		strokeColor : '#DD0000',
 		fillColor : '#AA0000'
@@ -196,6 +155,8 @@ function handleMovement() {
 	cap.bindTo('center', marker, 'position');
 	flat = (Math.floor(mapCenter.lat() * 1000) / 1000);
 	flng = (Math.floor(mapCenter.lng() * 1000) / 1000);
+
+	titlebar.setTitle(flat + ' x ' + flng);
 }
 
 function delay(func) {
@@ -216,10 +177,9 @@ function createFirstPage() {
 		title : 'SteriaQuiz',
 		items : [ {
 			xtype : 'button',
-			id : 'startknapp',
 			handler : function(button, event) {
-				switchTo(img_panel);
-				Ext.Msg.alert('', img_QQ, Ext.emptyFn);
+				switchTo(mapPage);
+				Ext.Msg.alert(mapQnum, mapQQ, Ext.emptyFn);
 			},
 			centered : true,
 			height : 250,
@@ -233,126 +193,6 @@ function createFirstPage() {
 
 	return firstPage;
 
-}
-
-function getMousePosition(e) {
-	if (currentPage != house_house)
-		return;
-	console.log('clicked ' + (currentPage == house_house));
-	var scroll = house_house.getScrollable().getScroller().setFps(10).position.y;
-	var y = e.pageY + scroll;
-	y -= house_MAX;
-	if (y > 1512)
-		return;
-	y /= 22;
-	y = Math.ceil(y);
-	y = 61 - y;
-	house_okBtn.setText('Gjett ' + y + ' etasjer.');
-	house_value = y;
-	return true;
-}
-function createImageSelector() {
-
-	var btn1 = new Ext.Button({
-		docked : 'bottom',
-		text : 'foo',
-		listeners : {
-			tap : function() {
-				answers.push(house_value);
-				switchTo(carousel);
-			}
-		}
-	});
-
-	var panTop = new Ext.Panel({
-		layout : 'hbox',
-		flex : 1,
-		items : [ {
-			xtype : 'button',
-			text : 'button1',
-			html : '<img src="' + img_src[0] + '" height="' + img_getSize + '"  width="' + img_getSize() + '" />',
-			listeners : {
-				tap : function() {
-					alert('1');
-				}
-			},
-			flex : 1
-		}, {
-			xtype : 'button',
-			text : 'button2',
-			html : '<img src="' + img_src[1] + '" height="' + img_getSize + '"  width="' + img_getSize() + '" />',
-			listeners : {
-				tap : function() {
-					alert('2');
-				}
-			},
-			flex : 2
-		} ]
-	});
-	var panBtm = new Ext.Panel({
-		layout : 'hbox',
-		flex : 2,
-		items : [ {
-			xtype : 'button',
-			text : 'button3',
-			html : '<img src="' + img_src[2] + '" height="' + img_getSize + '"  width="' + img_getSize() + '" />',
-			listeners : {
-				tap : function() {
-					alert('3');
-				}
-			},
-			flex : 1
-		}, {
-			xtype : 'button',
-			text : 'button4',
-			html : '<img src="' + img_src[3] + '" height="' + img_getSize + '"  width="' + img_getSize() + '" />',
-			flex : 2,
-			listeners : {
-				tap : function() {
-					alert('4');
-				}
-			},
-		} ]
-	});
-	img_panel = new Ext.Panel({
-		fullscreen : true,
-		layout : 'vbox',
-		items : [ panTop, panBtm ]
-	})
-
-	return img_panel;
-}
-
-/** Get a reasonable picture size.. */
-function img_getSize() {
-	return document.width / 3;
-}
-
-function createSlider() {
-
-	house_okBtn = new Ext.Button({
-		docked : 'bottom',
-		text : 'foo',
-		id : 'house_ok',
-		listeners : {
-			tap : function() {
-
-				answers.push(house_value);
-				switchTo(carousel);
-			}
-		}
-
-	});
-	house_house = new Ext.Container({
-		alignment : 'stretch',
-		id : 'house_img',
-		html : '<img src="steria-bg.png" click: />',
-		scrollable : {
-			direction : 'vertical'
-		},
-		items : house_okBtn
-	});
-	return house_house;
 }
 
 function createRegPage() {
@@ -380,7 +220,6 @@ function createRegPage() {
 			},
 			items : [ nameField, emailField, phoneField, {
 				xtype : 'button',
-				id : 'fjern',
 				handler : function(button, event) {
 					nameField.setValue('');
 					emailField.setValue('');
@@ -390,21 +229,19 @@ function createRegPage() {
 				text : 'Fjern',
 			}, {
 				xtype : 'button',
-				id : 'registrer',
 				itemId : 'registrer',
 				text : 'Registrer',
 				handler : function(button, event) {
 					var path = createRegPath(nameField.getValue(), emailField.getValue(), phoneField.getValue(), getCorrectAnswers());
 					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.open('GET', path, true);
-					xmlhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+					xmlhttp.open("GET", path, true);
 					xmlhttp.send(null);
 					xmlhttp.onreadystatechange = function() {
 						Ext.Msg.alert('Registreringsserveren forteller:', xmlhttp.responseText, Ext.emptyFn);
 						// Hvis feilmelding, la
 						// personen registrere
 						// p√• nytt.
-						if (xmlhttp.responseText.indexOf('Obs', 0) == -1) {
+						if (xmlhttp.responseText.indexOf("Obs", 0) == -1) {
 							button.setDisabled(true);
 							// G√• til
 							// avslutningsskjerm?
@@ -431,19 +268,12 @@ function createRegPage() {
 	});
 }
 
-function createRegPath(name, email, phone, score, ans) {
+function createRegPath(name, email, phone, score) {
 	var retval = regPath;
 	retval += 'name=' + name;
 	retval += '&email=' + email;
 	retval += '&phone=' + phone;
 	retval += '&score=' + score;
-	var ans = '';
-	console.log('Answers: ' + answers.length);
-	for ( var i = 0; i < answers.length; i++) {
-		ans += answers[i] + ';';
-	}
-	retval += '&answers=' + ans;
-	console.log('Reg Path: ' + retval);
 	return retval;
 }
 
@@ -461,34 +291,6 @@ function getCorrectAnswers() {
 			retval++;
 		}
 	}
-	// TODO support more map questions!
-	var lat_d = Math.abs(CORR_lat - flat);
-	var lng_d = Math.abs(CORR_lng - flng);
-	var snitt = (lat_d + lng_d) / 2;
-	if (snitt <= THRESH)
-		retval += 3;
-	else if (snitt <= 3 * THRESH)
-		retval += 2;
-	else if (snitt <= 10 * THRESH)
-		retval += 1;
-	console.log('House: ' + house_value + ' ' + house_CORR);
-	console.log('House: ' + retval);
-	switch (Math.abs(house_value - house_CORR)) {
-	case 0:
-		retval += 3;
-		break;
-	case 1:
-		retval += 2;
-		break;
-	case 2:
-		retval += 1;
-		break;
-	case 3:
-		retval += 1;
-		break;
-	}
-	console.log('House: ' + retval);
-
 	return retval;
 }
 
@@ -527,7 +329,7 @@ function addOrdinaryQuestionToCarousel() {
 		};
 		globQuestCnt++;
 	}
-
+	console.log(globAnsCnt + '---' + numOrdQuestions);
 	var instr = '<center>Dra i siden for &#xE5; komme videre!<br /><font size=12>';
 	if (globAnsCnt == numOrdQuestions - 1)
 		instr += '&#8592;</font></center>';
@@ -548,7 +350,7 @@ function addOrdinaryQuestionToCarousel() {
 	return questionPanel;
 }
 
-function getQuestions(quizPath) {
+function createQuestionsCarousel(quizPath) {
 
 	if (quizPath) {
 		var xmlhttp = new XMLHttpRequest();
@@ -560,8 +362,7 @@ function getQuestions(quizPath) {
 		// the correct answer
 		var correctNum;
 		var carouselPanels = new Array();
-		xmlhttp.open('GET', quizPath, true);
-		xmlhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+		xmlhttp.open("GET", quizPath, true);
 		xmlhttp.send(null);
 		var q = 0;
 		numOrdQuestions = 0;
@@ -574,12 +375,12 @@ function getQuestions(quizPath) {
 				allQuestions = doc.documentElement.getElementsByTagName('question');
 
 				for ( var i = 0; i < allQuestions.length; i++) {
-					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'ordinary') {
+					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "ordinary") {
 						numOrdQuestions++;
 					}
 				}
 				for ( var i = 0; i < allQuestions.length; i++) {
-					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'ordinary') {
+					if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "ordinary") {
 						var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
 						allAnswers = allQuestions[i].getElementsByTagName('answer');
 						var tmpWrong = new Array();
@@ -597,17 +398,13 @@ function getQuestions(quizPath) {
 						if (i == numOrdQuestions - 1) {
 							var answerButton = Ext.create('Ext.Button', {
 								text : 'Trykk for &#xE5 levere!',
-								id : 'lever',
 								listeners : {
 									tap : function() {
 										var cnt = 0;
 										for ( var i = 0; i < globQuestCnt; i++) {
 											tmp = Ext.getCmp('cbox' + i);
-											if (tmp.getChecked()) {
+											if (tmp.getChecked())
 												cnt++;
-												answers.push(i);
-												console.log('Found checked box:' + i);
-											}
 										}
 										if (cnt == allOrdinaryRadioButtonCorrectAnswers.length)
 											switchTo(regPage);
@@ -620,33 +417,13 @@ function getQuestions(quizPath) {
 							pan.add(answerButton);
 						}
 						carousel.add(pan);
-					} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'map') {
+					} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == "map") {
 						var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
+						mapQnum += i;
 						mapQQ = title;
-						THRESH = allQuestions[i].getElementsByTagName('threshold')[0].textContent;
-						CORR_lat = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lat')[0].textContent;
-						CORR_lng = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lng')[0].textContent;
-
-					} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'slider') {
-						house_QQ = allQuestions[i].getElementsByTagName('title').item(0).textContent;
-						house_CORR = allQuestions[i].getElementsByTagName('correct').item(0).textContent;
-					} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'imgsel') {
-						img_QQ = allQuestions[i].getElementsByTagName('title').item(0).textContent;
-						img_CORR = allQuestions[i].getElementsByTagName('correct').item(0).textContent;
-						var items = allQuestions[i].getElementsByTagName('img_src');
-						for ( var j = 0; j < items.length; j++) {
-							img_src[j] = items[j].textContent;
-						}
-						items = allQuestions[i].getElementsByTagName('img_txt');
-						for ( var j = 0; j < items.length; j++) {
-							img_txt[j] = items[j].textContent;
-						}
 					}
 				}
-				console.log('Questions are loaded. Step2.');
-				initStep2();
 			}
 		};
-
 	}
 }

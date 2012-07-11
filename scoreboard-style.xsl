@@ -9,65 +9,78 @@
 				<script src="scoreboard.js" />
 			</head>
 			<body>
-				
 				<center>
-					<h1 id="h1heading">Deltakerliste Sterias surrequiz 2012</h1>
-					<h3 id="winnerheading"></h3>
-					<table id="tab" summary="Deltakerliste Sterias surrequiz 2012">
-						<thead>
-							<tr>
-								<th scope="col" class="left">Levert</th>
-								<th scope="col">Navn</th>
-								<th scope="col">Telefon</th>
-								<th scope="col">Epost</th>
-								<th scope="col" class="right">Poengsum</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<td class="rounded-foot-left"></td>
-								<td colspan="3">
-									<!-- sensurert <em>Resultatlisten er sensurert! Det ser iallefall slik ut.</em> -->
-									<em>Personinformasjon lagres hos Steria fram til trekningen.</em>
-								</td>
-								<td class="rounded-foot-right"></td>
-							</tr>
-						</tfoot>
-						<tbody>
-							<xsl:for-each select="scoreboard/entry">
-								<xsl:sort data-type="number" select="score" order="descending" />
-								<tr>
-						            <xsl:attribute name="id">tr<xsl:value-of select="position()"/></xsl:attribute>
-									<td>
-										<xsl:value-of select="time" />
-									</td>
-									<td>
-										<xsl:value-of select="substring(name, 0, 2)"/>.&#160;<xsl:value-of select="substring-after(name,' ')"/>
-										<!-- <xsl:value-of select="name" /> -->
-									</td>
-									<td>
-										<xsl:value-of select="translate(phone, '12345','*****')"/>
-										<!-- <xsl:value-of select="phone"/> -->
-									</td>
-									<td>
-										<xsl:value-of select="substring-before(email,'@')"/>@********.*** 
-										<!--<xsl:value-of select="email"/>-->
-									</td>
-									<td>
-										<div style="text-align: right;"><xsl:value-of select="score"/></div>
-									</td>
-								</tr>
-							</xsl:for-each>
-						</tbody>
+					<table id="smallborder">
+						<tr>
+							<td>
+								<div id="padding"></div>
+							</td>
+							<td id="h1heading">Deltakerliste Sterias surrequiz 2012</td>
+						</tr>
 					</table>
+					<div id="padding"></div>
+					<div id="winnerheading"></div>
+					<div id="tabcontainer">
+						<table id="tab" summary="Deltakerliste Sterias surrequiz 2012">
+							<thead>
+								<tr>
+									<th scope="col" class="left">Levert</th>
+									<th scope="col">Navn</th>
+									<th scope="col">Telefon</th>
+									<th scope="col">Epost</th>
+									<th scope="col" class="right">Poengsum</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<td>&#160;</td>
+									<td colspan="3">
+										<!-- sensurert <em>Resultatlisten er sensurert! Det ser iallefall slik ut.</em> -->
+										<em>Personinformasjon lagres hos Steria fram til trekningen.</em>
+									</td>
+									<td class="rounded-foot-right"></td>
+								</tr>
+							</tfoot>
+							<tbody>
+								<xsl:for-each select="scoreboard/entry">
+									<xsl:sort data-type="number" select="score" order="descending" />
+									<tr><xsl:attribute name="id">tf<xsl:value-of select="position()"/></xsl:attribute>
+										<td>
+											<xsl:value-of select="time" />
+										</td>
+										<td>
+											<xsl:value-of select="substring(name, 0, 2)"/>
+											.&#160;
+											<xsl:value-of select="substring-after(name,' ')"/>
+											<!-- <xsl:value-of select="name" /> -->
+										</td>
+										<td>
+											<xsl:value-of select="translate(phone, '12345','*****')"/>
+											<!-- <xsl:value-of select="phone"/> -->
+										</td>
+										<td>
+											<xsl:value-of select="substring-before(email,'@')"/>
+											@********.***
+											<!--<xsl:value-of select="email"/>-->
+										</td>
+										<td>
+											<div style="text-align: right;">
+												<xsl:value-of select="score"/>
+											</div>
+										</td>
+									</tr>
+								</xsl:for-each>
+							</tbody>
+						</table>
+					</div>
 					<p>
-						Uavgjort? 
+						Uavgjort?
 						<button onClick="drawWinner()">Trekk en vinner</button>
 						(uferdig)
 					</p>
-					<p> 
+					<p>
 						<img src="Sencha/sterialogo.gif" />
-					</p> 
+					</p>
 				</center>
 			</body>
 		</html>

@@ -45,4 +45,13 @@
 		<title>Hvor h&#xF8;yt er bygget hvor Steria har sitt norske hovedkontor?</title>
 		<correct>26</correct>
 	</question>
+	<question>
+		<type>imgsel</type>
+		<title>I hvilke av disse landene er Steria grunnlagt?</title>
+		<correct>1</correct>
+		<img_src>country_de.png</img_src>
+		<img_src>country_fr.png</img_src>
+		<img_src>country_se.png</img_src>
+		<img_src>country_no.png</img_src>
+	</question>
 </quiz>

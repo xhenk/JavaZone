@@ -212,6 +212,15 @@ input,textarea{-webkit-user-select:text}
 #happy{-webkit-border-radius:0em;border-radius:0em}
 
 
+/* Endringer på "hvor høy er posthuset"-knappen*/
+#house_ok{background:ededed}
+#house_ok{-webkit-border-radius:0em;border-radius:0em}
+#house_ok:active{background:#017e9f}
+
+#house_img.center
+
+
+
 .x-button.x-button-confirm,.x-toolbar .x-button.x-button-confirm,.x-button.x-button-confirm-round,.x-toolbar .x-button.x-button-confirm-round,.x-button.x-button-confirm-small,.x-toolbar .x-button.x-button-confirm-small{border:1px solid #263501;border-top-color:#374e02;color:white}
 .x-button.x-button-confirm.x-button-back:before,.x-button.x-button-confirm.x-button-forward:before,.x-toolbar .x-button.x-button-confirm.x-button-back:before,.x-toolbar .x-button.x-button-confirm.x-button-forward:before,.x-button.x-button-confirm-round.x-button-back:before,.x-button.x-button-confirm-round.x-button-forward:before,.x-toolbar .x-button.x-button-confirm-round.x-button-back:before,.x-toolbar .x-button.x-button-confirm-round.x-button-forward:before,.x-button.x-button-confirm-small.x-button-back:before,.x-button.x-button-confirm-small.x-button-forward:before,.x-toolbar .x-button.x-button-confirm-small.x-button-back:before,.x-toolbar .x-button.x-button-confirm-small.x-button-forward:before{background:#263501}
 .x-button.x-button-confirm,.x-button.x-button-confirm.x-button-back:after,.x-button.x-button-confirm.x-button-forward:after,.x-toolbar .x-button.x-button-confirm,.x-toolbar .x-button.x-button-confirm.x-button-back:after,.x-toolbar .x-button.x-button-confirm.x-button-forward:after,.x-button.x-button-confirm-round,.x-button.x-button-confirm-round.x-button-back:after,.x-button.x-button-confirm-round.x-button-forward:after,.x-toolbar .x-button.x-button-confirm-round,.x-toolbar .x-button.x-button-confirm-round.x-button-back:after,.x-toolbar .x-button.x-button-confirm-round.x-button-forward:after,.x-button.x-button-confirm-small,.x-button.x-button-confirm-small.x-button-back:after,.x-button.x-button-confirm-small.x-button-forward:after,.x-toolbar .x-button.x-button-confirm-small,.x-toolbar .x-button.x-button-confirm-small.x-button-back:after,.x-toolbar .x-button.x-button-confirm-small.x-button-forward:after{background-image:none;background-color:#6c9804;background-image:-webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2e306), color-stop(3%, #7eb105), color-stop(100%, #5b7f03));background-image:-webkit-linear-gradient(top, #a2e306,#7eb105 3%,#5b7f03);background-image:linear-gradient(top, #a2e306,#7eb105 3%,#5b7f03)}

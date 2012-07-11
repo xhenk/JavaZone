@@ -239,7 +239,7 @@ function getMousePosition(e) {
 	return true;
 }
 function createImageSelector () {
-	
+
 	var btn1 = new Ext.Button({
 		docked : 'bottom',
 		text : 'foo',
@@ -250,7 +250,7 @@ function createImageSelector () {
 			}
 		}
 	});
-	
+
 	img_panel = new Ext.Panel({
 		alignment : 'stretch',
 	});
@@ -262,6 +262,7 @@ function createSlider() {
 	house_okBtn = new Ext.Button({
 		docked : 'bottom',
 		text : 'foo',
+		id: 'house_ok',
 		listeners : {
 			tap : function() {
 
@@ -273,6 +274,7 @@ function createSlider() {
 	});
 	house_house = new Ext.Container({
 		alignment : 'stretch',
+		id : 'house_img',
 		html : '<img src="steria-bg.png" click: />',
 		scrollable : {
 			direction : 'vertical'
@@ -431,7 +433,7 @@ function createCarousel() {
 /**
  * This function takes a variable number of arguments, using arguments[n] for
  * access.
- * 
+ *
  * Format is: Question, CorrectAnswer#, Answer1, Answer2, ..., Answer N. Returns
  * a questionPanel to put into the carousel.
  */
