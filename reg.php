@@ -14,13 +14,8 @@
 	$doc -> load('./Quiz/JavaZone2012.quiz');
 	$foos = $doc -> getElementsByTagName("question");
 	foreach ($foos as $foo) {
-		// Map questions are +3 points
-		if (strcmp($foo->getElementsByTagName("type")->item(0)->textContent, "map") == 0)
-			$MAX_POINTS = $MAX_POINTS + 3;
-		else if (strcmp($foo->getElementsByTagName("type")->item(0)->textContent, "slider") == 0)
-			$MAX_POINTS = $MAX_POINTS + 3;
-		else
-			$MAX_POINTS = $MAX_POINTS + 1;
+		// All questions are MAX 3 points
+		$MAX_POINTS = $MAX_POINTS + 3;
 	}
 
 	$doc -> load('scoreboard.xml');
@@ -61,7 +56,7 @@
 		print("Obs: En luring (kanskje deg?) med samme telefonnummer eller epost har allerede konkurrert!<br/>Ikke bruk kunstnernavn eller tulletelefonnummer!");
 	} else if ($nulls) {
 		print("Obs: En eller flere verdier er ikke utfylt!");
-	} else if (strlen($phone) <= 8) {
+	} else if (strlen($phone) < 8) {
 		print("Obs: Vi pr&#xF8vde &#xE5 ringe deg, men telefonnummeret ditt fungerer ikke! Pr&#xF8v &#xE5tte tegn (eller mer!)!");
 	} else if ($invalidemail == 2) {
 		print("Obs: Epost uten punktum? Aldri h&#xF8rt om. Pr&#xF8v p&#xE5 nytt.");

@@ -5,8 +5,6 @@ var menuBtn;
 var carousel;
 var regPage;
 
-var questionsAreLoaded = false;
-
 /**
  * All Map-related variables. Requires one set per map-question!
  */
@@ -43,10 +41,16 @@ var img_txt = new Array();
 var allOrdinaryRadioButtonQuestions = new Array();
 /* Correct answers to all ordinary radio button questions */
 var allOrdinaryRadioButtonCorrectAnswers = new Array();
+
+// Array of all answers:
+var allAnswers;
+
+/** Controlled by registerAnswer() */
 var answers = new Array();
+var glob_points = new Array();
 
 var regPath = '../reg.php?';
-var globAnsCnt = 0;
+var globAnsCnt = 2;
 var globQuestCnt = 0;
 var numOrdQuestions = 0;
 
@@ -149,9 +153,9 @@ function createMapPage(question) {
 			docked : 'bottom',
 			listeners : {
 				tap : function(button, event) {
-					answers.push(mapCenter);
-					Ext.Msg.alert('Oppgave 2', house_QQ, Ext.emptyFn);
+					registerAnswer(0, mapCenter);
 					switchTo(house_house);
+					Ext.Msg.alert('Oppgave 2', house_QQ, Ext.emptyFn);
 				}
 			}
 		} ]
@@ -218,8 +222,8 @@ function createFirstPage() {
 			xtype : 'button',
 			id : 'startknapp',
 			handler : function(button, event) {
-				switchTo(img_panel);
-				Ext.Msg.alert('', img_QQ, Ext.emptyFn);
+				switchTo(mapPage);
+				Ext.Msg.alert('Oppgave 1', mapQQ, Ext.emptyFn);
 			},
 			centered : true,
 			height : 250,
@@ -253,17 +257,7 @@ function getMousePosition(e) {
 }
 function createImageSelector() {
 
-	var btn1 = new Ext.Button({
-		docked : 'bottom',
-		text : 'foo',
-		listeners : {
-			tap : function() {
-				answers.push(house_value);
-				switchTo(carousel);
-			}
-		}
-	});
-
+	/** TODO forminske dette: */
 	var panTop = new Ext.Panel({
 		layout : 'hbox',
 		flex : 1,
@@ -273,7 +267,8 @@ function createImageSelector() {
 			html : '<img src="' + img_src[0] + '" height="' + img_getSize + '"  width="' + img_getSize() + '" />',
 			listeners : {
 				tap : function() {
-					alert('1');
+					registerAnswer(2, 1);
+					switchTo(carousel);
 				}
 			},
 			flex : 1
@@ -283,7 +278,8 @@ function createImageSelector() {
 			html : '<img src="' + img_src[1] + '" height="' + img_getSize + '"  width="' + img_getSize() + '" />',
 			listeners : {
 				tap : function() {
-					alert('2');
+					registerAnswer(2, 2);
+					switchTo(carousel);
 				}
 			},
 			flex : 2
@@ -298,7 +294,8 @@ function createImageSelector() {
 			html : '<img src="' + img_src[2] + '" height="' + img_getSize + '"  width="' + img_getSize() + '" />',
 			listeners : {
 				tap : function() {
-					alert('3');
+					registerAnswer(2, 3);
+					switchTo(carousel);
 				}
 			},
 			flex : 1
@@ -309,7 +306,8 @@ function createImageSelector() {
 			flex : 2,
 			listeners : {
 				tap : function() {
-					alert('4');
+					registerAnswer(2, 4);
+					switchTo(carousel);
 				}
 			},
 		} ]
@@ -325,7 +323,7 @@ function createImageSelector() {
 
 /** Get a reasonable picture size.. */
 function img_getSize() {
-	return document.width / 3;
+	return document.width / 2.5;
 }
 
 function createSlider() {
@@ -336,9 +334,9 @@ function createSlider() {
 		id : 'house_ok',
 		listeners : {
 			tap : function() {
-
-				answers.push(house_value);
-				switchTo(carousel);
+				registerAnswer(1, house_value);
+				switchTo(img_panel);
+				Ext.Msg.alert('Oppgave 3', img_QQ, Ext.emptyFn);
 			}
 		}
 
@@ -447,48 +445,12 @@ function createRegPath(name, email, phone, score, ans) {
 	return retval;
 }
 
-/** TODO */
 function getCorrectAnswers() {
-	var tmp, retval = 0, num;
-	for ( var i = 0; i < allOrdinaryRadioButtonCorrectAnswers.length; i++) {
-		num = allOrdinaryRadioButtonCorrectAnswers[i] - 1; // Because question
-		// number begins at
-		// 1, cboxes at 0.
-		// selects the radio button that is supposed to be checked
-		tmp = Ext.getCmp('cbox' + num);
-		// and controls it.
-		if (tmp.getChecked()) {
-			retval++;
-		}
-	}
-	// TODO support more map questions!
-	var lat_d = Math.abs(CORR_lat - flat);
-	var lng_d = Math.abs(CORR_lng - flng);
-	var snitt = (lat_d + lng_d) / 2;
-	if (snitt <= THRESH)
-		retval += 3;
-	else if (snitt <= 3 * THRESH)
-		retval += 2;
-	else if (snitt <= 10 * THRESH)
-		retval += 1;
-	console.log('House: ' + house_value + ' ' + house_CORR);
-	console.log('House: ' + retval);
-	switch (Math.abs(house_value - house_CORR)) {
-	case 0:
-		retval += 3;
-		break;
-	case 1:
-		retval += 2;
-		break;
-	case 2:
-		retval += 1;
-		break;
-	case 3:
-		retval += 1;
-		break;
-	}
-	console.log('House: ' + retval);
 
+	var retval = 0;
+	for ( var i = 0; i < glob_points.length; i++) {
+		retval += glob_points[i];
+	}
 	return retval;
 }
 
@@ -520,18 +482,22 @@ function addOrdinaryQuestionToCarousel() {
 			xtype : 'radiofield',
 			name : 'answer',
 			id : 'cbox' + (globQuestCnt),
-			value : arguments[2][i],
 			label : arguments[2][i],
 			check : false,
-			labelWidth : '90 %'
+			labelWidth : '90 %',
+			listeners : {
+				check : function(thisBox, e, eOpts) {
+					registerAnswer(3, thisBox.getId());
+				}
+			}
 		};
 		globQuestCnt++;
 	}
 
 	var instr = '<center>Dra i siden for &#xE5; komme videre!<br /><font size=12>';
-	if (globAnsCnt == numOrdQuestions - 1)
+	if (globAnsCnt == numOrdQuestions + 1)
 		instr += '&#8592;</font></center>';
-	else if (globAnsCnt == 0)
+	else if (globAnsCnt == 2)
 		instr += '&#8594;</font></center>';
 	else
 		instr += '&#8592;&nbsp;&nbsp;&nbsp;&nbsp;&#8594;</font></center>';
@@ -555,8 +521,6 @@ function getQuestions(quizPath) {
 		var xmlDocument;
 		// Array of all questions:
 		var allQuestions;
-		// Array of all answers:
-		var allAnswers;
 		// the correct answer
 		var correctNum;
 		var carouselPanels = new Array();
@@ -586,7 +550,7 @@ function getQuestions(quizPath) {
 						// Make wrong answers into a string array
 						for ( var j = 0; j < allAnswers.length; j++) {
 							tmpWrong[j] = allAnswers[j].textContent;
-						}
+						} 
 						correctNum = allQuestions[i].getElementsByTagName('correct')[0].textContent;
 						var pan = addOrdinaryQuestionToCarousel(title, correctNum, tmpWrong);
 						carouselPanels[q] = pan;
@@ -600,20 +564,17 @@ function getQuestions(quizPath) {
 								id : 'lever',
 								listeners : {
 									tap : function() {
-										var cnt = 0;
-										for ( var i = 0; i < globQuestCnt; i++) {
-											tmp = Ext.getCmp('cbox' + i);
-											if (tmp.getChecked()) {
-												cnt++;
-												answers.push(i);
-												console.log('Found checked box:' + i);
-											}
+										console.log(glob_points);
+										var answered = 0;
+										for ( var j = 0; j < glob_points.length; j++) {
+											if (glob_points[j])
+												answered++;
 										}
-										if (cnt == allOrdinaryRadioButtonCorrectAnswers.length)
+										console.log('svar: ' + answered + ' ' + answers.length);
+										if (answered == answers.length)
 											switchTo(regPage);
-										else {
+										else
 											Ext.Msg.alert('Obs!', 'Du m&#xE5 svare p&#xE5 alle sp&#xF8rsm&#xE5l', Ext.emptyFn);
-										}
 									}
 								}
 							});
@@ -649,4 +610,59 @@ function getQuestions(quizPath) {
 		};
 
 	}
+}
+
+/**
+ * Registers the answer ansnum at the field qnum in answers
+ */
+function registerAnswer(qnum, ansval) {
+	answers[qnum] = ansval;
+	console.log('Du svarte ' + ansval + ' på spørsmål ' + qnum + ' ' + globAnsCnt + ' ' + answers.length);
+	switch (qnum) {
+	case 0: { // map
+
+		var lat_d = Math.abs(CORR_lat - flat);
+		var lng_d = Math.abs(CORR_lng - flng);
+		var snitt = (lat_d + lng_d) / 2;
+		if (snitt <= THRESH)
+			glob_points[0] = 3;
+		else if (snitt <= 3 * THRESH)
+			glob_points[0] = 2;
+		else if (snitt <= 10 * THRESH)
+			glob_points[0] = 1;
+		else
+			glob_points[0] = 0;
+		break;
+	}
+	case 1: { // slider
+		var hval = Math.abs(house_value - house_CORR);
+		if (hval == 3 || hval == 2) {
+			glob_points[1] = 1;
+		} else if (hval == 1) {
+			glob_points[1] = 2;
+		} else if (hval == 0) {
+			glob_points[1] = 3;
+		} else
+			glob_points[1] = 0;
+		break;
+	}
+	case 2: { // images
+		if (answers[2] == img_CORR) {
+			glob_points[2] = 3;
+		} else {
+			glob_points[2] = 0;
+		}
+		break;
+	}
+	case 3: { // radio buttons
+		//ansval == cbox5 
+		//allOrdinaryRadioButtonCorrectAnswers = 5;
+		if (ansval.substring(0, 4) == allOrdinaryRadioButtonCorrectAnswers[i]) {
+			
+		}
+	}
+
+	}
+
+	console.log('Ga ' + glob_points[qnum] + ' på spm ' + qnum);
 }

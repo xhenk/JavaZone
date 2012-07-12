@@ -48,7 +48,7 @@
 	<question>
 		<type>imgsel</type>
 		<title>I hvilke av disse landene er Steria grunnlagt?</title>
-		<correct>1</correct>
+		<correct>2</correct>
 		<img_src>country_de.png</img_src>
 		<img_src>country_fr.png</img_src>
 		<img_src>country_se.png</img_src>
