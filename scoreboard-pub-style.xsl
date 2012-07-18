@@ -26,16 +26,13 @@
 								<tr>
 									<th scope="col" class="left">Levert</th>
 									<th scope="col">Navn</th>
-									<th scope="col">Telefon</th>
-									<th scope="col">Epost</th>
 									<th scope="col" class="right">Poengsum</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<td>&#160;</td>
-									<td colspan="3">
-										<!-- sensurert <em>Resultatlisten er sensurert! Det ser iallefall slik ut.</em> -->
+									<td>
 										<em>Personinformasjon lagres hos Steria fram til trekningen.</em>
 									</td>
 									<td class="rounded-foot-right"></td>
@@ -49,19 +46,8 @@
 											<xsl:value-of select="time" />
 										</td>
 										<td>
-											<xsl:value-of select="substring(name, 0, 2)"/>
-											.&#160;
+											<xsl:value-of select="substring(name, 0, 2)"/>.&#160;
 											<xsl:value-of select="substring-after(name,' ')"/>
-											<!-- <xsl:value-of select="name" /> -->
-										</td>
-										<td>
-											<xsl:value-of select="translate(phone, '12345','*****')"/>
-											<!-- <xsl:value-of select="phone"/> -->
-										</td>
-										<td>
-											<xsl:value-of select="substring-before(email,'@')"/>
-											@********.***
-											<!--<xsl:value-of select="email"/>-->
 										</td>
 										<td>
 											<div style="text-align: right;">

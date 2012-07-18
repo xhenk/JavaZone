@@ -1,0 +1,23 @@
+#entry {
+	padding-left: 50px;
+	padding-top: 20px;
+}
+
+#name {
+	font-family:monospace;
+	font-size:0.75em;
+	font-weight:900;
+	font-style:oblique;
+}
+
+#time {
+	font-weight:200;
+	font-size:0.75em;
+}
+
+#comm {
+	font-family:monospace;
+	font-size:1em;
+	font-weight:200;
+	width:400px;
+}
