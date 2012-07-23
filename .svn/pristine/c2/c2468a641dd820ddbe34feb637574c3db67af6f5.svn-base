@@ -1,0 +1,33 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Henning Klevjer}
+\title{SteriaQuiz - teknisk dokumentasjon}
+\date{\today}
+\begin{document}
+	\maketitle
+	\section{SteriaQuiz}
+		SteriaQuizen er laget for profilering av Steria på konferanser (JavaZone, etc.), bedriftspresentasjoner og liknende. Den er i hovedsak skrevet i javascript, og bruker Sencha Touch 2\footnote{http://sencha.com} APIet til alt grafisk.
+		Registrering av svar foregår i PHP\footnote{Det \textit{døende} serversidespråket} til XML. 
+		Presentasjon av deltakere er gjort i XML med stylesheets i XSL og CSS, i tillegg til lett javascripting for å trekke en vinner.
+		De fysiske delene blir forklart under.
+		\subsubsection*{Støttede nettlesere}
+			Siden quizen bruker Sencha er den begrenset til WebKit-nettlesere\footnote{http://webkit.org}. For øyeblikket er disse de viktigste WebKit-baserte nettleserne:
+			\begin{itemize}
+				\item[] \textbf{Amazon Kindle}
+				\item[] \textbf{Android Browser (følger med operativsystemet)}
+				\item[] Safari
+				\item[] \textbf{Safari Mobile (følger med operativsystemet)}
+				\item[] Google Chrome
+				\item[] \textbf{Google Chrome for Android}
+			\end{itemize}
+			{\footnotesize (Mobilnettlesere markert i \textbf{bold})}\\
+			
+			Dette betyr altså at Opera og Internet Explorer ikke støttes, hverken på mobiltelefon eller ellers. 
+	\section{Mobilsiden}
+		Mobilsiden -- altså selve quizen -- er en samling Sencha-paneler, hver definert i sin variabel. Disse kan fjernes og legges til i quizen ved at flere instanser av samme panel instansieres. 
+		
+			
+\end{document}

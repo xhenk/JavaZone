@@ -1,0 +1,50 @@
+<?xml version="1.0" standalone="yes" ?>
+<quiz>
+	<info>Svar p&#xE5; sp&#xF8;rsm&#xE5;lene og bli med i trekningen av en tur med Steria-ballongen!</info>
+	<lastPageInfo> Gratulerer, du er n&#xE5; med i trekningen av en ballongferd og andre flotte premier. &lt;br&gt; Vinneren vil bli oppringt kl 16.00, s&#xE5; v&#xE6;r tilgjengelig :) &lt;br&gt; Lykke til! </lastPageInfo>
+	<question>
+		<type>slider</type>
+		<title>Hvor h&#xF8;yt er bygget hvor Steria har sitt norske hovedkontor?</title>
+		<correct>26</correct>
+	</question>
+	<question>
+		<type>imgsel</type>
+		<title>I hvilke av disse landene er Steria grunnlagt?</title>
+		<correct>1</correct>
+		<img_src>country_de.png</img_src>
+		<img_src>country_fr.png</img_src>
+		<img_src>country_se.png</img_src>
+		<img_src>country_no.png</img_src>
+	</question>
+	<question>
+		<type>ordinary</type>
+		<title>Hva er forskjellen p&#xE5; m&#xE5;ker og kr&#xE5;ker?</title>
+		<correct>0</correct>
+		<answer>Forskjellig farge</answer>
+		<answer>M&#xE5;ker er ikke fugler</answer>
+		<answer>Kr&#xE5;ker er ikke fugler</answer>
+		<answer>Alle er riktige</answer>
+	</question>
+	<question>
+		<type>ordinary</type>
+		<title>Hvor mange trappetrinn er det i posthuset?</title>
+		<correct>6</correct>
+		<answer>300</answer>
+		<answer>3000</answer>
+		<answer>30000</answer>
+		<answer>300000</answer>
+		<answer>3000000</answer>
+		<answer>30000000</answer>
+		<answer>Noe helt annet.</answer>
+	</question>
+	<question>
+		<type>ordinary</type>
+		<title>I hvilken etasje finner man den godterikastende legoroboten?</title>
+		<correct>2</correct>
+		<answer>1. </answer>
+		<answer>2. </answer>
+		<answer>22. </answer>
+		<answer>23. </answer>
+		<answer>24. </answer>
+	</question>
+</quiz>

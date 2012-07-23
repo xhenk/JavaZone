@@ -1,0 +1,88 @@
+% !TeX spellcheck = nb_NO
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\author{Henning Klevjer}
+\title{SteriaQuiz - teknisk dokumentasjon}
+\date{\today}
+\begin{document}
+	\maketitle
+	\section{SteriaQuiz}
+		SteriaQuizen er laget for profilering av Steria på konferanser (JavaZone, etc.), bedriftspresentasjoner og liknende. Den er i hovedsak skrevet i javascript, og bruker Sencha Touch 2\footnote{http://sencha.com} APIet til alt grafisk.
+		Registrering av svar foregør i PHP\footnote{Det \textit{døende} serversidespråket} til XML. 
+		Presentasjon av deltakere er gjort i XML med stylesheets i XSL og CSS, i tillegg til lett javascripting for å trekke en vinner.
+		Dette dokumentet er skrevet mest som et oppslagsverk. All informasjonen her inne er ikke nødvendig for å endre koden. De fysiske delene (``programmene'') i quizprosjektet blir forklart under. 
+		
+		\subsubsection*{Støttede nettlesere}
+			Siden quizen bruker Sencha er den begrenset til WebKit-nettlesere\footnote{http://webkit.org}. For øyeblikket er disse de viktigste WebKit-baserte nettleserne:
+			\begin{itemize}
+				\item[] \textbf{Amazon Kindle}
+				\item[] \textbf{Android Browser (følger med operativsystemet)}
+				\item[] Safari
+				\item[] \textbf{Safari Mobile (følger med operativsystemet)}
+				\item[] Google Chrome
+				\item[] \textbf{Google Chrome for Android}
+			\end{itemize}
+			{\footnotesize (Mobilnettlesere markert i \textbf{bold})}\\
+			
+			Dette betyr altså at Opera og Internet Explorer ikke støttes, hverken på mobiltelefon eller ellers. 
+			
+	\section{Quiz-filen}
+		Quiz-filen definerer oppgavene, løsninger og informasjon om gevinst og trekning. Den er skrevet i XML-format og endres med en fritt valgt tekstbehandler. Hver quiz-fil støtter ett \texttt{<quiz>}-element. Under \texttt{<quiz>} er det to informasjonselementer, \texttt{<info>} som beskriver quizen, og \texttt{<lastPageInfo>} som blir vist til brukeren etter at svarene er registrert.
+		Ett \texttt{<quiz>}-element kan inneholde evig mange oppgaver, \texttt{<question>}. Hvert \texttt{<question>} består (alltid) av en \texttt{<type>}, en \texttt{<title>} og \texttt{<correct>}, der \texttt{<type>} er en av paneltypene beskrevet under, i punkt \ref{sec:mobs}, \texttt{<title>} er tittelen (oppgaveteksten) og \texttt{<correct>} beskriver svaret man skal fram til i oppgaven. 
+		\begin{figure}
+			\centering
+			\includegraphics[width=.8\textwidth]{xml-fil.eps}
+			\caption{xml-fila}
+		\end{figure}
+	\section{Mobilsiden}
+		\label{sec:mobs}
+		Mobilsiden -- altså selve quizen -- er en samling Sencha-paneler, hver definert i sin variabel. Disse kan fjernes og legges til i quizen ved at man lager flere instanser av samme type panel. 
+		\subsection{Paneltyper}
+			For å være ekstra presis er det ikke panelene som er forskjellige, men innholdet i dem. Vi har fire forskjellige typer paneler:
+			\subsubsection*{Map}
+				{\footnotesize \texttt{<type>} i .quiz-fil: \texttt{map}}\\
+				Dette panelet er ikke i bruk. Meningen var at brukeren skulle kunne få oppgaver som f.eks ``Hvor ligger Sterias hovedkontor?'', hvor brukeren zoomer seg inn på kartet og finner (innenfor en satt margin (``threshold'')) stedet med koordinatene angitt i svarvariabelen. Grunnen til at det ikke er i bruk er at oppgavene ble for tungvinne for brukeren og at kartet i seg (Google Maps API) selv bruker for mye ressurser på telefonen, noe som resulterer i en rimelig kjedelig brukeropplevelse, siden oppgaven tar for lang tid.
+				
+				
+				
+			\subsubsection*{Slider}
+			{\footnotesize \texttt{<type>} i .quiz-fil: \texttt{slider}}\\
+				Slider-panelet brukes for at brukeren skal velge et område i et bilde som samsvarer med en fasitverdi fra quiz-filen.
+			\subsubsection*{Bildevelger}
+			{\footnotesize \texttt{<type>} i .quiz-fil: \texttt{imgsel}}\\
+			\subsubsection*{Radio buttons}
+			{\footnotesize \texttt{<type>} i .quiz-fil: \texttt{ordinary}}\\
+			Dette er de klassiske oppgavene hvor svarer på ett spørsmål med ett riktig av flere svar. Disse feltene kan sannsynligvis enkelt utvides til å bli ``Check box''-er, hvor man altså har flere riktige svar. 
+			
+			
+			
+			{\noindent{\footnotesize Koden til SteriaQuizen ligger på: https://github.com/xhenk/JavaZone.git\\Dokumentasjon til Sencha Touch 2: http://docs.sencha.com/touch/2-0/}}
+		
+	\section{Deltakerlisten}
+		\begin{figure}[t]
+			\begin{minipage}[b]{0.5\textwidth}
+				\centering
+				\includegraphics[width=\textwidth]{scoreboard.eps}
+				\caption{{\footnotesize Privat scoreboard -- dette brukes for å finne kontaktinformasjon om vinneren}}
+				\label{fig:figure1}
+			\end{minipage}
+			\hspace{2em}
+			\begin{minipage}[b]{0.5\textwidth}
+				\centering
+				\includegraphics[width=\textwidth]{scoreboard2.eps}
+				\caption{{\footnotesize Offentlig scoreboard -- dette kan presenteres til brukerne og brukes til trekning}}
+				\label{fig:figure2}
+			\end{minipage}
+		\end{figure}
+		
+		\pagebreak
+		\begin{figure}
+			\centering
+			\includegraphics[width=\textwidth]{utsyn.eps}
+			\caption{Forskjellige skjermbilder fra SteriaQuiz}
+		\end{figure}
+\end{document}

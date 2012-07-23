@@ -1,6 +1,8 @@
 <?xml version="1.0" standalone="yes" ?>
 <quiz>
-	<info>Svar p&#xE5; sp&#xF8;rsm&#xE5;lene og bli med i trekningen av en tur med Steria-ballongen!</info>
+	<title>Sterias JavaZone-quiz</title>
+	<info>Svar p&#xE5; sp&#xF8;rsm&#xE5;lene og bli med i trekningen av INGENTING (siden dette er en beta!)</info>
+	<lastPageInfo> Gratulerer! Siden dette er en beta f&#xE5;r du dessverre ingen premie! </lastPageInfo>
 	<question>
 		<type>slider</type>
 		<title>Hvor h&#xF8;yt er bygget hvor Steria har sitt norske hovedkontor?</title>
@@ -9,7 +11,7 @@
 	<question>
 		<type>imgsel</type>
 		<title>I hvilke av disse landene er Steria grunnlagt?</title>
-		<correct>2</correct>
+		<correct>1</correct>
 		<img_src>country_de.png</img_src>
 		<img_src>country_fr.png</img_src>
 		<img_src>country_se.png</img_src>
@@ -18,7 +20,7 @@
 	<question>
 		<type>ordinary</type>
 		<title>Hva er forskjellen p&#xE5; m&#xE5;ker og kr&#xE5;ker?</title>
-		<correct>cbox0</correct>
+		<correct>0</correct>
 		<answer>Forskjellig farge</answer>
 		<answer>M&#xE5;ker er ikke fugler</answer>
 		<answer>Kr&#xE5;ker er ikke fugler</answer>
@@ -27,7 +29,7 @@
 	<question>
 		<type>ordinary</type>
 		<title>Hvor mange trappetrinn er det i posthuset?</title>
-		<correct>cbox10</correct>
+		<correct>6</correct>
 		<answer>300</answer>
 		<answer>3000</answer>
 		<answer>30000</answer>
@@ -39,7 +41,7 @@
 	<question>
 		<type>ordinary</type>
 		<title>I hvilken etasje finner man den godterikastende legoroboten?</title>
-		<correct>cbox13</correct>
+		<correct>2</correct>
 		<answer>1. </answer>
 		<answer>2. </answer>
 		<answer>22. </answer>

@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+	<script type="text/javascript">
+		
+		function sett() {
+			localStorage['geit'] = 'kake';
+			alert('hallo');
+		}
+		
+		function hent() {
+			return localStorage['geit'];
+		}
+	</script>
+	
+	<p><button onclick="sett()" title="a"></button></p>
+	<p><button onclick="alert(hent())" title="b"></button></p>
+</html>
