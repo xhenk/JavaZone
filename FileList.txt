@@ -1,0 +1,53 @@
+
+\index.php			Hovedsiden til prosjektet
+\reg.php			Registreringssiden i PHP
+\scoreboard-priv-style.xsl	Stylesheet til privat scorebaord
+\scoreboard-private.xml		Privat scoreboard
+\scoreboard-pub-style.xsl	Stylesheet til offentlig scorebaord
+\scoreboard-style.css		CSS-stylesheet til scoreboards
+\scoreboard.js			Javascript-del av offentlig scoreboard
+\scoreboard.xml			Offentlig scoreboard
+\sterialogo.gif			Sterias logo
+\tips.html			Tipsside for hovedsiden
+\tips.php			Tipsregistrering for hovedsiden
+
+\Dokumentasjon\			All dokumentasjon til prosjektet
+    \ikketeknisk.pdf		Ikketeknisk dokumentasjon - SteriaQuiz
+    \ikketeknisk.tex		Ikketeknisk dokumentasjon - SteriaQuiz (source)
+    \legoroboten.pdf		Teknisk dokumentasjon - legorobot
+    \legoroboten.tex		Teknisk dokumentasjon - legorobot (source)
+    \SteriaQuiz-teknisk.pdf	Teknisk dokumentasjon - SteriaQuiz
+    \SteriaQuiz-teknisk.tex	Teknisk dokumentasjon - SteriaQuiz (source)
+
+\LeJOS				Programmet som kjører på roboten
+    \bin			LeJOS-klasser
+        \Lego$1.class		
+        \Lego$2.class
+        \Lego.class
+        \Lego.nxj		LeJOS NXJ executable for NXT
+    \javadocs			Dokumentasjon av prosjektet
+    \src			Kildekoden til robotprogrammet
+        \Lego.java
+
+\Quiz\				Tekstinnhold til quizen
+    \JavaZone2012.quiz		XML-fil som inneholder all informasjon
+    \JavaZone2012.test		Testfil til samme formål
+
+\Sencha				Presentasjonen av quizen
+    \app.html			Siden som inneholder quizen
+    \app.js			Hovedprogrammet for quizen
+    \country_*.png		Bildefiler for bildevalgoppgave
+    \steria-bg.png		Bildefil for slider-oppgave
+    \sterialogo.gif		Startknapp for quizen
+    \stil.css			Stilinnhold til quizen
+
+\Sencha-test			Samme som over - testmappe.
+    \app.html
+    \app.js
+    \country_de.png
+    \country_fr.png
+    \country_no.png
+    \country_se.png
+    \steria-bg.png
+    \sterialogo.gif
+    \stil.css

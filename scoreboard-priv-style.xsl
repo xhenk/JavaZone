@@ -27,13 +27,14 @@
 									<th scope="col">Navn</th>
 									<th scope="col">Telefon</th>
 									<th scope="col">Epost</th>
+									<th scope="col">Svar</th>
 									<th scope="col" class="right">Poengsum</th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<td>&#160;</td>
-									<td colspan="3">
+									<td colspan="4">
 										<!-- sensurert <em>Resultatlisten er sensurert! Det ser iallefall slik ut.</em> -->
 										<em>Personinformasjon lagres hos Steria fram til trekningen.</em>
 									</td>
@@ -57,6 +58,9 @@
 											<xsl:value-of select="email"/>
 										</td>
 										<td>
+											<xsl:value-of select="answers"/>
+										</td>
+										<td>
 											<div style="text-align: right;">
 												<xsl:value-of select="score"/>
 											</div>
@@ -67,7 +71,7 @@
 						</table>
 					</div>
 					<p>
-						<img src="Sencha/sterialogo.gif" />
+						<img src="sterialogo.gif" />
 					</p>
 				</center>
 			</body>

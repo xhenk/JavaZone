@@ -4,54 +4,210 @@
 \usepackage{graphicx}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\renewcommand{\figurename}{Figur}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize, frame=single, xleftmargin=2.5em, framexleftmargin=2em}
 \author{Henning Klevjer og Esther Bloemendaal}
 \title{SteriaQuiz - Ikketeknisk dokumentasjon}
 \begin{document}
 	\maketitle
 	\section{Innledning}
 		I forbindelse med JavaZone har det vært ønskelig med en quiz på mobil. Dette ble derfor oppgaven til to av årets sommerstudenter. 
-		Dette dokumentet skal gi en enkel innføring i hvordan quizen er bydg opp, og hvordan den skal brukes. Den er bydg påå på en måte som gjør det enkelt å endre informasjon om quizen og premier og selve spørsmålene. 
+		Dette dokumentet skal gi en enkel innføring i hvordan quizen er bygd opp, og hvordan den skal brukes. Quizen er bygd opp på en måte som gjør det enkelt å endre informasjon og selve oppgaveteksten.
+		
+		Dokumentet er laget for en ikketeknisk person. For personer med teknisk bakgrunn og dype tekniske kunnskaper kan dette dokumentet bli veldig detaljert og banalt. 
+	
 		\subsection{Quizens oppbyggning}
-			Selve quizen er kodet i JavaScript med Sencha som rammeverk. Dette rammeverket er laget for å gi enkel og pen utforming på applikasjonen. Dette er en web-applikasjon på mobil, dermed er det ikke nødvendig for hver enkelt bruker å måtte laste ned en applikasjon for å kunne delta på quizen, noe vi mener vil senke terskelen for å delta. Webapplikasjonen kan kun kjøres på enkelte nettlesere, dette fordi ---  
+			Selve quizen er kodet i JavaScript med Sencha som rammeverk. Dette er en web-applikasjon på mobil, dermed er det ikke nødvendig for hver enkelt bruker å måtte laste ned noe for å kunne delta på quizen. Web-applikasjonen kan kun kjøres på enkelte nettlesere, dette fordi applikasjonen er bygd på web-kit. Web-kit er en teknologi som kun støttes av Apple Safari, Google Chrome, Mobile Safari (iOS), Android Browser og BlackBerry Browser.
 			
-			Selve spørsmålene er lagret i et eget xml-dokument, dette gjør det veldig enkelt å endre spøsmål, slik at quizen er best mulig tilpasset den enkelte situasjon og brukergruppe. 
+			Selve spørsmålene er lagret i et eget xml-dokument, noe som gjør det veldig enkelt å endre spørsmål. På denne måten vil quizen til enhver tid være best mulig tilpasset den enkelte situasjon og brukergruppe. 
 			
 			Figur \ref{fig:xml} viser hvordan xml-dokumentet ser ut.
 				
-				\begin{figure}[h!]
+				\begin{figure}
 				\centering
 				\includegraphics[width=.8\textwidth]{xml-fil.eps}
 				\caption{xml-dokument med informasjon og spørsmål}
 				\label{fig:xml}
 				\end{figure} 
 				
-			Alle endringer på det tekstlige innholdet gjøres i dette dokumentet. Det er ikke noe behov for å gå inn i koden. 
+			Alle endringer på det tekstlige innholdet gjøres i dette dokumentet. Og det vil ikke være noe behov for å gå inn i koden. 
 			
-			Når deltakerne har svart på alle spørsmålene må de registrere seg. Quizen er laget slik at en må registrere seg for å i det hele tatt kunne bli med i trekkingen. Denne informasjonen blir sendt til to forskjellige scoreboards. Ett som er åpent for alle, her kommer kun navn og poengsum opp. På det private scoreborardet ligger all informasjon om brukeren. Dette scoreboardet brukes kun av de som administrerer quizen og er laget for å enkelt kunne trekke ut en vinner.
+			Når deltakerne har svart på alle spørsmålene må de registrere seg. Quizen er laget slik at en må registrere seg for å i det hele tatt kunne bli med i trekkingen. Denne informasjonen blir sendt til to forskjellige poengtavler. Ett som er åpent for alle, her kommer kun navn og poengsum opp. På den private poengtavlen ligger all informasjon om brukeren. Denne poengtavlen brukes kun av de som administrerer quizen og er laget for å enkelt kunne trekke ut, og kontakte en vinner.
+			
+			Alle linjer i xml-fila starter og slutter med noe vi i denne dokumentasjonen vil omtale som "taggs" Det er viktig at selve taggsene ikke endres men kun innholdet i mellom dem 
+			{\footnotesize
+			\begin{lstlisting}
+<info> Hei </info>
+			\end{lstlisting} 
+			}
+			
+			Det er enkelte tegn som xml-fila ikke klarer å lese, så overalt hvor man skriver inn tekst må æ, ø og å erstattes. Dersom dette ikke blir gjort vil disse tegnene vises som spørsmålstegn i teksten.
+			
+			\begin{itemize}
+			\item[] æ = \&\#xE6;
+			\item[] ø = \&\#xF8;
+			\item[] å = \&\#xE5; 
+			\end{itemize}
+			
+			Dersom det er ønskelig med et linjeskifte, må denne følgende notasjon benyttes: \textit{\&lt;br\&gt;}. I eksempelet nedenfor ser man hvordan disse spesialtegnene blir brukt. 
+			
+			{\footnotesize
+			\begin{lstlisting}
+<info>Her &lt;br&gt; skriver du inn den informasjonen du 
+&#xF8;nsker skal komme p&#xE5; f&#xF8;rstesiden </info>
+			\end{lstlisting} 
+			}
+			Denne teksten vil se ut slik den gjør i figur \ref{fig:quiz}. 
+			
+			\begin{figure}[h!]
+			\centering
+			\includegraphics[width=.3\textwidth]{quiz.eps}
+			\caption{Startsiden på quizen.}
+			\label{fig:quiz}
+			\end{figure}
+			
+			\begin{figure}
+			\centering
+			\includegraphics[width=\textwidth]{utsyn.eps}
+			\caption{Forskjellige skjermbilder fra quizen}
+			\label{fig:skjerm}
+			\end{figure}
 			
 			\subsection{Slik bruker man quizen}
-				Når brukeren har åpnet quizen i nettleseren sin på mobilen vil de få opp en startside som ser slik ut:
+				Figur \ref{fig:skjerm} viser de forskjellige skjermbildene i quizen.
+				
+				\textbf{Steg 1:} For å kunne begynne quizen må man trykke på Steria-logoen. Du føres nå videre til det første spørsmålet 
+				
+				\textbf{Steg 2:} Det vil komme opp en meldingsboks som inneholder selve oppgaveteksten. For å i det hele tatt kunne komme videre må brukeren svare "Ok" på meldingsboksen. Da vil det komme opp et bilde av et stort hus. Her må brukeren dra bildet oppover og nedover for så å velge den ønskede etasjen. Når man trykker på en etasje vil den komme opp i knappen nederst på siden. Når brukeren er fornøyd, trykker man på knappen og vil bli sendt videre til neste spørsmål.
+				
+				\textbf{Steg 3:} På dette spørsmålet vil også oppgaveteksten vises i en meldingsboks. Her kommer det opp 4 bilder, og man skal trykke på det som er riktig. Når man har trykket, kommer man videre til neste spørsmål.
+				
+				\textbf{Steg 4:} De neste spørsmålene er tradisjonelle flervalgsspørsmål, hvor man trykker på den boksen med det svaren man mener er riktig. Her er det kun et svar som er riktig. For å komme videre til neste spørsmål kan man enten "swipe" (dra i siden) eller trykke på piltastene under spørsmålsboksen. Dette gjør du til det ikke lenger er mulig å komme mot høyre, på siste spørsmål vil det være en "lever"-knapp. Den vil vises på siste spørsmålet, men du vil få opp en feilmelding om du trykker på den uten å ha besvart alle spørsmålene. 
+				
+				\textbf{Steg 5:} Ved å trykke på "lever"-knappen blir du sendt til registrerings siden. Her må alle felter fylles ut. For at e-mail adressen skal være gyldig må den inneholde '@' og '.', og telefonnummeret må inneholde mellom 8 og 12 tall. Det er ikke mulig å registrere samme e-mail adresse eller telefonnummer mer enn en gang. Dette for å forhindre at folk registrerer seg fler ganger. 
+				
+				\textbf{Steg 6:} Brukeren har nå registrert seg og levert svarene sine. Hvor mange riktige brukeren fikk kommer opp i et eget vindu. Initialer og poengsum vil bli sendt til en offentlig poengtavle, som kan vises på stand. All annen personinformasjon vil bli lagret i en privat poengtavle som kun er synlig for personene på Sterias stand. Se figur \ref{fig:score-priv} og \ref{fig:score-off}. 
+				
+		\begin{figure}[t]
+			\begin{minipage}[b]{0.5\textwidth}
+				\centering
+				\includegraphics[width=\textwidth]{scoreboard.eps}
+				\caption{{\footnotesize Privat scoreboard -- dette brukes for å finne kontaktinformasjon om vinneren}}
+				\label{fig:score-priv}
+			\end{minipage}
+			\hspace{2em}
+			\begin{minipage}[b]{0.5\textwidth}
+				\centering
+				\includegraphics[width=\textwidth]{scoreboard2.eps}
+				\caption{{\footnotesize Offentlig scoreboard -- dette kan presenteres til brukerne og brukes til trekning}}
+				\label{fig:score-off}
+			\end{minipage}
+		\end{figure}
+				
+				Under hele quizen kan man "swipe" dra i siden for å manøvrere seg fra spørsmål til spørsmål, nederst på siden er det små prikker som til enhver tid kan fortelle hvor i quizen brukeren befinner seg, hvor mange spørsmål som har blitt besvart, og hvor mange som er igjen. Dersom Brukeren har glemt hva oppgaveteksten på ett av spørsmålene sa, er det bare å swipe fram og tilbake for å få opp igjen oppgaveteksten. Brukeren leverer ikke noe endelig svar før han/hun har registrert seg. Det er da med andre ord til enhver tid mulig å endre på svarene. Det er også mulig å lukke nettleseren uten å miste svarene, da svarene  vil være lagret i nettleseren. Da vil du ikke miste svarene dine selv om du velger å vente litt med å levere. Til enhver tid gjennom hele quizen, er det mulig å trykke på huset øverst i høyrehjørnet, det vil føre brukeren tilbake til startsiden. 
 				
 		\subsection{Endring av Informasjon}
 			På første og siste siden av quizen er det lagt opp til å ha kort og konsis informasjon. Det kan være informasjon om hva det er mulig å vinne, hvor og når trekningen er, og hvordan trekningen foregår. Generelt informasjon som kan være nødvendig for brukere å vite. 
+			For å endre på quizen, må fila \texttt{\textbf{JavaZone2012.quiz}}, som ligger i mappen Quiz, åpnes i en texteditor, f.eks notepad. 
 			
-			\subsubsection{Endring av informasjon på førstesiden}
-				Det markerte feltet i figur \ref{fig:xml} viser hvor du endrer teksten som kommer opp på førstesiden. 
-				Det er teksten mellom "taggene" \textit{\textless info \textgreater} og \textit{\textless \textbackslash info \textgreater} som skal endres. Det er viktig at selve taggsene forblir uendret for at programmet skal skjønne hva det er som skal leses inn. 
+			\subsubsection{Endring av informasjon på første- og sistesiden}
+				Det markerte feltet i figur \ref{fig:startInfo} viser hvor du endrer teksten som kommer opp på førstesiden. 
+				Det er teksten mellom "taggene" \texttt{<info>} og\texttt{</info>} som skal endres. Det er viktig at selve taggsene forblir uendret for at programmet skal skjønne hva det er som skal leses inn. 
 				
 				\begin{figure}
 				\centering
-				\includegraphics[width=.8\textwidth]{endreInfo.eps}
-				\caption{Viser hvor du endrer informasjonsteksten på startsiden.}
+				\includegraphics[width=1\textwidth]{endreInfo.eps}
+				\caption{Viser hvor du endrer informasjons teksten på startsiden.}
 				\label{fig:startInfo}
 				\end{figure}
 				
-				
+				Informasjonen som kommer på siste siden er teksten mellom taggsene \texttt{<lastPageInfo>} og \texttt{</lastPageInfo>}
+				Denne teksten kan bla fortelle noe om hvor trekkingen vil finne sted eller hvordan vinneren vil bli kontaktet og hva som er premien.
 				
 		\subsection{Endring av spørsmålene}
-			Tekst
-				\subsubsection{}
-					Tekst
-		\subsection{underoverskrift}
-			Tekst
+			Selve spørsmålene er i xml-fila gitt mellom taggsene \texttt{<question>} og \texttt{</question>} Dette definerer ett og ett spørsmål. 
+			
+			\texttt{<type>} sier noen om hvilken type spørsmål det er. De forskjellige typene som er definert er; \textit{slider, imgsel} og \textit{ordinary}. Det er kun en type per question. 
+			
+			\texttt{<title>} Her står selve oppgaveteksten
+			
+			\texttt{<correct>} Forteller hvilket av alternativene som er det riktige. De riktige svarene ligger i en liste, som begynner å telle på 0 (og ikke 1) så dersom det første alternativet er riktig skal du skrive inn tallet 0, altså plassen i rekka riktig svaralternativ ligger. 
+			
+			\textit{\textless answer\textgreater} De forskjellige svaralternativene. 
+			
+			Det er viktig at selve "taggsene" ikke endres, men kun innholdet imellom dem. 
+			Det som er satt opp er kun et forslag, skulle det ønskelig med flere spørsmål så kan dette enkelt legges til ved å kopiere, og lime inn i samme dokumentet. Det samme gjelder antall svaralternativer. Men det er kun mulig å ha ett riktig svar. 
+			
+				\subsubsection{scrolle spørsmål}
+					Scrolle spørsmålet tar inn et bilde, i dette tilfellet et veldig stort hus, hvor brukeren skal gjette hvor mange etasjer posthuset har. 
+					Dette spørsmålet er ikke så lett å endre på så dersom det ikke er ønskelig med et slikt spørsmål må hele spørsmålet fjernes fra xml-fila. 
+				
+				\subsubsection{bilde spørsmål}
+					Bilde spørsmålet er av type \textit{imgsel}, og tar inn, i dette tilfellet, 4 forskjellige bilder. Oppgaven går ut på å besvare et spørsmål ved at svar alternativene er bilder. Hvor brukeren trykker på det bildet som han/hun mener er riktig. Det er viktig at disse bildene ligger lagret i hovedmappa, slik at programmet klarer å lokalisere de. 
+					
+					{\footnotesize
+					\begin{lstlisting}
+<question>
+	<type>imgsel</type>
+	<title>I hvilke av disse landene 
+	er Steria grunnlagt?</title>
+	<correct>1</correct>
+	<img_src>country_de.png</img_src>
+	<img_src>country_fr.png</img_src>
+	<img_src>country_se.png</img_src>
+	<img_src>country_no.png</img_src>
+</question>
+					\end{lstlisting} 
+					}
+					
+					Oppgaveteksten og riktig svaralternativ endres som oppgitt over. 
+					"Taggsen" \texttt{<img\_src>} tar inn selve bildene. Det som da skal stå mellom \texttt{<img\_src>} og \texttt{</img\_src>} er navnet på bildefila. Dette skjermbildet støtter kun fire bilder.
+				\subsubsection{flervalgs-spørsmål}
+					Flervalgsspørsmålene er av type \textit{ordinary}. Her er det mange mulige svaralternativer men kun et svar er riktig. 
+					
+					{\footnotesize
+					\begin{lstlisting}
+<question>
+	<type>ordinary</type>
+	<title>Hvor mange trappetrinn er det i 
+	posthuset?</title>
+	<correct>6</correct>
+	<answer>300</answer>
+	<answer>3000</answer>
+	<answer>30000</answer>
+	<answer>300000</answer>
+	<answer>3000000</answer>
+	<answer>30000000</answer>
+	<answer>Noe helt annet.</answer>
+</question>
+					\end{lstlisting} 
+					}
+					
+					Oppgaveteksten, det som står innenfor \texttt{<title>}, og riktig svar, \texttt{<correct>}, endres som oppgitt over. Det som står mellom \texttt{<answer>} og \texttt{</answer>} er de forskjellige svaralternativer. Det er helt åpent hvor  mange forskjellige alternativer det skal være. Er det ønskelig med færre slettes bare noen av de, eller om det er ønskelig mer fler så legges disse bare inn. Men husk at det skal vises på en mobil så noen fler enn 7 alternativer er ikke å anbefale 
+					
+		\subsection{Poengtavler}
+			Som tidligere nevnt, er det to poeng tavler, se figur \ref{fig:score-priv} o\ref{fig:score-off} en privat og en offentlig. Den Private brukes og sees kun av de som administrere quizen, og skal brukes for å trekke og kontakte en vinner. Den offentlige er laget kun for å vise fram en toppcore liste. 
+			
+			For å trekke en vinner kan man gå inn på den offentlige poengtavlen og trykke på "velg en vinner". Programmet vil da velge en tilfeldig vinner av de med høyest poengsum. Personens intialer, leveringstidspunkt og poengsum vises, og man kan finne kontaktinformasjon om samme person på den private poengtavlen.
+			
+				\subsection{Tømme poengtavlene}
+					For å tømme poengtavlene må man inn i fila: \texttt{scoreboard-private.xml)} i en teksteditor, vil anbefale å bruke Eclipse. Trykk Ctrl + shift + f for å få dokumentet mer oversiktlig. Dokumentet vil da se ut som i figur \ref{fig:slett}.
+			\begin{figure}
+			\centering
+			\includegraphics[width=\textwidth]{slett.eps}
+			\caption{slik ser den private poengtavla ut når den åpnes i eclipse.}
+			\label{fig:slett}
+			\end{figure}
+		
+			For å slette kun en person slettes hele entry's, alt fra \texttt{<entry>} til \texttt{</entry>} inkludert taggsene. 
+			Er det ønskelig å tømme hele poengtavla slettes alt innenfor \texttt{<scoreboard>} slik at fila vil se ut som i figur \ref{fig:score-tom}.
+			
+			\begin{figure}
+			\centering
+			\includegraphics[width=\textwidth]{tom.eps}
+			\caption{Tom poengtavle}
+			\label{fig:score-tom}
+			\end{figure}
+					
 \end{document}

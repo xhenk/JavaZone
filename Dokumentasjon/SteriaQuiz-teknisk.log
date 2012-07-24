@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=latex 2012.7.20)  23 JUL 2012 13:27
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=latex 2012.7.20)  24 JUL 2012 15:40
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -162,35 +162,35 @@ Package: listings 2007/02/22 1.4 (Carsten Heinz)
 (./SteriaQuiz-teknisk.aux)
 \openout1 = `SteriaQuiz-teknisk.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 \c@lstlisting=\count107
-LaTeX Font Info:    Try loading font information for U+msa on input line 14.
+LaTeX Font Info:    Try loading font information for U+msa on input line 15.
 
 (c:/texlive/2012/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 14.
+LaTeX Font Info:    Try loading font information for U+msb on input line 15.
 
 (c:/texlive/2012/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-)
-File: xml-fil.eps Graphic file (type eps)
- <xml-fil.eps> [1
+) [1
 
 ]
+File: xml-fil.eps Graphic file (type eps)
+ <xml-fil.eps>
 [2]
-Overfull \hbox (3.00055pt too wide) in paragraph at lines 66--68
+Overfull \hbox (3.00055pt too wide) in paragraph at lines 72--74
 \OT1/cmr/m/n/10 Slider-panelet brukes for at bruk-eren skal velge et omr^^Wade 
 i et bilde som samsvarer
  []
@@ -200,38 +200,42 @@ File: scoreboard.eps Graphic file (type eps)
  <scoreboard.eps>
 File: scoreboard2.eps Graphic file (type eps)
  <scoreboard2.eps>
-Overfull \hbox (24.44446pt too wide) in paragraph at lines 83--96
+Overfull \hbox (24.44446pt too wide) in paragraph at lines 89--102
 [][][]   [] 
  []
 
 
-Overfull \hbox (58.2392pt too wide) in paragraph at lines 81--97
+Overfull \hbox (4.32292pt too wide) in paragraph at lines 87--103
 \OT1/cmr/m/n/10 om det trengs. Begge er stil-satt med CSS for ^^Wa matche ste-r
-ias pro-fil (\OT1/cmtt/m/n/10 scoreboard-style.css\OT1/cmr/m/n/10 ).
+ias pro-fil (\OT1/cmtt/m/n/10 scoreboard-
  []
 
 File: utsyn.eps Graphic file (type eps)
-<utsyn.eps> [4]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 108.
+<utsyn.eps>
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 114.
 
  (c:/texlive/2012/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 108.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 114.
+ [4]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 114.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 120.
  [5]
 [6]
 File: sterialogo.eps Graphic file (type eps)
- <sterialogo.eps> [7] (./SteriaQuiz-teknisk.aux) ) 
+ <sterialogo.eps> [7]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 175.
+ [8] (./SteriaQuiz-teknisk.aux) ) 
 Here is how much of TeX's memory you used:
- 2858 strings out of 493489
- 36648 string characters out of 3144771
- 90464 words of memory out of 3000000
- 6151 multiletter control sequences out of 15000+200000
+ 3120 strings out of 493489
+ 38653 string characters out of 3144771
+ 126442 words of memory out of 3000000
+ 6413 multiletter control sequences out of 15000+200000
  13453 words of font info for 52 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 27i,8n,32p,734b,316s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,8n,32p,734b,1071s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on SteriaQuiz-teknisk.dvi (7 pages, 17516 bytes).
+Output written on SteriaQuiz-teknisk.dvi (8 pages, 28564 bytes).

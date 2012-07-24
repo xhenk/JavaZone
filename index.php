@@ -50,10 +50,11 @@
 				</p>
 				<p>
 					En robot som kaster godteri (denne kan besøkes i 22. etg.)
-				</p><p></p><td width=400>&nbsp; </td>
+				</p><td width=400>&nbsp; </td>
 				<td>
-				<p>
-					Vi har et <a href="http://klevjers.com/temp/IMG_0310.JPG">bilde</a> og en <a href="http://klevjers.com/temp/VIDEO0005.mp4">video</a> også, for alle som er uhyre interessert i lego.
+				<p>Vi har et <a href="http://klevjers.com/temp/IMG_0310.JPG">bilde</a> og en <a href="http://klevjers.com/temp/VIDEO0005.mp4">video</a> også, for alle som er uhyre interessert i lego.</p>
+				<p>For ikke å snakke om vår <a href="./Dokumentasjon/SteriaQuiz-teknisk.pdf">tekniske</a> og <a href="./Dokumentasjon/ikketeknisk.pdf">ikke-tekniske</a> dokumentasjon!</p>
+				<p>Vi har tilogmed dokumentasjon for <a href="./Dokumentasjon/legoroboten.pdf">roboten</a>!
 				</td>
 			</tr>
 			<tr>

@@ -65,7 +65,7 @@
 						(uferdig)
 					</p>
 					<p>
-						<img src="Sencha/sterialogo.gif" />
+						<img src="sterialogo.gif" />
 					</p>
 				</center>
 			</body>

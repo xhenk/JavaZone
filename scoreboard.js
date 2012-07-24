@@ -7,6 +7,7 @@ var rowData = 0;
 var rows = 0;
 
 function drawWinner() {
+	scroll(0,0);
 	contestants = new Array();
 	secondRound = new Array();
 	rowData = document.getElementById("tab").getElementsByTagName("tr");

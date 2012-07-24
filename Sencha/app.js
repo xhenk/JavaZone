@@ -12,10 +12,12 @@ var imgQ; // Fire bilder-oppgaven
 var radioQ = new Array(); // Radio button-spørsmålene
 var answers = new Array(); // Brukerens svar
 var regPath = '../reg.php?';// Adressen til registreringssiden
-var globAnsCnt = 0; // Brukes for å holde styr på antall oppgaver
-var totQuestions = 0; // Totalt antall oppgaver
+var globAnsCnt = 0; // Brukes for å holde styr på hvor mange oppgaver som er
+					// lastet foreløpig
+var totQuestions = 0; // Totalt antall oppgaver i quiz-fila.
 var quizInfo, lastPageInfo; // Informasjon på første og siste side.
 var firstClick = true; // Hjelp til å håndtere klikking på Slider-oppgaver
+var QUIZ_PATH = '../Quiz/JavaZone2012.quiz'; // Adressen til quizfila.
 
 /** Her starter alt! */
 Ext.application({
@@ -265,7 +267,7 @@ function initStep1() {
 	// mapQ = new Map();
 	// Asynchronous; relies on XMLHttpRequest. Next functions must wait a short
 	// while to be executed. Therefore continued in step2.
-	getQuestions('../Quiz/JavaZone2012.quiz');
+	getQuestions(QUIZ_PATH);
 }
 
 /**
@@ -338,6 +340,7 @@ function createFirstPage() {
 			id : 'startknapp',
 			handler : function(button, event) {
 				switchTo(carousel);
+				Ext.Msg.alert('Oppgave 1', sliderQ.QQ, Ext.emptyFn);
 			},
 
 			height : 250,
@@ -399,15 +402,18 @@ function createRegPage() {
 
 	var nameField = Ext.create('Ext.field.Text', {
 		id : 'name',
-		label : 'Navn'
+		label : 'Navn',
+		placeHolder : 'Navn Navnesen'
 	});
 	var emailField = Ext.create('Ext.field.Email', {
 		id : 'email',
-		label : 'Epost'
+		label : 'Epost',
+		placeHolder : 'foo@bar.org'
 	});
 	var phoneField = Ext.create('Ext.field.Text', {
 		id : 'number',
-		label : 'Telefon'
+		label : 'Telefon',
+		placeHolder : '12354678'
 	});
 	return Ext.create('Ext.Container', {
 		title : 'SteriaQuiz',
@@ -457,14 +463,8 @@ function createRegPage() {
 					if (!phoneField.getValue() || phoneField.getValue().length == 0) {
 						Ext.Msg.alert('Feil', 'Du må registrere telefonnr', Ext.emptyFn);
 						return;
-					} else if (!isANumber(phoneField.getValue())) {
-						Ext.Msg.alert('Feil', 'Merkelig telefonnummer!', Ext.emptyFn);
-						return;
-					} else if (phoneField.getValue().length < 8) {
-						Ext.Msg.alert('Feil', 'Du mangler tall i telefonnummeret', Ext.emptyFn);
-						return;
-					} else if (phoneField.getValue().length > 12) {
-						Ext.Msg.alert('Feil', 'Du har for mange tall i telefonnummeret', Ext.emptyFn);
+					} else if (!isAValidPhoneNumber(phoneField.getValue())) {
+						Ext.Msg.alert('Feil', 'Ugyldig telefonnummer!', Ext.emptyFn);
 						return;
 					}
 					// Ferdig med inputvalidering
@@ -481,7 +481,6 @@ function createRegPage() {
 						// personen registrere
 						// pÃ¥ nytt.
 						if (xmlhttp.responseText.indexOf('Obs', 0) == -1) {
-							console.log('Fikk ikke feilmelding');
 							button.setDisabled(true);
 							// GÃ¥ til
 							// avslutningsskjerm
@@ -490,7 +489,6 @@ function createRegPage() {
 						} else {
 							button.setDisabled(false);
 							switchTo(regPage);
-							console.log('Fikk feilmelding');
 						}
 
 					};
@@ -526,6 +524,10 @@ function createRegPage() {
  * @returns Adressen til registreringsserveren med parametre
  */
 function createRegPath(name, email, phone, ans) {
+	if (phone[0] == '+') {
+		phone = phone.substring(1, phone.length);
+		phone = "%2B" + phone;
+	}
 	var retval = regPath;
 	retval += 'name=' + name;
 	retval += '&email=' + email;
@@ -551,7 +553,6 @@ function createCarousel() {
 			activeitemchange : function(thisContainer, value, oldValue, eOpts) {
 				if (!oldValue)
 					return;
-				console.log('Changed to ' + value.getId());
 				if (oldValue.getId() == 'house_img') {
 					// Moved from the house, register answer
 					answers[0] = sliderQ.value;
@@ -579,7 +580,7 @@ function getQuestions(quizPath) {
 	if (!quizPath) {
 		return;
 	}
-	
+
 	var xmlhttp = new XMLHttpRequest();
 	var xmlDocument;
 	var allQuestions;
@@ -599,12 +600,11 @@ function getQuestions(quizPath) {
 			quizInfo = doc.documentElement.getElementsByTagName('info').item(0).textContent;
 			lastPageInfo = doc.documentElement.getElementsByTagName('lastPageInfo').item(0).textContent;
 
-			// totQuestions =
-			// allQuestions[i].getElementsByTagName('type').length;
 			totQuestions = allQuestions.length;
 			var questionID = 0;
-			
-			// Går gjennom hver enkelt oppgave og bygger panelene avhengig av type.
+
+			// Går gjennom hver enkelt oppgave og bygger panelene avhengig av
+			// type.
 			for ( var i = 0; i < allQuestions.length; i++) {
 				if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'ordinary') {
 					var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
@@ -632,9 +632,7 @@ function getQuestions(quizPath) {
 											answered++;
 									}
 									if (answered == questionID) {
-										console.log('Lagrer spørsmål i localStorage');
 										localStorage['SteriaQuizAnswers'] = answers;
-										console.log(localStorage['SteriaQuizAnswers']);
 										switchTo(regPage);
 									} else
 										Ext.Msg.alert('Obs!', 'Du m&#xE5; svare p&#xE5; alle sp&#xF8;rsm&#xE5;l', Ext.emptyFn);
@@ -699,35 +697,38 @@ function getQuestions(quizPath) {
  * Henter spørsmålene fra localStorage
  */
 function loadQuestions() {
-	
+
 	var tmpanswers = localStorage['SteriaQuizAnswers'];
 	if (!tmpanswers) {
-		console.log('Vi henter IKKE spørsmål!');
 		return;
 	}
-	console.log('Vi henter spørsmål!');
-	answers = tmpanswers.split(",");
-	console.log(answers);
 
+	answers = tmpanswers.split(",");
 	sliderQ.value = answers[0];
-	console.log('sliderQ verdi' + sliderQ.value);
 	sliderQ.okBtn.setText('&#8594; Gjett ' + sliderQ.value + ' etasjer. &#8594;');
-	console.log('sliderQ verdi' + sliderQ.value);
-	console.log('hvorfor funker ikke dette da?');
-	console.log(answers);
-	
+
 	// Her settes checkboxene som er valgt i localStorage.
-	Ext.getCmp('cbox-2-' + answers[2]).setChecked(true);
-	Ext.getCmp('cbox-3-' + answers[3]).setChecked(true);
-	Ext.getCmp('cbox-4-' + answers[4]).setChecked(true);
+	var theBox;
+	for ( var i = 2; i < totQuestions; i++) {
+		theBox = Ext.getCmp('cbox-' + i + '-' + answers[i]);
+		if (theBox)
+			theBox.setChecked(true);
+	}
 
 }
 
-/** 
- * Hjelpefunksjon til telefonnummervalidering.
- * Vurderer om en variabel er et tall
- * @param n variabelen som skal vurderes.
+/**
+ * Hjelpefunksjon til telefonnummervalidering. Vurderer om en variabel er et
+ * tall
+ * 
+ * @param n
+ *            variabelen som skal vurderes.
  */
-function isANumber(n) {
+function isAValidPhoneNumber(n) {
+	n = n.replace(/\s/g,'');
+	if (n[0] == '+') {
+		n = n.substring(1, n.length);
+	}
+	if (n.length > 12 || n.length < 8) return false;
 	return !isNaN(n - 0);
 }

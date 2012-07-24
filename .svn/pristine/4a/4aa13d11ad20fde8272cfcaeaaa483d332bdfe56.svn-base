@@ -1,0 +1,61 @@
+<?xml version="1.0" standalone="yes" ?>
+<quiz>
+	<title>Sterias JavaZone-quiz</title>
+	<info>Dette er siste test i JavaZone-quiz-betaen</info>
+	<lastPageInfo> Gratulerer! Siden dette er en beta f&#xE5;r du dessverre ingen premie! </lastPageInfo>
+	<question>
+		<type>slider</type>
+		<title>Hvor h&#xF8;yt er bygget hvor Steria har sitt norske hovedkontor?</title>
+		<correct>26</correct>
+	</question>
+	<question>
+		<type>imgsel</type>
+		<title>I hvilke av disse landene ble Steria grunnlagt?</title>
+		<correct>1</correct>
+		<img_src>country_de.png</img_src>
+		<img_src>country_fr.png</img_src>
+		<img_src>country_se.png</img_src>
+		<img_src>country_no.png</img_src>
+	</question>
+	<question>
+		<type>ordinary</type>
+		<title>Hvor mange ansatte har Steria i Norge?</title>
+		<correct>0</correct>
+		<answer>ca. 700</answer>
+		<answer>ca. 1000</answer>
+		<answer>ca. 300</answer>
+		<answer>ca. 1100</answer>
+	</question>
+	<question>
+		<type>ordinary</type>
+		<title>Hvilket uttrykk er lovlig i Java (1.7)?</title>
+		<correct>3</correct>
+		<answer>long int x;</answer>
+		<answer>Object i = (byte) * (int) 3;</answer>
+		<answer>... catch ( EOFException || Exception e ) {}</answer>
+		<answer>Object y = -(int)(Integer)4;</answer>
+	</question>
+	<question>
+		<type>ordinary</type>
+		<title>Hva er galt her?&lt;br&gt;class String {class A {}{class B{}}}</title>
+		<correct>3</correct>
+		<answer>Klassen B er deklarert i et ugyldig omr&#xE5;de</answer>
+		<answer>Det er en {} for mye</answer>
+		<answer>Klassenavnet String er beskyttet</answer>
+		<answer>Ingenting.</answer>
+	</question>
+	<question>
+		<type>ordinary</type>
+		<title>Enda en oneliner: Hva er x?&lt;br&gt;int x=5;{x-=-(int)-((1&lt;=3)?1-2:-2);}</title>
+		<correct>3</correct>
+		<answer>2</answer>
+		<answer>-1</answer>
+		<answer>1</answer>
+		<answer>6</answer>
+		<answer>-2</answer>
+		<answer>-3</answer>
+		<answer>0</answer>
+		<answer>Dette er et ugyldig uttrykk</answer>
+	</question>
+	
+</quiz>

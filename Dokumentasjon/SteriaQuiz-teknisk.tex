@@ -5,11 +5,12 @@
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage{amssymb}
-\author{Henning Klevjer}
-\title{SteriaQuiz - teknisk dokumentasjon}
+\author{Henning Klevjer\\hennikl@ifi.uio.no}
+\title{SteriaQuiz\\teknisk dokumentasjon}
+\date{20. Juli 2012}
 \renewcommand{\figurename}{Figur}
 \usepackage{listings}
-\lstset{basicstyle=\ttfamily\footnotesize, frame=single, numbers=left, xleftmargin=2.5em, framexleftmargin=2em}
+\lstset{basicstyle=\footnotesize, frame=single, xleftmargin=0.5em, framexleftmargin=0em}
 \begin{document}
 	\maketitle
 	\section{SteriaQuiz}
@@ -34,9 +35,14 @@
 			}
 			Dette betyr altså at Opera og Internet Explorer ikke støttes, hverken på mobiltelefon eller ellers. 
 			
+	\section{Deploye på server} 
+		SteriaQuizen har vært testet lokalt med Apache 2.2 og PHP 5, og bør fungere på en hvilken som helst server som støtter PHP. Brukere bør komme inn i quizen via en link til app.html, gjerne hjulpet av url-forkorter eller QR-kode\footnote{Selv om nesten ingen på jorda liker, bruker eller trenger QR-koder kan det være at den ene promillen som har QR-scanner og lyst til å bruke den dukker opp på JavaZone. Tenk så fornøyde de blir når de kan scanne QR-kodene!}
+			
 	\section{Quiz-fila}
 		Quiz-fila definerer oppgavene, løsninger og informasjon om gevinst og trekning. Den er skrevet i XML-format og endres med en fritt valgt tekstbehandler. Hver quiz-fil støtter ett \texttt{<quiz>}-element. Under \texttt{<quiz>} er det en tittel, \texttt{<title>} og to informasjonselementer, \texttt{<info>} som beskriver quizen, og \texttt{<lastPageInfo>} som blir vist til brukeren etter at svarene er registrert.
-		Ett \texttt{<quiz>}-element kan inneholde evig mange oppgaver, \texttt{<question>}. Hvert \texttt{<question>} består alltid av kun en \texttt{<type>}, en \texttt{<title>} og \texttt{<correct>}, der \texttt{<type>} er en av paneltypene beskrevet under, i punkt \ref{sec:mobs}, \texttt{<title>} er tittelen (oppgaveteksten) og \texttt{<correct>} beskriver svaret man skal fram til i oppgaven. 
+		Ett \texttt{<quiz>}-element kan inneholde evig mange oppgaver, \texttt{<question>}. Hvert \texttt{<question>} består alltid av kun en \texttt{<type>}, en \texttt{<title>} og \texttt{<correct>}, der \texttt{<type>} er en av paneltypene beskrevet under, i punkt \ref{sec:mobs}, \texttt{<title>} er tittelen (oppgaveteksten) og \texttt{<correct>} beskriver svaret man skal fram til i oppgaven. Programmet regner 0 som det første svaret.
+		
+		I javascriptet (\texttt{app.js}) er adressen til quizfila hardkodet inn, så om hver quiz har forskjellig navn må dette endres i koden. 
 		\begin{figure}
 			\centering
 			\includegraphics[width=.8\textwidth]{xml-fil.eps}
@@ -78,7 +84,7 @@
 		
 		Deltakerlisten er todelt. Den blir presentert til brukeren som \texttt{scoreboard.xml}, den \textit{offentlige} listen, og til ``quizmastere'' som \texttt{scoreboard-private.xml}. I førstnevnte noteres bare tidspunkt for levering, navn og poengsum. Her kan deltakerne se hvordan de og andre deltakere ligger an, og denne siden kan også brukes til trekning av vinnere. Den private siden skal kun brukes av quizmastere for å finne kontaktinformasjonen til vinneren. \texttt{scoreboard.xml} kan godt publiseres på nettet og linkes til fra avslutningssiden i quizen, mens \texttt{scoreboard-private.xml} (hvor deltakernes telefonnummer og epostadresser er lagret) må holdes privat, men skrivbar.
 		
-		Deltakerlistene er skrevet i XML for enkelhets skyld -- de kan endres manuelt om det trengs. Begge er stilsatt med CSS for å matche sterias profil (\texttt{scoreboard-style.css}). XSL brukes for å sette opp listene korrekt ut fra innholdet i XML-fila.
+		Deltakerlistene er skrevet i XML for enkelhets skyld -- de kan endres manuelt om det trengs. Begge er stilsatt med CSS for å matche sterias profil (\texttt{scoreboard\-style.css}). XSL brukes for å sette opp listene korrekt ut fra innholdet i XML-fila. Skal man slette en eller flere deltakere må man passe på at man bare fjerner hele \texttt{<entry>}-elementer og at toppelementet \texttt{<scoreboard>} fortsatt er intakt.
 		\begin{figure}[t]
 			\begin{minipage}[b]{0.5\textwidth}
 				\centering
@@ -127,6 +133,7 @@
 		\item[\texttt{\textbf{quizInfo}}]	Informasjon for første side.
 		\item[\texttt{\textbf{lastPageInfo}}]	Informasjon for siste side.
 		\item[\texttt{\textbf{firstClick}}]	Hjelp til å håndtere klikking på Slider-oppgaver
+		\item[\texttt{\textbf{QUIZ\_PATH}}]	Adressen til quizfila.
 		\end{itemize}
 		
 	\subsubsection*{funksjoner}
@@ -152,11 +159,72 @@
 	\begin{itemize}
 		\item[] Koden til SteriaQuizen ligger på: https://github.com/xhenk/JavaZone.git
 		\item[] Dokumentasjon til Sencha Touch 2: http://docs.sencha.com/touch/2-0/
+		\item[] Apache : http://www.apache.org/
+		\item[] PHP : http://www.php.net/
+		
 	\end{itemize}
 	}
 
 		\begin{center}
 		\includegraphics[width=100pt]{sterialogo.eps}
 		\end{center}
+
+\pagebreak
+	\section{Mappestruktur i JavaZone-prosjektet}
+	\begin{lstlisting}
+\index.php			Hovedsiden til prosjektet
+\reg.php			Registreringssiden i PHP
+\scoreboard-priv-style.xsl	Stil til privat scorebaord
+\scoreboard-private.xml		Privat scoreboard
+\scoreboard-pub-style.xsl	Stil til offentlig scoreboard
+\scoreboard-style.css		CSS-stylesheet til scoreboards
+\scoreboard.js			JS-del av offentlig scoreboard
+\scoreboard.xml			Offentlig scoreboard
+\sterialogo.gif			Sterias logo
+\tips.html			Tipsside for hovedsiden
+\tips.php			Tipsregistrering for hovedsiden
+
+\Dokumentasjon\			All dokumentasjon til prosjektet
+    \ikketeknisk.pdf		Ikketeknisk - SteriaQuiz
+    \ikketeknisk.tex		Ikketeknisk - SteriaQuiz (source)
+    \legoroboten.pdf		Teknisk - legorobot
+    \legoroboten.tex		Teknisk - legorobot (source)
+    \SteriaQuiz-teknisk.pdf	Teknisk - SteriaQuiz
+    \SteriaQuiz-teknisk.tex	Teknisk - SteriaQuiz (source)
+
+\LeJOS				Programmet som kjører på roboten
+    \bin			LeJOS-klasser
+        \Lego$1.class		
+        \Lego$2.class
+        \Lego.class
+        \Lego.nxj		LeJOS NXJ executable for NXT
+    \javadocs			Dokumentasjon av prosjektet
+    \src			Kildekoden til robotprogrammet
+        \Lego.java
+
+\Quiz\				Tekstinnhold til quizen
+    \JavaZone2012.quiz		XML-fil med all quizinfo
+    \JavaZone2012.test		Testfil til samme formål
+
+\Sencha				Presentasjonen av quizen
+    \app.html			Siden som inneholder quizen
+    \app.js			Hovedprogrammet for quizen
+    \country_*.png		Bildefiler for bildevalgoppgave
+    \steria-bg.png		Bildefil for slider-oppgave
+    \sterialogo.gif		Startknapp for quizen
+    \stil.css			Stilinnhold til quizen
+
+\Sencha-test			Samme som over - testmappe.
+    \app.html
+    \app.js
+    \country_de.png
+    \country_fr.png
+    \country_no.png
+    \country_se.png
+    \steria-bg.png
+    \sterialogo.gif
+    \stil.css
+
+	\end{lstlisting}
 \end{document}
 
