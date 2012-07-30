@@ -194,6 +194,8 @@ input,textarea{-webkit-user-select:text}
 /* Bra jobba - knappen blir dus når musetasten er over*/
 #lever{background:#ededed}
 #lever:active{background:#017e9f}
+#lever{-webkit-border-radius:0em;border-radius:0em}
+#lever{margin-bottom: 30px}
 
 /* dus effekt på knappene på registreringssiden */
 #fjern:active{opacity:0.6}
@@ -210,6 +212,19 @@ input,textarea{-webkit-user-select:text}
 #happy:active{background:#017e9f}
 #happy{background:#ededed}
 #happy{-webkit-border-radius:0em;border-radius:0em}
+
+
+/* Endringer på "hvor høy er posthuset"-knappen*/
+#house_ok{background:#ededed}
+#house_ok{-webkit-border-radius:0em;border-radius:0em}
+#house_ok:active{background:#017e9f}
+#house_ok{margin-bottom: 30px}
+
+/* Dus farge på kart-spørmålet*/
+#land:hover{opacity:0.6}
+
+a{color:#666666}
+a:hover{color:#fa5a00}
 
 
 .x-button.x-button-confirm,.x-toolbar .x-button.x-button-confirm,.x-button.x-button-confirm-round,.x-toolbar .x-button.x-button-confirm-round,.x-button.x-button-confirm-small,.x-toolbar .x-button.x-button-confirm-small{border:1px solid #263501;border-top-color:#374e02;color:white}
@@ -623,6 +638,8 @@ input,textarea{-webkit-user-select:text}
 
 /* Endrer teksten 'instructions' det som står nederst på regpage*/
 .x-form-fieldset-instructions{text-shadow:#fff 0 1px 1px;color:#333333;color:gray;margin:3em 0.7em 1em;font-size:.8em; text-align:center}
+#instruction {text-shadow:#fff 0 1px 1px; color:gray; font-size:.8em; margin:3em 0.7em 1em; text-align:center;}
+#instruction2 {text-shadow:#fff 0 1px 1px; color:gray; font-size:.8em; margin:3em 0.7em 1em; text-align:center;}
 
 .x-selectmark-base,.x-field-select .x-component-outer:after{content:"";position:absolute;width:1em;height:1em;top:50%;left:auto;right:0.7em;-webkit-mask-size:1em;-webkit-mask-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpGRTdGMTE3NDA3MjA2ODExOTJDQUMyNUQwRUE4NjdEQiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxQTFBMDFDQ0I5NEYxMURGQUU1RjlGMEFERUNDQTVEMCIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoyMkRCMDIxMkI5NEUxMURGQUU1RjlGMEFERUNDQTVEMCIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjMwRTE0QzVBNDIyMjY4MTFCQ0ZCOTAzOTcwNzcyRkVCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkZFN0YxMTc0MDcyMDY4MTE5MkNBQzI1RDBFQTg2N0RCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+HfrH/AAAAeVJREFUeNrs2cFHBGEUAPA3zYqIiIhOnTpFRHSKrp26RqeuEV077R/QqWtE166dOkVERHRa9hQRnZalFcv0Hk/W1Mx+38z3vvlm5j3eZW+/9+abne+9KEkSaFPMQMtCwQpWsIIVrGAFK1jBClawgo2ik/4hiqJGwLKuvfpIc5xSkWqYr5hzU1s/mRNxXTPsJ+ZqluvXlwOmSj3XBDvG3M1rpAmYYoUrFzr4ZNqTawqm2MH8Dhh7ZXJUbcAUx4FinzBnJcAUl4FhP/jIgRSYKvkYCJaO2LbNv08RMMUy5nsA4COTLy0XYIqtil9iF6aflq7AwBWuAvuQ9ZKSBgNX2ieWjtKSzeXBNZgqfe8J+4W5aXtbcg0GrvibB/BhkeuhBJhigzsghT0veh+WAlMcCGHvMOMQwcCdcIntYy6WmXhIg2PuiAvsEHO97IhHGgzckb4D8L6LmZYPMHBnhiWwXVdDPF9g4A4Vwd66nFr6BAN3ygbbw1yoMzjmjplgB5hrrufSvsHAHesZDOD2JAbxVYCBOzfIAZ9JbR6qAgN3cPwP9kZy1VIlGLiTdluCmoOBO/pnS9Bk8DzmS3pL4BMcpZEe1qX0GI/atC4dQYXRMa1MU0IX4gpWsIIVrGAFK1jBCnYUPwIMAPUPAyFL+nRdAAAAAElFTkSuQmCC');margin-top:-0.5em}
 .x-field-select{position:relative}

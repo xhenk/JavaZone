@@ -106,7 +106,7 @@ input,textarea{-webkit-user-select:text}
 .x-floating.x-panel-light:after{background-color:#ff0000}
 
 /* Endrer formen på knappen/ikonet på forsiden*/
-.x-button{-webkit-background-clip:padding;background-clip:padding-box;-webkit-border-radius:6.5em;border-radius:6.5em;display:-webkit-box;display:box;-webkit-box-align:center;box-align:center;min-height:1.8em;padding:.3em .6em;position:relative;overflow:hidden;-webkit-user-select:none}
+.x-button{-webkit-background-clip:padding;background-clip:padding-box;-webkit-border-radius:0em;border-radius:0em;display:-webkit-box;display:box;-webkit-box-align:center;box-align:center;min-height:1.8em;padding:.3em .6em;position:relative;overflow:hidden;-webkit-user-select:none}
 
 /* Sterialogoen blir dus når du tar musetasten over*/
 #startknapp:hover{opacity: 0.6}
@@ -141,7 +141,7 @@ input,textarea{-webkit-user-select:text}
 .x-button-label,.x-hasbadge .x-badge{-webkit-box-flex:1;box-flex:1;-webkit-box-align:center;box-align:center;white-space:nowrap;text-overflow:ellipsis;text-align:center;font-weight:bold;line-height:1.2em;display:block;overflow:hidden}
 
 /* endrer størrelsen på knappen på toolbaren*/
-.x-toolbar .x-button{padding:1em 2.5em;-webkit-border-radius:0em;border-radius:0em}
+.x-toolbar .x-button{padding:1em 1.4em;-webkit-border-radius:0em;border-radius:0em}
 
 
 /* Endrer skriftstørrelse og farge på teksten på knappen i feilmeldingsvinduet*/
@@ -207,6 +207,9 @@ input,textarea{-webkit-user-select:text}
 /*#hjem:hover{background:#017e9f}*/
 #hjem{background:#04315b}
 #hjem:active{background:#017e9f}
+#hjem{border-right:#04315b}
+#hjem{border-left:#04315b}
+
 
 /* Dus effekt på "fornøyd"-knappen på kart spørsmålet*/
 #happy:active{background:#017e9f}
@@ -222,6 +225,12 @@ input,textarea{-webkit-user-select:text}
 
 /* Dus farge på kart-spørmålet*/
 #land:hover{opacity:0.6}
+#land{-webkit-border-radius:0em;border-radius:0em}
+
+
+/* Endrer farge på pilene i karusellen*/
+a{color:#666666}
+a:hover{color:#fa5a00}
 
 
 .x-button.x-button-confirm,.x-toolbar .x-button.x-button-confirm,.x-button.x-button-confirm-round,.x-toolbar .x-button.x-button-confirm-round,.x-button.x-button-confirm-small,.x-toolbar .x-button.x-button-confirm-small{border:1px solid #263501;border-top-color:#374e02;color:white}
@@ -469,7 +478,7 @@ input,textarea{-webkit-user-select:text}
 .x-scroll-bar-y > .x-scroll-bar-stretcher{height:300%}
 .x-scroll-bar-y.active{width:6px}
 
-/* Endrer scrolleren i carusellen*/
+/* Endrer scrolleren i karusellen*/
 .x-scroll-indicator{background:#333;position:absolute;z-index:2;opacity:0.2}
 .x-scroll-indicator.default{-webkit-border-top-left-radius:3px;border-top-left-radius:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-left-radius:3px;border-bottom-left-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px}.x-list-light .x-scroll-indicator,.x-dataview-light .x-scroll-indicator{background:#fff;opacity:1}.x-scroll-indicator-x{height:100%}.x-scroll-indicator-y{width:100%}.x-scroll-indicator.csstransform{background:none}
 .x-scroll-indicator.csstransform > *{position:absolute;background-color:#333}
@@ -486,7 +495,7 @@ input,textarea{-webkit-user-select:text}
 .x-scroll-indicator.csstransform.x-scroll-indicator-x > :last-child{width:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px}
 .x-carousel{position:relative;overflow:hidden}
 
-/* Sier noe om hvor mye av skjermbildet carusellen tar*/
+/* Sier noe om hvor mye av skjermbildet karusellen tar*/
 .x-carousel-item{position:absolute;width:100%;height:100%}
 .x-carousel-item > *{position:absolute;width:100%;height:100%}
 .x-carousel-indicator{padding:0;-webkit-border-radius:0;border-radius:0;-webkit-box-shadow:none;background-color:transparent;background-image:none}
@@ -503,7 +512,7 @@ input,textarea{-webkit-user-select:text}
 .x-carousel-indicator-dark span{background-image:none;background-color:rgba(51, 51, 51, 1)}
 .x-carousel-indicator-dark span.x-carousel-indicator-active{background-image:none;background-color:rgba(250, 90, 0, 1)}
 
-/* Endrer fargen på container bakgrunnen i carusellen*/
+/* Endrer fargen på container bakgrunnen i karusellen*/
 .x-form .x-scroll-container{background-color:#fbfbfb}
 
 /* Endrer paddingen mellom tabellen og ytterkantene*/
@@ -516,13 +525,13 @@ input,textarea{-webkit-user-select:text}
 .x-form-label span{font-size:.8em;font-weight:bold}
 
 /* Endrer hva som skjer med mye tekst i tabellen*/
-.x-form-label-nowrap .x-form-label{white-space:normal;overflow:visible}
+.x-form-label-nowrap .x-form-label{white-space:normal;overflow:visible; width:90%}
 
 /* Endrer høyden på radene i tabellen*/
 .x-field{min-height:2.5em;background:#fff}
 
 /* Endrer posisjonen til radiobuttone på linjen i tabellen*/
-.x-field .x-field-input{position:relative;min-width:0em }
+.x-field .x-field-input{position:relative;min-width:0% }
 .x-field .x-field-input,.x-field .x-input-el{width:100%}
 
 .x-field.x-field-labeled .x-form-label{display:block !important}

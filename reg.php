@@ -68,13 +68,6 @@ if ($already) {
 	print("Obs: En luring (kanskje deg?) med samme telefonnummer eller epost har allerede konkurrert!");
 } else {
 
-	$name = str_replace("æ", "&#xE6;", $name);
-	$name = str_replace("Æ", "&#xC6;", $name);
-	$name = str_replace("ø", "&#xF8;", $name);
-	$name = str_replace("Ø", "&#xD8;", $name);
-	$name = str_replace("å", "&#xE5;", $name);
-	$name = str_replace("Å", "&#xC5;", $name);
-
 	$score = 0;
 	$answArray = explode(';', $answers);
 

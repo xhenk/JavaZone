@@ -1,3 +1,0 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="scoreboard-pub-style.xsl"?>
-<scoreboard><entry><time>11:11:10</time><name>Test Testorama</name><score>3</score></entry><entry><time>11:12:50</time><name>Dr. Testenstein</name><score>3</score></entry><entry><time>13:47:45</time><name>Test Testersen</name><score>3</score></entry><entry><time>14:13:47</time><name>John Foo</name><score>0</score></entry><entry><time>12:41:30</time><name>Gaute</name><score>2</score></entry><entry><time>14:03:32</time><name>Stian S&#xF8;reb&#xF8;</name><score>2</score></entry><entry><time>15:16:08</time><name>Meg</name><score>2</score></entry></scoreboard>

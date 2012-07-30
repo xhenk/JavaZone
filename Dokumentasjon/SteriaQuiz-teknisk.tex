@@ -1,16 +1,21 @@
-% !TeX spellcheck = nb_NO
 \documentclass[10pt,a4paper]{article}
 \usepackage[latin1]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage[centering,includeheadfoot]{geometry}
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{calc,blindtext}
 \usepackage{graphicx}
-\usepackage{amssymb}
-\author{Henning Klevjer\\hennikl@ifi.uio.no}
+\usepackage{amssymb}\author{Henning Klevjer\\hennikl@ifi.uio.no}
 \title{SteriaQuiz\\teknisk dokumentasjon}
 \date{20. Juli 2012}
 \renewcommand{\figurename}{Figur}
 \usepackage{listings}
-\lstset{basicstyle=\footnotesize, frame=single, xleftmargin=0.5em, framexleftmargin=0em}
+\lstset{basicstyle=\footnotesize, frame=single, captionpos=t, xleftmargin=0.5em, framexleftmargin=0em}
 \begin{document}
 	\maketitle
 	\section{SteriaQuiz}
@@ -36,7 +41,15 @@
 			Dette betyr altså at Opera og Internet Explorer ikke støttes, hverken på mobiltelefon eller ellers. 
 			
 	\section{Deploye på server} 
-		SteriaQuizen har vært testet lokalt med Apache 2.2 og PHP 5, og bør fungere på en hvilken som helst server som støtter PHP. Brukere bør komme inn i quizen via en link til app.html, gjerne hjulpet av url-forkorter eller QR-kode\footnote{Selv om nesten ingen på jorda liker, bruker eller trenger QR-koder kan det være at den ene promillen som har QR-scanner og lyst til å bruke den dukker opp på JavaZone. Tenk så fornøyde de blir når de kan scanne QR-kodene!}
+		SteriaQuizen har vært testet lokalt med Apache 2.2 og PHP 5, og bør fungere på en hvilken som helst server som støtter PHP. Brukere bør komme inn i quizen via en link til app.html, gjerne hjulpet av url-forkorter eller QR-kode\footnote{Selv om nesten ingen på jorda liker, bruker eller trenger QR-koder kan det være at den ene promillen som har QR-scanner og lyst til å bruke den dukker opp på JavaZone. Tenk så fornøyde de blir når de kan scanne QR-kodene!}. 
+		
+		Det er også utviklet en egen server hvor man slipper bruk av PHP (dette er tross alt JavaZone), men heller redirecter PHP-forespørsler til en handler i serverkoden. Den største forskjellen fra Apache-kjøringen er at parametrene til \texttt{reg.php} sendes Base64-kodet, for å støtte spesialtegn i navn, blant annet.
+		\\[\baselineskip]
+		\noindent\colorbox{YellowOrange}{\makebox[\textwidth-2\fboxsep][l]{\bfseries\color{white} 
+		Viktig
+		}}
+		\\[\baselineskip]
+		Skal man bruke den hjemmelagde serveren må man sette variablen \texttt{APACHE\_AND\_PHP} til \texttt{false} i \texttt{app.js}. Dette for at klienten må velge hvorvidt parametrene skal kodes om eller ikke. Skal man kjøre både Apache+PHP og den hjemmelagde serveren må man ha to utgaver av \texttt{app.js}, eller en smartere måte å velge koding eller ikke på.
 			
 	\section{Quiz-fila}
 		Quiz-fila definerer oppgavene, løsninger og informasjon om gevinst og trekning. Den er skrevet i XML-format og endres med en fritt valgt tekstbehandler. Hver quiz-fil støtter ett \texttt{<quiz>}-element. Under \texttt{<quiz>} er det en tittel, \texttt{<title>} og to informasjonselementer, \texttt{<info>} som beskriver quizen, og \texttt{<lastPageInfo>} som blir vist til brukeren etter at svarene er registrert.
@@ -82,7 +95,7 @@
 	\section{Deltakerlisten}
 		\label{sec:sboard}
 		
-		Deltakerlisten er todelt. Den blir presentert til brukeren som \texttt{scoreboard.xml}, den \textit{offentlige} listen, og til ``quizmastere'' som \texttt{scoreboard-private.xml}. I førstnevnte noteres bare tidspunkt for levering, navn og poengsum. Her kan deltakerne se hvordan de og andre deltakere ligger an, og denne siden kan også brukes til trekning av vinnere. Den private siden skal kun brukes av quizmastere for å finne kontaktinformasjonen til vinneren. \texttt{scoreboard.xml} kan godt publiseres på nettet og linkes til fra avslutningssiden i quizen, mens \texttt{scoreboard-private.xml} (hvor deltakernes telefonnummer og epostadresser er lagret) må holdes privat, men skrivbar.
+		Deltakerlisten er todelt. Den blir presentert til brukeren som \texttt{scoreboard.xml}, den \textit{offentlige} listen, og til ``quizmastere'' som \texttt{scoreboard-private.xml}. I førstnevnte noteres bare tidspunkt for levering, navn og poengsum. Her kan deltakerne se hvordan de og andre deltakere ligger an, og denne siden kan også brukes til trekning av vinnere. Den private siden skal kun brukes av quizmastere for å finne kontaktinformasjonen til vinneren. \texttt{scoreboard.xml} kan godt publiseres på nettet og linkes til fra avslutningssiden i quizen, mens \texttt{scoreboard-private.xml} (hvor deltakernes telefonnummer og epostadresser er lagret) må holdes privat, men skrivbar. Altså rettigheter {\small \texttt{rwx-w--w-}}.
 		
 		Deltakerlistene er skrevet i XML for enkelhets skyld -- de kan endres manuelt om det trengs. Begge er stilsatt med CSS for å matche sterias profil (\texttt{scoreboard\-style.css}). XSL brukes for å sette opp listene korrekt ut fra innholdet i XML-fila. Skal man slette en eller flere deltakere må man passe på at man bare fjerner hele \texttt{<entry>}-elementer og at toppelementet \texttt{<scoreboard>} fortsatt er intakt.
 		\begin{figure}[t]
@@ -111,12 +124,15 @@
 			\caption{Forskjellige skjermbilder fra SteriaQuiz}
 		\end{figure}
 		\subsubsection*{Tekstkoding}
-			Vi har plages mye med å få ISO-8859-1-koding til å fungere med Sencha. Derfor har vi brukt HTML-escape-characters der det trengs spesialtegn. \{æøåÆØÅ\} fungerer dessverre heller ikke.
+			Det er viktig at tekstfilene med innhold som skal vises til brukeren er lagret som Unicode-fil! Hvis ikke må man bruke escape-tegn for spesialtegn. Skal man skrive linjeskift i XML-fila (f.eks i et spørsmål) må man bruke \texttt{\&lt;} og \texttt{\&gt;} istedenfor hhv. $<$ og $>$.
+			
+			For å garantere at filen er lagret i Unicode kan man lagre den i gode gamle Notepad og velge Unicode under \textit{encoding}.
 			
 	
 	\section{Kodekommentarer}
 	\subsubsection*{Globale variable}
 		\begin{itemize}
+		\item[\texttt{\textbf{APACHE\_AND\_PHP}}]	Er true hvis man kjører Apache, false hvis man bruker Java-serveren.
 		\item[\texttt{\textbf{titlebar}}]	  Titteltekst med hjem-knapp
 		\item[\texttt{\textbf{currentPage}}]	Inneholder hvilken side man befinner seg i
 		\item[\texttt{\textbf{firstPage}}]	Førstesiden med startknapp
@@ -171,7 +187,7 @@
 
 \pagebreak
 	\section{Mappestruktur i JavaZone-prosjektet}
-	\begin{lstlisting}
+	\begin{lstlisting}[caption={De viktigste filene i prosjektet}, label=amb]
 \index.php			Hovedsiden til prosjektet
 \reg.php			Registreringssiden i PHP
 \scoreboard-priv-style.xsl	Stil til privat scorebaord
@@ -224,6 +240,10 @@
     \steria-bg.png
     \sterialogo.gif
     \stil.css
+\SteriaQuizServer
+    \src
+        Server.java		Serverprogrammet. Kjører på port 80
+    \bin				(...)
 
 	\end{lstlisting}
 \end{document}

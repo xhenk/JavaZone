@@ -1,11 +1,11 @@
-<?xml version="1.0" standalone="yes" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <quiz>
 	<title>Sterias JavaZone-quiz</title>
-	<info>Dette er siste test i JavaZone-quiz-betaen</info>
-	<lastPageInfo> Gratulerer! Siden dette er en beta f&#xE5;r du dessverre ingen premie! </lastPageInfo>
+	<info>Dette er siste test i JavaZone-quiz-betaen.</info>
+	<lastPageInfo>Siden dette er en beta får du dessverre ingen premie</lastPageInfo>
 	<question>
 		<type>slider</type>
-		<title>Hvor h&#xF8;yt er bygget hvor Steria har sitt norske hovedkontor?</title>
+		<title>Hvor høyt er bygget hvor Steria har sitt norske hovedkontor?</title>
 		<correct>26</correct>
 	</question>
 	<question>

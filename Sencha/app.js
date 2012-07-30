@@ -1,4 +1,5 @@
 // Globale variable for hver side og viktige elementer:
+var APACHE_AND_PHP = true;
 var titlebar; // Titteltekst med hjem-knapp
 var currentPage; // Inneholder hvilken side man befinner seg i
 var firstPage; // Førstesiden med startknapp
@@ -13,7 +14,7 @@ var radioQ = new Array(); // Radio button-spørsmålene
 var answers = new Array(); // Brukerens svar
 var regPath = '../reg.php?';// Adressen til registreringssiden
 var globAnsCnt = 0; // Brukes for å holde styr på hvor mange oppgaver som er
-					// lastet foreløpig
+// lastet foreløpig
 var totQuestions = 0; // Totalt antall oppgaver i quiz-fila.
 var quizInfo, lastPageInfo; // Informasjon på første og siste side.
 var firstClick = true; // Hjelp til å håndtere klikking på Slider-oppgaver
@@ -89,7 +90,7 @@ function Slider() {
 			id : 'house_ok',
 			listeners : {
 				tap : function() {
-					carousel.setActiveItem(1);
+					carousel.setActiveItem(carousel.getActiveIndex() + 1);
 					Ext.Msg.alert('Oppgave 2', imgQ.QQ, Ext.emptyFn);
 				}
 			}
@@ -159,76 +160,47 @@ function RadioBtnQuestion(args) {
  * 
  * @param qid
  *            Oppgavenummer
+ * @param img_src
+ *            Bildeadressene
  */
-function ImageSelector(qid) {
+function ImageSelector(qid, img_src) {
 
-	this.src = new Array();
-	this.img0 = new Ext.Button({
-		html : '',
-		listeners : {
-			tap : function() {
-				answers[qid] = 0;
-				carousel.setActiveItem(2);
-			}
-		},
-		flex : 1
-	});
-	this.img1 = new Ext.Button({
-		html : '',
-		listeners : {
-			tap : function() {
-				answers[qid] = 1;
-				carousel.setActiveItem(2);
-			}
-		},
-		flex : 2
-	});
-	this.img2 = new Ext.Button({
-		html : '',
-		listeners : {
-			tap : function() {
-				answers[qid] = 2;
-				carousel.setActiveItem(2);
-			}
-		},
-		flex : 1
-	});
-	this.img3 = new Ext.Button({
-		html : '',
-		listeners : {
-			tap : function() {
-				answers[qid] = 3;
-				carousel.setActiveItem(2);
-			}
-		},
-		flex : 2
-	});
-
-	/** Get a reasonable picture size.. */
-	this.getSize = function() {
-
-		if (document.width < document.height) {
-			return document.width / 2.5;
-		}
-		return document.height / 2.5;
+	this.regAns = function(num) {
+		answers[qid] = num;
+		carousel.setActiveItem(carousel.getActiveIndex() + 1);
 	}
+	var htmlcontents = '<center><img onclick="imgQ.regAns(0)" src="' + img_src[0] + '" id="land" height="' + getSize() + '">'
+			+ '<img onclick="imgQ.regAns(1)"  src="' + img_src[1] + '" id="land" height="' + getSize() + '"><br/>'
+			+ '<img  onclick="imgQ.regAns(2)" src="' + img_src[2] + '" id="land" height="' + getSize() + '">'
+			+ '<img onclick="imgQ.regAns(3)"  src="' + img_src[3] + '" id="land" height="' + getSize() + '"></center>';
 
-	var panTop = new Ext.Panel({
-		layout : 'hbox',
-		items : [ this.img0, this.img1 ]
-	});
-	var panBtm = new Ext.Panel({
-		layout : 'hbox',
-		flex : 2,
-		items : [ this.img2, this.img3 ]
-	});
 	this.panel = new Ext.Panel({
 
 		layout : 'vbox',
 		id : 'img_sel',
-		items : [ panTop, panBtm ]
+		html : htmlcontents,
+		style : 'width: 100%',
 	});
+}
 
+/** Gir en fornuftig bildestørrelse */
+function getSize() {
+
+	// Jeg er ikke god nok til å få tak i denne verdien fra noe annet sted.
+	var MAGIC_NUMBER_SIZEOF_TITLEBAR = 46;
+	var w = document.width;
+	var h = document.height - MAGIC_NUMBER_SIZEOF_TITLEBAR;
+
+	if (Ext.browser.is.Chrome) {
+		// Chrome mobile takler ikke document.width
+		w = window.innerWidth;
+		h = window.innerHeight - MAGIC_NUMBER_SIZEOF_TITLEBAR;
+	}
+
+	if (w < h) {
+		return w / 2;
+	}
+	return h / 2;
 }
 
 /**
@@ -263,6 +235,7 @@ this.getImgMousePosition = function(e) {
 function initStep1() {
 	titlebar = createTitlebar();
 	regPage = createRegPage();
+	lastPage = createLastPage();
 	carousel = createCarousel();
 	// mapQ = new Map();
 	// Asynchronous; relies on XMLHttpRequest. Next functions must wait a short
@@ -276,7 +249,6 @@ function initStep1() {
 function initStep2() {
 	firstPage = createFirstPage();
 	loadQuestions();
-	lastPage = createLastPage();
 	switchTo(firstPage);
 }
 
@@ -340,6 +312,7 @@ function createFirstPage() {
 			id : 'startknapp',
 			handler : function(button, event) {
 				switchTo(carousel);
+				carousel.setActiveItem(0);
 				Ext.Msg.alert('Oppgave 1', sliderQ.QQ, Ext.emptyFn);
 			},
 
@@ -371,7 +344,10 @@ function createFirstPage() {
  * Genererer sistesiden
  */
 function createLastPage() {
-
+	lastPageInfo = Ext.create('Ext.Label', {
+		xtype : 'label',
+		id : 'instruction2',
+	});
 	lastPage = Ext.create('Ext.Container', {
 		title : 'SteriaQuiz',
 		id : 'lastPage',
@@ -379,15 +355,7 @@ function createLastPage() {
 			type : 'vbox',
 			align : 'center'
 		},
-		items : [ {
-
-			xtype : 'label',
-			id : 'lastPageInfo',
-			// centered : true,
-			iconAlign : 'center',
-			id : 'instruction2',
-			html : lastPageInfo
-		} ]
+		items : [ lastPageInfo ]
 
 	});
 
@@ -476,19 +444,20 @@ function createRegPage() {
 					xmlhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
 					xmlhttp.send(null);
 					xmlhttp.onreadystatechange = function() {
-						Ext.Msg.alert('Registreringsserveren forteller:', xmlhttp.responseText, Ext.emptyFn);
-						// Hvis feilmelding, la
-						// personen registrere
-						// pÃ¥ nytt.
-						if (xmlhttp.responseText.indexOf('Obs', 0) == -1) {
-							button.setDisabled(true);
-							// GÃ¥ til
-							// avslutningsskjerm
-							switchTo(lastPage);
+						if (xmlhttp.readyState == 4) {
+							lastPageInfo.setHtml(xmlhttp.responseText + '<br>' + lastPageInfo.getHtml());
+							// Hvis feilmelding, la
+							// personen registrere
+							// pÃ¥ nytt.
+							if (xmlhttp.responseText.indexOf('Obs', 0) == -1) {
+								button.setDisabled(true);
+								// GÃ¥ til
+								// avslutningsskjerm
+								switchTo(lastPage);
 
-						} else {
-							button.setDisabled(false);
-							switchTo(regPage);
+							} else {
+								button.setDisabled(false);
+							}
 						}
 
 					};
@@ -528,7 +497,7 @@ function createRegPath(name, email, phone, ans) {
 		phone = phone.substring(1, phone.length);
 		phone = "%2B" + phone;
 	}
-	var retval = regPath;
+	var retval = '';
 	retval += 'name=' + name;
 	retval += '&email=' + email;
 	retval += '&phone=' + phone;
@@ -539,7 +508,12 @@ function createRegPath(name, email, phone, ans) {
 			ans += answers[i] + ';';
 	}
 	retval += '&answers=' + ans;
-	return retval;
+	console.log(retval);
+	if (!APACHE_AND_PHP) {
+		retval = Base64.encode(retval);	
+	} 
+	console.log(retval);
+	return regPath + retval;
 }
 
 /**
@@ -553,6 +527,7 @@ function createCarousel() {
 			activeitemchange : function(thisContainer, value, oldValue, eOpts) {
 				if (!oldValue)
 					return;
+
 				if (oldValue.getId() == 'house_img') {
 					// Moved from the house, register answer
 					answers[0] = sliderQ.value;
@@ -598,7 +573,7 @@ function getQuestions(quizPath) {
 			// Sett tittel:
 			document.title = doc.documentElement.getElementsByTagName('title').item(0).textContent;
 			quizInfo = doc.documentElement.getElementsByTagName('info').item(0).textContent;
-			lastPageInfo = doc.documentElement.getElementsByTagName('lastPageInfo').item(0).textContent;
+			lastPageInfo.setHtml(doc.documentElement.getElementsByTagName('lastPageInfo').item(0).textContent);
 
 			totQuestions = allQuestions.length;
 			var questionID = 0;
@@ -634,9 +609,9 @@ function getQuestions(quizPath) {
 									if (answered == questionID) {
 										localStorage['SteriaQuizAnswers'] = answers;
 										switchTo(regPage);
-									} else
+									} else {
 										Ext.Msg.alert('Obs!', 'Du m&#xE5; svare p&#xE5; alle sp&#xF8;rsm&#xE5;l', Ext.emptyFn);
-
+									}
 								}
 							}
 						});
@@ -664,18 +639,16 @@ function getQuestions(quizPath) {
 					sliderQ.questionID = questionID;
 				} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'imgsel') {
 					// Her behandles bildevalgoppgavene
-					imgQ = new ImageSelector(questionID);
+
+					var items = allQuestions[i].getElementsByTagName('img_src');
+					var img_src = new Array();
+					for ( var j = 0; j < items.length; j++) {
+						img_src[j] = items[j].textContent;
+					}
+					imgQ = new ImageSelector(questionID, img_src);
+
 					imgQ.QQ = allQuestions[i].getElementsByTagName('title').item(0).textContent;
 					imgQ.CORR = allQuestions[i].getElementsByTagName('correct').item(0).textContent;
-					var items = allQuestions[i].getElementsByTagName('img_src');
-					for ( var j = 0; j < items.length; j++) {
-						imgQ.src[j] = items[j].textContent;
-					}
-					// Her settes bildene i korrekt felt
-					imgQ.img0.setHtml('<img id="land" src="' + imgQ.src[0] + '" height="' + imgQ.getSize() + '"  width="' + imgQ.getSize() + '" />');
-					imgQ.img1.setHtml('<img id="land" src="' + imgQ.src[1] + '" height="' + imgQ.getSize() + '"  width="' + imgQ.getSize() + '" />');
-					imgQ.img2.setHtml('<img id="land" src="' + imgQ.src[2] + '" height="' + imgQ.getSize() + '"  width="' + imgQ.getSize() + '" />');
-					imgQ.img3.setHtml('<img id="land" src="' + imgQ.src[3] + '" height="' + imgQ.getSize() + '"  width="' + imgQ.getSize() + '" />');
 					items = allQuestions[i].getElementsByTagName('img_txt');
 					for ( var j = 0; j < items.length; j++) {
 						imgQ.txt[j] = items[j].textContent;
@@ -725,10 +698,104 @@ function loadQuestions() {
  *            variabelen som skal vurderes.
  */
 function isAValidPhoneNumber(n) {
-	n = n.replace(/\s/g,'');
+	n = n.replace(/\s/g, '');
 	if (n[0] == '+') {
 		n = n.substring(1, n.length);
 	}
-	if (n.length > 12 || n.length < 8) return false;
+	if (n.length > 12 || n.length < 8)
+		return false;
 	return !isNaN(n - 0);
+}
+
+var Base64 = {
+
+	// private property
+	_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+
+	// public method for encoding
+	encode : function(input) {
+		var output = "";
+		var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+		var i = 0;
+
+		input = Base64._utf8_encode(input);
+
+		while (i < input.length) {
+
+			chr1 = input.charCodeAt(i++);
+			chr2 = input.charCodeAt(i++);
+			chr3 = input.charCodeAt(i++);
+
+			enc1 = chr1 >> 2;
+			enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+			enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+			enc4 = chr3 & 63;
+
+			if (isNaN(chr2)) {
+				enc3 = enc4 = 64;
+			} else if (isNaN(chr3)) {
+				enc4 = 64;
+			}
+
+			output = output + this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) + this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+
+		}
+
+		return output;
+	},
+
+	// private method for UTF-8 encoding
+	_utf8_encode : function(string) {
+		string = string.replace(/\r\n/g, "\n");
+		var utftext = "";
+
+		for ( var n = 0; n < string.length; n++) {
+
+			var c = string.charCodeAt(n);
+
+			if (c < 128) {
+				utftext += String.fromCharCode(c);
+			} else if ((c > 127) && (c < 2048)) {
+				utftext += String.fromCharCode((c >> 6) | 192);
+				utftext += String.fromCharCode((c & 63) | 128);
+			} else {
+				utftext += String.fromCharCode((c >> 12) | 224);
+				utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+				utftext += String.fromCharCode((c & 63) | 128);
+			}
+
+		}
+
+		return utftext;
+	},
+
+	// private method for UTF-8 decoding
+	_utf8_decode : function(utftext) {
+		var string = "";
+		var i = 0;
+		var c = c1 = c2 = 0;
+
+		while (i < utftext.length) {
+
+			c = utftext.charCodeAt(i);
+
+			if (c < 128) {
+				string += String.fromCharCode(c);
+				i++;
+			} else if ((c > 191) && (c < 224)) {
+				c2 = utftext.charCodeAt(i + 1);
+				string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+				i += 2;
+			} else {
+				c2 = utftext.charCodeAt(i + 1);
+				c3 = utftext.charCodeAt(i + 2);
+				string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+				i += 3;
+			}
+
+		}
+
+		return string;
+	}
+
 }
