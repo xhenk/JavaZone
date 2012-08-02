@@ -1,5 +1,5 @@
 // Globale variable for hver side og viktige elementer:
-var APACHE_AND_PHP = true;
+var APACHE_AND_PHP = false;
 var titlebar; // Titteltekst med hjem-knapp
 var currentPage; // Inneholder hvilken side man befinner seg i
 var firstPage; // Førstesiden med startknapp
@@ -16,11 +16,11 @@ var regPath = '../reg.php?';// Adressen til registreringssiden
 var globAnsCnt = 0; // Brukes for å holde styr på hvor mange oppgaver som er
 // lastet foreløpig
 var totQuestions = 0; // Totalt antall oppgaver i quiz-fila.
-var quizInfo, lastPageInfo; // Informasjon på første og siste side.
+var quizInfo, lastPageInfo, lastPageText; // Informasjon på første og siste side.
 var firstClick = true; // Hjelp til å håndtere klikking på Slider-oppgaver
 var QUIZ_PATH = '../Quiz/JavaZone2012.quiz'; // Adressen til quizfila.
 
-/** Her starter alt! */
+/* Her starter alt! */
 Ext.application({
 	name : 'SteriaQuiz',
 
@@ -33,9 +33,9 @@ Ext.application({
 
 /**
  * Konstruktør for kartsider. OBS: denne er ikke i bruk -- se dokumentasjon
- * 
+ *
  * function Map() { / var thisMap = this; var questionID;
- * 
+ *
  * this.handleMovement = function() { if (!this.lastEvent) return; if
  * (this.lastEvent.getTime() + 500 > new Date().getTime()) return; var _map =
  * this.gmap.getMap(); if (this.marker) { this.marker.setMap(null); }
@@ -50,7 +50,7 @@ Ext.application({
  * fillColor : '#AA0000' }); this.cap.bindTo('center', this.marker, 'position');
  * this.flat = (Math.floor(this.mapCenter.lat() * 1000) / 1000); this.flng =
  * (Math.floor(this.mapCenter.lng() * 1000) / 1000); };
- * 
+ *
  * this.createMapPage = function(question) { var pos = new
  * google.maps.LatLng(65.83878, 13.88672); var x = (document.height - 75);
  * this.gmap = Ext.create('Ext.Map', { xtype : 'map', useCurrentLocation :
@@ -64,13 +64,13 @@ Ext.application({
  * tap : function(button, event) { answers[0] = mapQ.mapCenter;
  * carousel.setActiveItem(3); Ext.Msg.alert('Oppgave 2', sliderQ.QQ,
  * Ext.emptyFn); } } } ] }); }
- * 
+ *
  * this.delay = function(func) { this.lastEvent = new Date(); setTimeout(func,
  * 500); }
- * 
+ *
  * this.placeMarker = function(location) { this.marker = new
  * google.mapsF.Marker({ // position : location, map : this.gmap }); }
- * 
+ *
  * this.createMapPage(); };
  */
 /**
@@ -112,7 +112,7 @@ function Slider() {
 
 /**
  * Konstruktør for radiobuttonspørsmålsider. Lager et panel med radio buttons.
- * 
+ *
  * [tittel][q1][q2]...[qn]
  */
 function RadioBtnQuestion(args) {
@@ -155,9 +155,10 @@ function RadioBtnQuestion(args) {
 	});
 }
 
+var htc_des_click = false;
 /**
  * Konstruktør for bildevalgoppgaven
- * 
+ *
  * @param qid
  *            Oppgavenummer
  * @param img_src
@@ -165,7 +166,12 @@ function RadioBtnQuestion(args) {
  */
 function ImageSelector(qid, img_src) {
 
+
 	this.regAns = function(num) {
+		if (Ext.os.is.android && !htc_des_click) {
+			htc_des_click = true;
+			return;
+		}
 		answers[qid] = num;
 		carousel.setActiveItem(carousel.getActiveIndex() + 1);
 	}
@@ -254,7 +260,7 @@ function initStep2() {
 
 /**
  * Bytter skjermbilde
- * 
+ *
  * @param to
  *            Panelet det skal byttes til.
  */
@@ -395,17 +401,9 @@ function createRegPage() {
 				align : 'stretchmax',
 				type : 'vbox'
 			},
-			items : [ nameField, emailField, phoneField, {
-				xtype : 'button',
-				id : 'fjern',
-				handler : function(button, event) {
-					nameField.setValue('');
-					emailField.setValue('');
-					phoneField.setValue('');
-				},
-				itemId : 'fjern',
-				text : 'Fjern',
-			}, {
+			items : [ nameField, emailField, phoneField,
+
+			{
 				xtype : 'button',
 				id : 'registrer',
 				itemId : 'registrer',
@@ -445,7 +443,12 @@ function createRegPage() {
 					xmlhttp.send(null);
 					xmlhttp.onreadystatechange = function() {
 						if (xmlhttp.readyState == 4) {
-							lastPageInfo.setHtml(xmlhttp.responseText + '<br>' + lastPageInfo.getHtml());
+							if (xmlhttp.responseText.length < 1) {
+								Ext.Msg.alert('Feil', 'Ikke kontakt med registreringsserver!', Ext.emptyFn);
+								setTimeout(function() { switchTo(regPage); }, 4000);
+								return;
+							}
+							lastPageInfo.setHtml(xmlhttp.responseText + '<br>' + lastPageText);
 							// Hvis feilmelding, la
 							// personen registrere
 							// pÃ¥ nytt.
@@ -457,12 +460,24 @@ function createRegPage() {
 
 							} else {
 								button.setDisabled(false);
+								switchTo(lastPage);
+								setTimeout(function() { switchTo(regPage); }, 4000);
 							}
 						}
 
 					};
 				}
-			} ]
+			},{
+				xtype : 'button',
+				id : 'fjern',
+				handler : function(button, event) {
+					nameField.setValue('');
+					emailField.setValue('');
+					phoneField.setValue('');
+				},
+				itemId : 'fjern',
+				text : 'Fjern',
+			}]
 		}, {
 			xtype : 'panel',
 			defaults : {
@@ -480,7 +495,7 @@ function createRegPage() {
 
 /**
  * Legger parametrene til registreringsserveradressen
- * 
+ *
  * @param name
  *            Brukerens navn
  * @param email
@@ -489,7 +504,7 @@ function createRegPage() {
  *            Brukerens telefonnummer
  * @param ans
  *            Alle brukerens svar
- * 
+ *
  * @returns Adressen til registreringsserveren med parametre
  */
 function createRegPath(name, email, phone, ans) {
@@ -510,8 +525,8 @@ function createRegPath(name, email, phone, ans) {
 	retval += '&answers=' + ans;
 	console.log(retval);
 	if (!APACHE_AND_PHP) {
-		retval = Base64.encode(retval);	
-	} 
+		retval = Base64.encode(retval);
+	}
 	console.log(retval);
 	return regPath + retval;
 }
@@ -547,7 +562,7 @@ function createCarousel() {
 
 /**
  * Henter spørsmålene fra quizserveren
- * 
+ *
  * @param quizPath
  */
 function getQuestions(quizPath) {
@@ -561,6 +576,7 @@ function getQuestions(quizPath) {
 	var allQuestions;
 	xmlhttp.open('GET', quizPath, true);
 	xmlhttp.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+	//xmlhttp.setRequestHeader("", "text/plain;charset=UTF-8");
 	xmlhttp.send(null);
 	var q = 0;
 	xmlhttp.onreadystatechange = function() {
@@ -573,7 +589,7 @@ function getQuestions(quizPath) {
 			// Sett tittel:
 			document.title = doc.documentElement.getElementsByTagName('title').item(0).textContent;
 			quizInfo = doc.documentElement.getElementsByTagName('info').item(0).textContent;
-			lastPageInfo.setHtml(doc.documentElement.getElementsByTagName('lastPageInfo').item(0).textContent);
+			lastPageText = doc.documentElement.getElementsByTagName('lastPageInfo').item(0).textContent;
 
 			totQuestions = allQuestions.length;
 			var questionID = 0;
@@ -622,19 +638,18 @@ function getQuestions(quizPath) {
 
 					q++;
 				} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'map') {
+					/*
 					// Her behandles kartoppgavene. Denne delen er ikke i bruk.
 					var title = allQuestions[i].getElementsByTagName('title').item(0).textContent;
 					mapQ.mapQQ = title;
 					mapQ.THRESH = allQuestions[i].getElementsByTagName('threshold')[0].textContent;
-					mapQ.CORR_lat = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lat')[0].textContent;
-					mapQ.CORR_lng = allQuestions[i].getElementsByTagName('correct')[0].getElementsByTagName('lng')[0].textContent;
 					carousel.add(mapQ.gmap);
 					mapQ.questionID = questionID;
+					*/
 				} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'slider') {
 					// Her behandles slider-oppgavene
 					sliderQ = new Slider();
 					sliderQ.QQ = allQuestions[i].getElementsByTagName('title').item(0).textContent;
-					sliderQ.CORR = allQuestions[i].getElementsByTagName('correct').item(0).textContent;
 					carousel.add(sliderQ.house);
 					sliderQ.questionID = questionID;
 				} else if (allQuestions[i].getElementsByTagName('type').item(0).textContent == 'imgsel') {
@@ -648,7 +663,6 @@ function getQuestions(quizPath) {
 					imgQ = new ImageSelector(questionID, img_src);
 
 					imgQ.QQ = allQuestions[i].getElementsByTagName('title').item(0).textContent;
-					imgQ.CORR = allQuestions[i].getElementsByTagName('correct').item(0).textContent;
 					items = allQuestions[i].getElementsByTagName('img_txt');
 					for ( var j = 0; j < items.length; j++) {
 						imgQ.txt[j] = items[j].textContent;
@@ -693,7 +707,7 @@ function loadQuestions() {
 /**
  * Hjelpefunksjon til telefonnummervalidering. Vurderer om en variabel er et
  * tall
- * 
+ *
  * @param n
  *            variabelen som skal vurderes.
  */

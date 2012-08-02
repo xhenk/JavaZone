@@ -15,7 +15,7 @@
 							<td>
 								<div id="padding"></div>
 							</td>
-							<td id="h1heading">Deltakerliste Sterias surrequiz 2012</td>
+							<td id="h1heading">Deltakerliste Sterias JavaZone-quiz 2012</td>
 						</tr>
 					</table>
 					<div id="padding"></div>
@@ -30,13 +30,6 @@
 								</tr>
 							</thead>
 							<tfoot>
-								<tr>
-									<td>&#160;</td>
-									<td>
-										<em>Personinformasjon lagres hos Steria fram til trekningen.</em>
-									</td>
-									<td class="rounded-foot-right"></td>
-								</tr>
 							</tfoot>
 							<tbody>
 								<xsl:for-each select="scoreboard/entry">
@@ -58,11 +51,13 @@
 								</xsl:for-each>
 							</tbody>
 						</table>
+						<p></p>
+						<em id='persInfo'>Personinformasjon lagres hos Steria fram til trekningen.</em>
 					</div>
-					<p>
-						Uavgjort?
-						<button onClick="drawWinner()">Trekk en vinner</button>
-						(uferdig)
+					<p id='drawWinner'>
+						Uavgjort? 
+						<p></p>
+						<button id='Btn' onClick="drawWinner()">Trekk en vinner</button>
 					</p>
 					<p>
 						<img src="sterialogo.gif" />

@@ -4,23 +4,29 @@
 \usepackage{amsfonts}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
-\usepackage[english]{babel}
 \usepackage[centering,includeheadfoot]{geometry}
 \usepackage{color}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{calc,blindtext}
 \usepackage{graphicx}
-\usepackage{amssymb}\author{Henning Klevjer\\hennikl@ifi.uio.no}
+\usepackage{amssymb}
+\author{Henning Klevjer og Esther Bloemendaal}
 \title{SteriaQuiz\\teknisk dokumentasjon}
 \date{20. Juli 2012}
 \renewcommand{\figurename}{Figur}
+\renewcommand{\contentsname}{Innhold}
 \usepackage{listings}
-\lstset{basicstyle=\footnotesize, frame=single, captionpos=t, xleftmargin=0.5em, framexleftmargin=0em}
+\lstset{frame=single, captionpos=t, xleftmargin=0.5em, framexleftmargin=0em}
+\makeindex
 \begin{document}
 	\maketitle
+	\pagebreak
+	\tableofcontents
+	\pagebreak
 	\section{SteriaQuiz}
 		Steriaquizen er laget for profilering av Steria på konferanser (JavaZone, etc.), bedriftspresentasjoner og liknende. Den er i hovedsak skrevet i javascript, og bruker Sencha Touch 2-APIet\footnote{http://sencha.com} til alt grafisk.
-		Registrering av svar foregår i PHP\footnote{Det \textit{døende} serversidespråket} mot en XML-fil. 
+		
+		Programmet kjører på en hjemmelaget server skrevet i Java. Dette har vi gjort for å unngå å bruke PHP og Apache (unødvendig mye kluss), men ikke minst for å få spesialtilpasset tilgangskontroll til filene serveren hoster, da spesielt muligheten til å lese korrekte svar. Quizen fungerer altså med Apache+PHP\footnote{Det \textit{døende} serversidespråket}, men da må quizsvarene separeres i egen fil for å ikke være offentlig lesbare.
 		
 		Presentasjon av deltakere er gjort i XML med stylesheets i XSL og CSS, i tillegg til lett javascripting for å trekke en vinner.
 		
@@ -41,19 +47,22 @@
 			Dette betyr altså at Opera og Internet Explorer ikke støttes, hverken på mobiltelefon eller ellers. 
 			
 	\section{Deploye på server} 
-		SteriaQuizen har vært testet lokalt med Apache 2.2 og PHP 5, og bør fungere på en hvilken som helst server som støtter PHP. Brukere bør komme inn i quizen via en link til app.html, gjerne hjulpet av url-forkorter eller QR-kode\footnote{Selv om nesten ingen på jorda liker, bruker eller trenger QR-koder kan det være at den ene promillen som har QR-scanner og lyst til å bruke den dukker opp på JavaZone. Tenk så fornøyde de blir når de kan scanne QR-kodene!}. 
+	
+		SteriaQuizen har vært testet lokalt med Apache 2.2 og PHP 5, og bør fungere på en hvilken som helst server som støtter PHP. I tillegg, som nevnt over, er det skrevet en quiz-server \texttt{SteriaQuizServer} som kan sanere quizfila før sending til mobiltelefonen. Sistnevnte er altså enklest og sikrest (men kanskje ikke fri for bugs og idiotiske \textit{løsninger}).
 		
-		Det er også utviklet en egen server hvor man slipper bruk av PHP (dette er tross alt JavaZone), men heller redirecter PHP-forespørsler til en handler i serverkoden. Den største forskjellen fra Apache-kjøringen er at parametrene til \texttt{reg.php} sendes Base64-kodet, for å støtte spesialtegn i navn, blant annet.
+		Brukere bør komme inn i quizen via en link til \texttt{app.html}, gjerne hjulpet av url-forkorter eller QR-kode\footnote{Selv om nesten ingen på jorda liker, bruker eller trenger QR-koder kan det være at den ene promillen som har QR-scanner og lyst til å bruke den dukker opp på JavaZone. Tenk så fornøyde \textit{de} blir når de kan scanne QR-kodene!}. 
+		
+		På den hjemmelagde javaserveren redirectes PHP-forespørsler til en handler i serverkoden \texttt{SteriaQuiz.validateParams()}. Den største forskjellen fra Apache-kjøringen er at parametrene til \texttt{reg.php} sendes Base64-kodet, for å støtte spesialtegn i navn.
 		\\[\baselineskip]
 		\noindent\colorbox{YellowOrange}{\makebox[\textwidth-2\fboxsep][l]{\bfseries\color{white} 
 		Viktig
 		}}
 		\\[\baselineskip]
-		Skal man bruke den hjemmelagde serveren må man sette variablen \texttt{APACHE\_AND\_PHP} til \texttt{false} i \texttt{app.js}. Dette for at klienten må velge hvorvidt parametrene skal kodes om eller ikke. Skal man kjøre både Apache+PHP og den hjemmelagde serveren må man ha to utgaver av \texttt{app.js}, eller en smartere måte å velge koding eller ikke på.
+		Skal man bruke den hjemmelagde serveren må man sette variablen \texttt{APACHE\_AND\_PHP} til \texttt{false} i \texttt{app.js}. Dette for at klienten må velge hvorvidt parametrene skal kodes om eller ikke. Skal man kjøre både Apache+PHP og den hjemmelagde serveren må man ha to utgaver av \texttt{app.js}, eller en smartere måte å velge koding eller ikke på. Evt. implementere Base64 i \texttt{reg.php} og splitte parametre etter dekoding.
 			
 	\section{Quiz-fila}
 		Quiz-fila definerer oppgavene, løsninger og informasjon om gevinst og trekning. Den er skrevet i XML-format og endres med en fritt valgt tekstbehandler. Hver quiz-fil støtter ett \texttt{<quiz>}-element. Under \texttt{<quiz>} er det en tittel, \texttt{<title>} og to informasjonselementer, \texttt{<info>} som beskriver quizen, og \texttt{<lastPageInfo>} som blir vist til brukeren etter at svarene er registrert.
-		Ett \texttt{<quiz>}-element kan inneholde evig mange oppgaver, \texttt{<question>}. Hvert \texttt{<question>} består alltid av kun en \texttt{<type>}, en \texttt{<title>} og \texttt{<correct>}, der \texttt{<type>} er en av paneltypene beskrevet under, i punkt \ref{sec:mobs}, \texttt{<title>} er tittelen (oppgaveteksten) og \texttt{<correct>} beskriver svaret man skal fram til i oppgaven. Programmet regner 0 som det første svaret.
+		Ett \texttt{<quiz>}-element kan inneholde evig mange oppgaver, \texttt{<question>}. Hvert \texttt{<question>} består alltid av kun en \texttt{<type>}, en \texttt{<title>} og \texttt{<correct>}, der \texttt{<type>} er en av paneltypene beskrevet under, i punkt \ref{sec:pans}, \texttt{<title>} er tittelen (oppgaveteksten) og \texttt{<correct>} beskriver svaret man skal fram til i oppgaven. Programmet regner 0 som det første svaret.
 		
 		I javascriptet (\texttt{app.js}) er adressen til quizfila hardkodet inn, så om hver quiz har forskjellig navn må dette endres i koden. 
 		\begin{figure}
@@ -62,7 +71,6 @@
 			\caption{Quiz-fila}
 		\end{figure}
 	\section{Mobilsiden}
-		\label{sec:mobs}
 		Mobilsiden -- altså selve quizen -- er en samling Sencha-paneler, hver definert i sin variabel. Disse kan fjernes og legges til i quizen ved at man lager flere instanser av samme type panel. Siden noe av GUIet som genereres med Sencha trenger spørsmåldata for å lastes, gjøres initialiseringen i to faser, \texttt{initStep1()} og \texttt{initStep2()}. Steg to settes i gang når spørsmålene er lastet.	Metoden \texttt{switchTo()} bytter mellom vinduer.
 		\subsection{Kjøring}
 		Førstesiden inneholder en startknapp og første informasjonsfelt fra quiz-fila. Når man etter å ha trykket på startknappen kommer til første oppgave åpnes en ``karusell''\footnote{Ext.carousel.Carousel i Sencha API-et}, en sencha-container som inneholder alle oppgavene. Karusellen gjør det mulig å ``swipe'' mellom spørsmålene. Hver ``swipe'' trigger en meldingsboks med oppgaveteksten der dette ikke er skrevet på siden. 
@@ -77,10 +85,11 @@
 		
 		
 		\subsection{Paneltyper}
-			For å være ekstra presis er det ikke panelene som er forskjellige, men innholdet i dem. Vi har fire forskjellige typer paneler:
+			\label{sec:pans}
+			For å være ekstra presis er det ikke panelene som er forskjellige, men innholdet i dem. Vi har fire forskjellige typer paneler, som presenteres under. Om man ikke liker navnet \texttt{ordinary} på flervalgsspørsmålene kan dette naturligvis endres i koden.
 			\subsubsection*{Map}
 				{\footnotesize \texttt{<type>} i .quiz-fil: \texttt{map}}\\
-				Dette panelet er ikke i bruk. Meningen var at brukeren skulle kunne få oppgaver som f.eks ``Hvor ligger Sterias hovedkontor?'', hvor brukeren zoomer seg inn på kartet og finner (innenfor en satt margin (``threshold'')) stedet med koordinatene angitt i svarvariabelen. Grunnen til at det ikke er i bruk er at oppgavene ble for tungvinne for brukeren og at kartet i seg (Google Maps API) selv bruker for mye ressurser på telefonen, noe som resulterer i en rimelig kjedelig brukeropplevelse, siden oppgaven tar for lang tid.
+				Dette panelet er ikke i bruk. Meningen var at brukeren skulle kunne få oppgaver som f.eks ``Hvor ligger Sterias hovedkontor?'', hvor brukeren zoomer seg inn på kartet og finner (innenfor en satt margin (``threshold'')) stedet med koordinatene angitt i svarvariabelen. Grunnen til at det ikke er i bruk er at oppgavene ble for tungvinne for brukeren og at kartet (Google Maps API) i seg selv bruker for mye ressurser på telefonen, noe som resulterer i en rimelig kjedelig brukeropplevelse, siden oppgaven tar for lang tid.
 			\subsubsection*{Slider}
 			{\footnotesize \texttt{<type>} i .quiz-fil: \texttt{slider}}\\
 				Slider-panelet brukes for at brukeren skal velge et område i et bilde som samsvarer med en fasitverdi fra quiz-fila. Vi har brukt dette panelet til spørsmålet ``Hvor høyt er bygget hvor Steria har sitt norske hovedkontor''. Etasjen bestemmes av området brukeren trykker på, med en event hook på et \texttt{<div>}-element som trekker ut hvor på siden (i y-aksen) man har trykket. Dette tallet brukes til å regne ut hvilken etasje det er man gjetter på i bildet. Denne spesielle utregningen er hardkodet.
@@ -130,7 +139,7 @@
 			
 	
 	\section{Kodekommentarer}
-	\subsubsection*{Globale variable}
+	\subsection*{Globale variable}
 		\begin{itemize}
 		\item[\texttt{\textbf{APACHE\_AND\_PHP}}]	Er true hvis man kjører Apache, false hvis man bruker Java-serveren.
 		\item[\texttt{\textbf{titlebar}}]	  Titteltekst med hjem-knapp
@@ -147,12 +156,13 @@
 		\item[\texttt{\textbf{globAnsCnt}}]	Brukes for å holde styr på antall oppgaver
 		\item[\texttt{\textbf{totQuestions}}]	Totalt antall oppgaver
 		\item[\texttt{\textbf{quizInfo}}]	Informasjon for første side.
-		\item[\texttt{\textbf{lastPageInfo}}]	Informasjon for siste side.
+		\item[\texttt{\textbf{lastPageInfo}}]	Informasjonsholder for siste side.
+		\item[\texttt{\textbf{lastPageText}}]	Teksten på siste side.
 		\item[\texttt{\textbf{firstClick}}]	Hjelp til å håndtere klikking på Slider-oppgaver
 		\item[\texttt{\textbf{QUIZ\_PATH}}]	Adressen til quizfila.
 		\end{itemize}
 		
-	\subsubsection*{funksjoner}
+	\subsection*{funksjoner}
 		\begin{itemize}
 		\item[\texttt{\textbf{Slider()}}]	Konstruktør til slider-"klassen".
 		\item[\texttt{\textbf{RadioBtnQuestion()}}]	Konstruktør for radiobuttonspørsmålsider. Lager et panel med radio buttons. Parameterformat: [tittel][q1][q2]...[qn]
@@ -168,7 +178,7 @@
 		\item[\texttt{\textbf{createCarousel()}}]	Genererer spørsmålskarusellen
 		\item[\texttt{\textbf{getQuestions()}}]	Henter spørsmålene fra quizserveren
 		\item[\texttt{\textbf{loadQuestions()}}]	Henter spørsmålene fra localStorage
-		\item[\texttt{\textbf{isANumber()}}]	Hjelpefunksjon til telefonnummervalidering. Vurderer om en variabel er et tall.
+		\item[\texttt{\textbf{isAValidPhoneNumber()}}]	Hjelpefunksjon til telefonnummervalidering. Vurderer om en variabel er et tall.
 		\end{itemize}
 	\subsection*{Fotnoter}
 	{\footnotesize
@@ -217,10 +227,11 @@
     \javadocs			Dokumentasjon av prosjektet
     \src			Kildekoden til robotprogrammet
         \Lego.java
-
+\end{lstlisting}
+\pagebreak
+\begin{lstlisting}[caption={De viktigste filene i prosjektet, forts.}, label=amb]
 \Quiz\				Tekstinnhold til quizen
     \JavaZone2012.quiz		XML-fil med all quizinfo
-    \JavaZone2012.test		Testfil til samme formål
 
 \Sencha				Presentasjonen av quizen
     \app.html			Siden som inneholder quizen
@@ -230,16 +241,6 @@
     \sterialogo.gif		Startknapp for quizen
     \stil.css			Stilinnhold til quizen
 
-\Sencha-test			Samme som over - testmappe.
-    \app.html
-    \app.js
-    \country_de.png
-    \country_fr.png
-    \country_no.png
-    \country_se.png
-    \steria-bg.png
-    \sterialogo.gif
-    \stil.css
 \SteriaQuizServer
     \src
         Server.java		Serverprogrammet. Kjører på port 80

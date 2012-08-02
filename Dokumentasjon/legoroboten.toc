@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {1}Legoroboten}{3}
+\contentsline {section}{\numberline {2}Dette b\IeC {\o }r du vite for \r a bruke roboten}{3}
+\contentsline {section}{\numberline {3}Dette b\IeC {\o }r du vite for \r a omprogrammere roboten}{4}
+\contentsline {section}{\numberline {4}Troubleshooting}{5}

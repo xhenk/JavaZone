@@ -1,0 +1,124 @@
+[13:13:38] INFO> 	GET /scoreboard.xml /0:0:0:0:0:0:0:1:80 /0:0:0:0:0:0:0:1:45133
+[13:13:38] INFO> 	GET /scoreboard-pub-style.xsl /0:0:0:0:0:0:0:1:80 /0:0:0:0:0:0:0:1:45133
+[13:13:38] INFO> 	GET /scoreboard-style.css /0:0:0:0:0:0:0:1:80 /0:0:0:0:0:0:0:1:45133
+[13:13:38] INFO> 	GET /scoreboard.js /0:0:0:0:0:0:0:1:80 /0:0:0:0:0:0:0:1:45134
+[13:13:38] INFO> 	GET /sterialogo.gif /0:0:0:0:0:0:0:1:80 /0:0:0:0:0:0:0:1:45133
+[13:13:38] INFO> 	GET /favicon.ico /0:0:0:0:0:0:0:1:80 /0:0:0:0:0:0:0:1:45133
+[13:16:07] INFO> 	GET /scoreboard.xml
+[13:16:07] INFO> 	GET /scoreboard-pub-style.xsl
+[13:16:07] INFO> 	GET /scoreboard-style.css
+[13:16:07] INFO> 	GET /scoreboard.js
+[13:16:07] INFO> 	GET /sterialogo.gif
+[13:16:07] INFO> 	GET /favicon.ico
+[13:23:06] INFO> 	GET /scoreboard.xml
+[13:23:06] INFO> 	GET /scoreboard-pub-style.xsl
+[13:23:06] INFO> 	GET /scoreboard-style.css
+[13:23:06] INFO> 	GET /scoreboard.js
+[13:23:06] INFO> 	GET /sterialogo.gif
+[13:23:07] INFO> 	GET /favicon.ico
+[13:23:13] INFO> 	GET /scoreboard.xml
+[13:23:13] INFO> 	GET /scoreboard-pub-style.xsl
+[13:23:13] INFO> 	GET /scoreboard-style.css
+[13:23:13] INFO> 	GET /scoreboard.js
+[13:23:13] INFO> 	GET /sterialogo.gif
+[13:23:15] INFO> 	GET /scoreboard.xm
+[13:23:15] INFO> 	GET /scoreboard-pub-style.xsl
+[13:23:15] INFO> 	GET /scoreboard-style.css
+[13:23:15] INFO> 	GET /sterialogo.gif
+[13:23:18] INFO> 	GET /scoreboard.
+[13:23:58] INFO> 	GET /scoreboard.
+[13:24:14] INFO> 	GET /scoreboard.
+[13:24:58] INFO> 	GET /scoreboard.
+[13:25:08] INFO> 	GET /scoreboard.
+[13:25:35] INFO> 	GET /s
+[13:25:36] INFO> 	GET /favicon.ico
+[13:25:45] INFO> 	GET /
+[13:25:53] INFO> 	GET /C:/temp
+[13:25:53] ERROR>	404 finner ikke \C:\temp
+[13:27:06] INFO> 	GET /C:/temp
+[13:28:04] INFO> 	GET /scoreboard.xml
+[13:28:04] ERROR>	Kunne ikke hente fil: C:\scoreboard.xml
+[13:28:04] INFO> 	GET /favicon.ico
+[13:28:04] ERROR>	Kunne ikke hente fil: C:\favicon.ico
+[13:28:27] INFO> 	GET /scoreboard.xml
+[13:29:23] INFO> 	GET /scoreboard.xml
+[13:29:47] INFO> 	GET /scoreboard.xml
+[13:30:10] INFO> 	GET /scoreboard-pub-style.xsl
+[13:30:20] INFO> 	GET /scoreboard.xml
+[13:30:20] INFO> 	GET /scoreboard-pub-style.xsl
+[13:30:20] INFO> 	GET /scoreboard-style.css
+[13:30:20] INFO> 	GET /scoreboard.js
+[13:30:20] INFO> 	GET /sterialogo.gif
+[13:30:20] INFO> 	GET /favicon.ico
+[13:30:25] INFO> 	GET /
+[13:30:27] INFO> 	GET /scoreboard.xml
+[13:30:27] INFO> 	GET /scoreboard-pub-style.xsl
+[13:30:27] INFO> 	GET /scoreboard-style.css
+[13:30:27] INFO> 	GET /scoreboard.js
+[13:30:27] INFO> 	GET /sterialogo.gif
+[13:30:29] INFO> 	GET /scoreboard.xml
+[13:30:29] INFO> 	GET /scoreboard-pub-style.xsl
+[13:30:29] INFO> 	GET /scoreboard-style.css
+[13:30:29] INFO> 	GET /scoreboard.js
+[13:30:29] INFO> 	GET /sterialogo.gif
+[13:30:32] INFO> 	GET /scoreboard.xmlf
+[13:30:32] ERROR>	Kunne ikke hente fil: C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\scoreboard.xmlf
+[13:30:34] INFO> 	GET /scoreboard.
+[13:30:34] ERROR>	Kunne ikke hente fil: C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\scoreboard.
+[13:30:50] INFO> 	GET /
+[13:31:05] INFO> 	GET /
+[13:31:09] INFO> 	GET /"&"
+[13:31:09] ERROR>	Kunne ikke hente fil: C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\"&"
+[13:31:26] INFO> 	GET /"..."
+[13:31:26] ERROR>	Kunne ikke hente fil: C:\Program Files (x86)\Apache Software Foundation\Apache2.2\htdocs\"..."
+[13:31:42] INFO> 	GET /
+[13:31:43] INFO> 	GET /scoreboard.xml
+[13:31:43] INFO> 	GET /scoreboard-pub-style.xsl
+[13:31:43] INFO> 	GET /scoreboard-style.css
+[13:31:43] INFO> 	GET /scoreboard.js
+[13:31:44] INFO> 	GET /sterialogo.gif
+[13:31:46] INFO> 	GET /Dokumentasjon/legoroboten.pdf
+[13:31:53] INFO> 	GET /Dokumentasjon/SteriaQuiz-teknisk.pdf
+[13:32:33] INFO> 	GET /
+[13:32:33] INFO> 	GET /favicon.ico
+[13:32:34] INFO> 	GET /Dokumentasjon/SteriaQuiz-teknisk.pdf
+[13:38:39] INFO> 	GET /
+[13:38:39] INFO> 	GET /favicon.ico
+[13:38:40] INFO> 	GET /Sencha/app.html
+[13:38:40] INFO> 	GET /Sencha/stil.css
+[13:38:40] INFO> 	GET /Sencha/app.js
+[13:38:40] INFO> 	GET /Quiz/JavaZone2012.quiz
+[13:38:40] INFO> 	Henter sanert quizfil
+[13:38:41] INFO> 	GET /Sencha/steria-bg.png
+[13:38:41] INFO> 	GET /Sencha/country_de.png
+[13:38:41] INFO> 	GET /Sencha/country_se.png
+[13:38:41] INFO> 	GET /Sencha/sterialogo.gif
+[13:38:41] INFO> 	GET /Sencha/country_fr.png
+[13:38:41] INFO> 	GET /Sencha/country_no.png
+[13:38:57] INFO> 	GET /reg.php
+[13:38:57] INFO> 	Registrerer svar for Ja ja ja
+[13:43:03] INFO> 	GET /Sencha/app.html
+[13:43:03] INFO> 	GET /Sencha/stil.css
+[13:43:03] INFO> 	GET /Sencha/app.js
+[13:43:03] INFO> 	GET /favicon.ico
+[13:43:03] INFO> 	Henter sanert quizfil
+[13:43:03] INFO> 	GET /Sencha/country_fr.png
+[13:43:03] INFO> 	GET /Sencha/steria-bg.png
+[13:43:03] INFO> 	GET /Sencha/country_no.png
+[13:43:03] INFO> 	GET /Sencha/sterialogo.gif
+[13:43:03] INFO> 	GET /Sencha/country_se.png
+[13:43:03] INFO> 	GET /Sencha/country_de.png
+[13:43:05] INFO> 	GET /favicon.ico
+[13:43:20] INFO> 	GET /reg.php
+[13:43:20] INFO> 	Registrerer svar:	Tid: 13:43:20	Navn: Jo Jo	Epost: a@b.rro	Telefon: 48938900	Svar: 27;1;0;3;3;3;	Score: 17
+[13:49:32] INFO> 	GET /Sencha/app.html
+[13:49:32] INFO> 	GET /Sencha/stil.css
+[13:49:32] INFO> 	GET /Sencha/app.js
+[13:49:32] INFO> 	GET /Quiz/JavaZone2012.quiz
+[13:49:32] INFO> 	Henter sanert quizfil
+[13:49:32] INFO> 	GET /Sencha/country_de.png
+[13:49:32] INFO> 	GET /Sencha/sterialogo.gif
+[13:49:33] INFO> 	GET /Sencha/country_se.png
+[13:49:33] INFO> 	GET /Sencha/steria-bg.png
+[13:49:33] INFO> 	GET /Sencha/country_no.png
+[13:49:33] INFO> 	GET /Sencha/country_fr.png

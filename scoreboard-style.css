@@ -18,7 +18,7 @@ body {
 
 #smallborder {
 	padding: 1em;
-	background: #FFBA00;	
+	background: #04315B;	
 }
 
 
@@ -34,17 +34,17 @@ body {
 #winnerheading {
 	font-family: sans-serif;
 	font-size: 2em;
-	color: #FFFFFF;
+	color: #04315B;
 	height:2em;
 	/*document.styleSheets[0].insertRule('winnerheading { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',*/
-	background: #FFBA00;
+	background: #ffffff;
 	font-weight:bolder;
 }
 
 
 #tabcontainer {
 	padding: 45px;
-	background: #FFBA00;
+	background: #ffffff;
 }
 
 #tab
@@ -55,15 +55,16 @@ body {
 	text-align: left;
 	border-collapse: collapse;
 	margin-top: 1em;
-	margin-bottom: 1em;
+	margin-bottom: 3em;
+	background: #f5f5f5;
 }
 #tab thead th
 {
 	padding: 8px;
-	font-weight: normal;
+	font-weight: bold;
 	font-size: 1.75em;
-	color: #039;
-	background: #FFDD33;
+	color: #ffffff;
+	background: #fa5a00;
 }
 
 #tab thead th.right
@@ -74,17 +75,51 @@ body {
 #tab td
 {
 	padding: 8px;
-	background: #FFFFBB;
 	border-top: 1px solid #fff;
-	color: #017E9F;
+	color: #3333;
 	font-size: 1.25em;
 }
 
 
 #tab tr:hover td
 {
-	background: #FFFFAE;
+	background: #666666;
+	color: #ffffff;
 	text-shadow: black 0em 0em 3em;
 }
 
+#persinfo
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-style:normal;
+	font-size: 14px;
+	width: 100%;
+	color: #33333;
+}
 
+#drawWinner
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-style:normal;
+	font-size: 14px;
+	width: 100%;
+	color: #33333;
+}
+
+#Btn
+{
+   font-size:14px;
+   font-family: Sans-Serif;
+   font-weight: bold;
+   color:#ffffff;
+   width:200px;
+   background-color:#666666;
+   border: hidden;
+   padding: 0.5em 0.5em; 
+}
+
+
+#Btn:hover
+{
+	background-color:#fa5a00;
+}

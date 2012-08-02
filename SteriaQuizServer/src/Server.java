@@ -1,17 +1,14 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.Executors;
 
@@ -30,28 +27,28 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.sun.net.httpserver.Headers;
+import sun.misc.BASE64Decoder;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.xml.internal.messaging.saaj.util.Base64;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 public class Server {
 
 	public static final String LOCAL_SERVER_PATH = "C:\\Program Files (x86)\\Apache Software Foundation\\Apache2.2\\htdocs\\";
 	public static final File LOCAL_SERVER_FILE = new File(LOCAL_SERVER_PATH);
 
+	private Logger logger;
+
 	public Server() {
 
+		logger = new Logger();
 		InetSocketAddress addr = new InetSocketAddress(80);
 		HttpServer server = null;
 		try {
 			server = HttpServer.create(addr, 0);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Logger.LogEvent.ERROR, "Kan ikke lage ny server");
 		}
 
 		server.createContext("/", new HTTP());
@@ -62,159 +59,151 @@ public class Server {
 	public static void main(String[] args) throws IOException {
 		new Server();
 	}
-}
 
-class HTTP implements HttpHandler {
-	public void handle(HttpExchange exchange) throws IOException {
-		String requestMethod = exchange.getRequestMethod();
-		if (requestMethod.equalsIgnoreCase("GET")) {
-			Headers requestHeaders = exchange.getRequestHeaders();
-			Set<String> keySet = requestHeaders.keySet();
-			Iterator<String> iter = keySet.iterator();
-			String s = "";
-			while (iter.hasNext()) {
-				String key = iter.next();
-				List<String> values = requestHeaders.get(key);
-				s += key + " = " + values.toString() + "\n";
-			}
-			if (!validateHeaders(s)) {
-				// return;
-			}
-			getWebPage(exchange);
-		}
-	}
+	class HTTP implements HttpHandler {
+		private final FileAndBytes ERROR_404 = new FileAndBytes(null, "404, Filen finnes ikke!".getBytes());
 
-	/**
-	 * Sjekker om dette er en godkjent steria-quiz-henvendelse! Såkalt
-	 * "security by obscurity".
-	 * */
-	private boolean validateHeaders(String s) {
-		return (s.contains("SteriaQuiz"));
-	}
-
-	private void getWebPage(HttpExchange exchange) {
-
-		String path = exchange.getRequestURI().getPath();
-		if (path.equals("/")) {
-			path = "index.html";
-		}
-		// TODO LOG GET + path);
-
-		FileAndBytes fb = getFileContents(path);
-		byte[] fileContents = fb.bytes;
-		File theFile = fb.file;
-		String ctype = getType(theFile);
-		if (ctype.equals("custom/php")) {
-			// Spesialtilfelle: Skal ta imot parametre fra adressen som php
-			// ville gjort.
-
-			fileContents = SteriaQuiz.validateParams(exchange.getRequestURI().getQuery()).getBytes();
-			ctype = "text/plain";
-		}
-		exchange.getResponseHeaders().set("Content-Type", ctype);
-
-		if (fileContents == null)
-			fileContents = ("<center><h1>404</h1><h3>Finner ikke \"" + path + "\"</h3></center>\r\n\n").getBytes();
-		try {
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, fileContents.length);
-			exchange.getResponseBody().write(fileContents);
-			exchange.getResponseBody().close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private String getType(File theFile) {
-		String n = theFile.getName();
-		String ext = n.substring(n.lastIndexOf(".") + 1);
-		if (ext.equals("ico")) {
-			return "image/x-icon";
-		} else if (ext.equals("html")) {
-			return "text/html";
-		} else if (ext.equals("png")) {
-			return "image/png";
-		} else if (ext.equals("xml")) {
-			return "text/xml";
-		} else if (ext.equals("css")) {
-			return "text/css";
-		} else if (ext.equals("js")) {
-			return "text/javascript";
-		} else if (ext.startsWith("php")) {
-			return "custom/php";
-		}
-
-		return "application/octet-stream";
-	}
-
-	private FileAndBytes getFileContents(String path) {
-
-		path = path.replace('/', '\\');
-
-		File theFile = null;
-		if (!Server.LOCAL_SERVER_FILE.isDirectory()) {
-			throw new IllegalArgumentException("Adressen " + path + " er ikke en mappe!");
-		}
-		if (path.contains("/")) {
-			// Dette er inni en annen mappe!
-		}
-
-		Stack<File> files = listAllFiles(Server.LOCAL_SERVER_FILE);
-		for (File f : files) {
-			if (f.getPath().indexOf(path) != -1) {
-				theFile = f;
-				break;
+		public void handle(HttpExchange exchange) throws IOException {
+			String requestMethod = exchange.getRequestMethod();
+			String path = exchange.getRequestURI().getPath();
+			logger.log(Logger.LogEvent.INFO, requestMethod + " " + exchange.getRequestURI().getPath());
+			if (requestMethod.equalsIgnoreCase("GET")) {
+				getWebPage(exchange);
 			}
 		}
 
-		if (theFile.length() > Integer.MAX_VALUE)
+		private void getWebPage(HttpExchange exchange) {
+
+			String path = exchange.getRequestURI().getPath();
+			if (path.equals("/")) {
+				path = "index.html";
+			}
+			// TODO LOG GET + path);
+
+			FileAndBytes fb = getFileContents(path);
+			byte[] fileContents = fb.bytes;
+			File theFile = fb.file;
+			String ctype = getType(theFile);
+			if (ctype.equals("custom/quiz")) {
+				// Spesialtilfelle: Skal levere sanert quizfil.
+				fileContents = SteriaQuiz.createPublicQuizFile();
+				logger.log(Logger.LogEvent.INFO, "Henter sanert quizfil");
+			}
+			if (ctype.equals("custom/php")) {
+				// Spesialtilfelle: Skal ta imot parametre fra adressen som php
+				// ville gjort.
+
+				fileContents = SteriaQuiz.validateParams(exchange.getRequestURI().getQuery()).getBytes();
+				ctype = "text/plain";
+				logger.log(Logger.LogEvent.INFO, "Registrerer svar:\t" + SteriaQuiz.lastRegistered);
+			}
+			exchange.getResponseHeaders().set("Content-Type", ctype);
+
 			try {
-				throw new IOException("Filen er for stor!");
-			} catch (IOException e1) {
-				e1.printStackTrace();
+				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, fileContents.length);
+				exchange.getResponseBody().write(fileContents);
+				exchange.getResponseBody().close();
+			} catch (IOException e) {
+				logger.log(Logger.LogEvent.ERROR, "Kunne ikke skrive filinnhold til socket!");
+				return;
 			}
-		byte[] retb = new byte[(int) theFile.length()];
-		FileInputStream rd = null;
-		try {
-			rd = new FileInputStream(theFile);
-			rd.read(retb);
-			rd.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-		return new FileAndBytes(theFile, retb);
-	}
 
-	/**
-	 * 
-	 * @param root
-	 * @return
-	 */
-	private Stack<File> listAllFiles(File root) {
-		Stack<File> retval = new Stack<File>();
-		for (File f : root.listFiles()) {
-			if (f.getName().charAt(0) != '.') {
-				if (f.isDirectory()) {
-					retval.addAll(listAllFiles(f));
-				} else {
-					retval.add(f);
+		private String getType(File theFile) {
+			if (theFile == null)
+				return "text/plain";
+			String n = theFile.getName();
+			String ext = n.substring(n.lastIndexOf(".") + 1);
+			if (ext.equals("ico")) {
+				return "image/x-icon";
+			} else if (ext.equals("html")) {
+				return "text/html";
+			} else if (ext.equals("png")) {
+				return "image/png";
+			} else if (ext.equals("xml")) {
+				return "text/xml";
+			} else if (ext.equals("pdf")) {
+				return "application/pdf";
+			} else if (ext.equals("quiz")) {
+				return "custom/quiz";
+			} else if (ext.equals("css")) {
+				return "text/css";
+			} else if (ext.equals("js")) {
+				return "text/javascript";
+			} else if (ext.startsWith("php")) {
+				return "custom/php";
+			}
+
+			return "text/plain";
+		}
+
+		private FileAndBytes getFileContents(String path) {
+
+			path = path.replace('/', '\\');
+
+			File theFile = new File(Server.LOCAL_SERVER_PATH + path);
+			if (!Server.LOCAL_SERVER_FILE.isDirectory()) {
+				String err = "Adressen " + path + " er ikke en mappe!";
+				logger.log(Logger.LogEvent.ERROR, err);
+				throw new IllegalArgumentException(err);
+			}
+
+			if (theFile == null) {
+				logger.log(Logger.LogEvent.ERROR, "404 finner ikke " + path);
+				return ERROR_404;
+			}
+
+			if (theFile.length() > Integer.MAX_VALUE) {
+				String err = "Filen er for stor!";
+				logger.log(Logger.LogEvent.ERROR, err);
+				throw new IllegalArgumentException(err);
+			}
+
+			byte[] retb = new byte[(int) theFile.length()];
+			FileInputStream rd = null;
+			try {
+				rd = new FileInputStream(theFile);
+				rd.read(retb);
+				rd.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				logger.log(Logger.LogEvent.ERROR, "Kunne ikke hente fil: " + theFile.getAbsolutePath());
+			}
+			return new FileAndBytes(theFile, retb);
+		}
+
+		/**
+		 * 
+		 * @param root
+		 * @return
+		 */
+		private Stack<File> listAllFiles(File root) {
+			Stack<File> retval = new Stack<File>();
+			for (File f : root.listFiles()) {
+				if (f.getName().charAt(0) != '.') {
+					if (f.isDirectory()) {
+						retval.addAll(listAllFiles(f));
+					} else {
+						retval.add(f);
+					}
 				}
 			}
+			return retval;
+
 		}
-		return retval;
+
+		class FileAndBytes {
+
+			File file;
+			byte[] bytes;
+
+			FileAndBytes(File f, byte[] b) {
+				file = f;
+				bytes = b;
+			}
+		}
 
 	}
-
-	class FileAndBytes {
-
-		File file;
-		byte[] bytes;
-
-		FileAndBytes(File f, byte[] b) {
-			file = f;
-			bytes = b;
-		}
-	}
-
 }
 
 class SteriaQuiz {
@@ -222,6 +211,9 @@ class SteriaQuiz {
 	private static String PUBLIC_SCOREBOARD = "scoreboard.xml";
 	private static String PRIVATE_SCOREBOARD = "scoreboard-private.xml";
 	private static String QUIZ_PATH = "Quiz\\JavaZone2012.quiz";
+
+	// Navnet til sist registrerte bruker
+	static String lastRegistered = "";
 
 	public static String validateParams(String params) {
 
@@ -260,6 +252,54 @@ class SteriaQuiz {
 		storeUser(false, time, name, email, phone, answers, points);
 
 		return "Gratulerer, " + name + " du fikk " + points + " poeng!";
+	}
+
+	/**
+	 * Her plukkes de rette svarene bort fra quizfila som sendes klienten. Dette
+	 * er en stygg måte å gjøre det på. Kunne delt opp i to quizfiler eller
+	 * lagret korrekte et annet sted...
+	 * 
+	 * @return Quizfila uten svar.
+	 */
+	public static byte[] createPublicQuizFile() {
+
+		byte[] retval = null;
+		Scanner scan = null;
+		try {
+			scan = new Scanner(new File(Server.LOCAL_SERVER_PATH + QUIZ_PATH));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String ret = "";
+		String l = "";
+		while (scan.hasNext()) {
+			l = scan.nextLine();
+			if (!isCorrect(l)) {
+				ret += l + '\n';
+			}
+		}
+		return ret.getBytes();
+	}
+
+	private static boolean isCorrect(String l) {
+		if (l.contains("correct"))
+			return true;
+		char[] chrs = l.toCharArray();
+		String _tmp = "";
+		for (int i = 0; i < chrs.length; i += 2) {
+			_tmp += chrs[i];
+		}
+		if (_tmp.contains("correct"))
+			return true;
+		_tmp = "";
+		for (int i = 1; i < chrs.length; i += 2) {
+			_tmp += chrs[i];
+		}
+		if (_tmp.contains("correct"))
+			return true;
+
+		return false;
 	}
 
 	/**
@@ -356,6 +396,7 @@ class SteriaQuiz {
 
 	private static void storeUser(boolean _private, String time, String name, String email, String phone, String answers, String score) {
 
+		lastRegistered = String.format("Tid: %s\tNavn: %s\tEpost: %s\tTelefon: %s\tSvar: %s\tScore: %s", time, name, email, phone, answers, score);
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = null;
 		Document doc = null;
@@ -409,4 +450,67 @@ class SteriaQuiz {
 		}
 	}
 
+}
+
+class Logger {
+
+	private static final boolean ERROR_LOGGING = true, INFORMATION_LOGGING = true;
+	private static final String LOG_PATH = "server.log";
+	private FileWriter wr = null;
+
+	/**
+	 * Logger til wr.
+	 * 
+	 * @param x
+	 *            Alt som skal logges.
+	 * @throws IOException
+	 */
+	public void log(LogEvent event, Object... x) {
+
+		try {
+			wr = new FileWriter(new File(LOG_PATH), true);
+		} catch (IOException e1) {
+			System.err.println("Problemer med å åpne logg for skriving");
+			e1.printStackTrace();
+			return;
+		}
+		Calendar c = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		try {
+			wr.append("[" + dateFormat.format(c.getTime()) + "] ");
+		} catch (IOException e1) {
+			System.err.println("Problemer med å skrive til logg");
+			e1.printStackTrace();
+			return;
+		}
+		if (wr == null) {
+			System.err.println(wr + ">" + x);
+			return;
+		}
+		for (Object o : x) {
+			try {
+				if (event == LogEvent.ERROR && ERROR_LOGGING)
+					wr.append("ERROR>\t" + o);
+				else if (event == LogEvent.INFO && INFORMATION_LOGGING)
+					wr.append("INFO> \t" + o);
+				wr.append('\n');
+				System.err.println(((event == LogEvent.ERROR) ? "ERROR" : "INFO") + ">\t" + o);
+			} catch (IOException e) {
+				System.err.println("Kunne ikke logge >\t" + x);
+				e.printStackTrace();
+				return;
+			}
+		}
+		try {
+			wr.close();
+		} catch (IOException e) {
+			System.err.println("Problemer med å lukke loggfil");
+			e.printStackTrace();
+			return;
+		}
+	}
+
+	public enum LogEvent {
+		ERROR, INFO
+	}
 }

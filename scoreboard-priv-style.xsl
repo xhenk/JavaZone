@@ -14,7 +14,7 @@
 							<td>
 								<div id="padding"></div>
 							</td>
-							<td id="h1heading">Deltakerliste Sterias surrequiz 2012</td>
+							<td id="h1heading">Deltakerliste Sterias JavaZone-quiz 2012</td>
 						</tr>
 					</table>
 					<div id="padding"></div>
@@ -31,16 +31,7 @@
 									<th scope="col" class="right">Poengsum</th>
 								</tr>
 							</thead>
-							<tfoot>
-								<tr>
-									<td>&#160;</td>
-									<td colspan="4">
-										<!-- sensurert <em>Resultatlisten er sensurert! Det ser iallefall slik ut.</em> -->
-										<em>Personinformasjon lagres hos Steria fram til trekningen.</em>
-									</td>
-									<td class="rounded-foot-right"></td>
-								</tr>
-							</tfoot>
+						
 							<tbody>
 								<xsl:for-each select="scoreboard/entry">
 									<xsl:sort data-type="number" select="score" order="descending" />
@@ -69,6 +60,7 @@
 								</xsl:for-each>
 							</tbody>
 						</table>
+						<em id='persInfo'>Personinformasjon lagres hos Steria fram til trekningen.</em>
 					</div>
 					<p>
 						<img src="sterialogo.gif" />

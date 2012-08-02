@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="scoreboard-priv-style.xsl"?>
+<scoreboard><entry><time>13:56:27</time><name>Ja ja</name><score>100</score></entry><entry><time>15:06:37</time><name>Per Pettersen</name><phone>99889988</phone><email>per@pettersen.no</email><score>7</score><answers>28;1;0;1;1;0;</answers></entry><entry><time>08:54:49</time><name>per petterson</name><phone>77445544</phone><email>per@pet.no</email><score>3</score><answers>21;1;1;1;1;0;</answers></entry><entry><time>08:55:37</time><name>siri sol</name><phone>88552233</phone><email>siri@sol.no</email><score>3</score><answers>51;1;2;0;0;2;</answers></entry></scoreboard>

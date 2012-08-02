@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=latex 2012.7.20)  24 JUL 2012 10:19
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=latex 2012.7.20)  1 AUG 2012 10:07
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -158,40 +158,48 @@ File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
+\@indexfile=\write3
+\openout3 = `legoroboten.idx'.
 
+
+Writing index file legoroboten.idx
 (./legoroboten.aux)
 \openout1 = `legoroboten.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
 \c@lstlisting=\count107
-LaTeX Font Info:    Try loading font information for U+msa on input line 12.
+LaTeX Font Info:    Try loading font information for U+msa on input line 13.
  (c:/texlive/2012/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 12.
+LaTeX Font Info:    Try loading font information for U+msb on input line 13.
 
 (c:/texlive/2012/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
-]
-Overfull \hbox (11.56636pt too wide) in paragraph at lines 48--48
+] (./legoroboten.toc)
+\tf@toc=\write4
+\openout4 = `legoroboten.toc'.
+
+[2] [3]
+Overfull \hbox (11.56636pt too wide) in paragraph at lines 52--52
 []\OT1/cmr/bx/n/14.4 Dette b^^\r du vite for ^^Wa om-pro-gram-mere roboten 
  []
 
-[2]
-Overfull \hbox (68.69081pt too wide) in paragraph at lines 89--90
+[4]
+Overfull \hbox (68.69081pt too wide) in paragraph at lines 93--94
 [][]\OT1/cmr/m/n/10 LeJOS NXJ (API og ex-e-cuta-bles for Javautvikling p^^Wa Le
 go NXT): \OT1/cmtt/m/n/10 http://bit.ly/MYml7i 
  []
@@ -199,14 +207,21 @@ go NXT): \OT1/cmtt/m/n/10 http://bit.ly/MYml7i
 File: sterialogo.eps Graphic file (type eps)
 <sterialogo.eps>
 File: lejoslego.eps Graphic file (type eps)
- <lejoslego.eps> [3] (./legoroboten.aux) ) 
+ <lejoslego.eps> [5]
+File: robot.eps Graphic file (type eps)
+ <robot.eps>
+Overfull \hbox (15.0pt too wide) in paragraph at lines 105--106
+[][][] 
+ []
+
+[6] (./legoroboten.aux) ) 
 Here is how much of TeX's memory you used:
- 3076 strings out of 493489
- 37974 string characters out of 3144771
- 95379 words of memory out of 3000000
- 6380 multiletter control sequences out of 15000+200000
+ 3082 strings out of 493489
+ 38032 string characters out of 3144771
+ 95330 words of memory out of 3000000
+ 6381 multiletter control sequences out of 15000+200000
  11839 words of font info for 47 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 27i,8n,32p,479b,1019s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,6n,32p,481b,1019s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on legoroboten.dvi (3 pages, 9596 bytes).
+Output written on legoroboten.dvi (6 pages, 10080 bytes).

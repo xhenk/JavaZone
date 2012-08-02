@@ -13,6 +13,7 @@ $correctAnswers = array();
 
 $sliderPlace = -1;
 $tmpCnt = 0;
+
 $doc -> load('./Quiz/JavaZone2012.quiz');
 $questionElements = $doc -> getElementsByTagName("question");
 foreach ($questionElements as $qElem) {
@@ -28,7 +29,8 @@ foreach ($questionElements as $qElem) {
 	$tmpCnt++;
 }
 
-$doc -> load('scoreboard-private.xml');
+$doc->load('scoreboard-private.xml');
+
 $entries = $doc -> getElementsByTagName("entry");
 $already = false;
 $nulls = false;
@@ -80,7 +82,8 @@ if ($already) {
 			$score = $score + 3;
 		}
 	}
-	
+	$name = utf8_encode($name);
+
 	$scoreboard = $doc -> getElementsByTagName("scoreboard") -> item(0);
 	$element = $doc -> createElement('entry');
 	$scoreboard -> appendChild($element);
@@ -90,14 +93,14 @@ if ($already) {
 	$qux = $doc -> createElement('email', $email);
 	$quux = $doc -> createElement('score', $score);
 	$quuux = $doc -> createElement('answers', $answers);
-	
+
 	$element -> appendChild($foo);
 	$element -> appendChild($bar);
 	$element -> appendChild($baz);
 	$element -> appendChild($qux);
 	$element -> appendChild($quux);
 	$element -> appendChild($quuux);
-	
+
 	/* Write all information to private score board */
 	$output = $doc -> saveXML();
 	$file = fopen("scoreboard-private.xml", "w");
@@ -112,11 +115,11 @@ if ($already) {
 	$foo = $doc -> createElement('time', $time);
 	$bar = $doc -> createElement('name', $name);
 	$quux = $doc -> createElement('score', $score);
-	
+
 	$element -> appendChild($foo);
 	$element -> appendChild($bar);
 	$element -> appendChild($quux);
-	
+
 	/* Write all information to public score board */
 	$output = $doc -> saveXML();
 	$file = fopen("scoreboard.xml", "w");

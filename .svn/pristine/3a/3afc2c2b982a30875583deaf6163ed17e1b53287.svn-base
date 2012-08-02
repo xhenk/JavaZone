@@ -1,0 +1,98 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Henning Klevjer\\hennikl@ifi.uio.no}
+\title{Legoroboten}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize, frame=single, xleftmargin=2.5em, framexleftmargin=2em}
+\begin{document}
+	\maketitle
+	\section{Legoroboten}
+	Legoroboten er ment for å brukes under JavaZone 2012, i tillegg til en Steria-quiz. 
+		\subsubsection*{Hva vi tenker den kan brukes til}
+			Vi ser for oss en konkurranse, separat fra quizen, hvor deltakerne får et antall forsøk på å prøve å kaste godteri mot forskjellige mål på gulvet. Man kan for eksempel plassere ut skåler og pappkopper, og si at for pappkoppene får man fem poeng og skålene ett. Siden roboten er såpass hengslete og lite robust vil den flytte seg litt etter hvert kast, så det er ikke for sannsynlig at man vil kunne treffe det samme flere ganger med en god plassering.
+			
+			Roboten er designet spesielt for å kaste steriadrops, så om alle bruker disse, eller liknende type godteri, bør man få en ålreit konkurranse.
+	
+	\section{Dette bør du vite for å bruke roboten}
+		Roboten skrus på ved et enkelt trykk på den oransje knappen. Når roboten er på får man opp en hovedmeny, og kan igjen trykke på den oransje knappen for å starte robotprogrammet. Mens dette kjører er skjermen blank.
+		
+		\subsubsection*{Før man setter i gang}
+		\begin{enumerate}
+			\item Den bakre armen peker rett opp (den lengste delen av den grå armen står i $90^{\circ}$ vinkel)
+			\item Tauet bør ikke være viklet inn i tannhjulene
+			\item Det bør være nok strøm i batteriene
+			\item Hårstrikkene foran bør være montert og stå stramt
+			\item Det bør være god tilgang på godteri
+		\end{enumerate}	
+		\subsubsection*{En normal kjøring av programmet}
+		\begin{enumerate}
+			\item Deltakeren legger et godteri i ``hånden'' til roboten.
+			\item Deltakeren aktiverer kastearmen ved å enten trykke på avtrekkerknappen eller ta hånden over avstandssensoren rett ved siden av. 
+			\item Roboten trekker i tauet som drar kastearmen bakover
+			\item En arm holder fast i den ``ladde'' kastearmen
+			\item Tauet løsnes, og kastearmens vekt hviler på den bakre armen
+			\item Den bakre armen dytter videre ned, og armen kaster godteri.
+			\item Hurra!
+		\end{enumerate}
+		
+		Programmet kan avsluttes enten ved å trykke på den oransje knappen igjen, eller resette ved å trykke inn den oransje og den mørke knappen samtidig.
+		
+		Det er viktig å vite at NXT-maskinen bruker en del batterier. Hvis man merker at motorene går tregere bør man prøve å bytte batterier. Det kan være lurt å ta med seg et par-tre pakker med batterier til JavaZone. 
+		
+		Tauet som trekker opp kastearmen kan vikle seg inn i tannhjulene, så det kan være lurt å følge med på dette. 
+	
+	\section{Dette bør du vite for å omprogrammere roboten}
+		Programmet er skrevet i Java med LeJOS-biblioteket for Lego NXT. Alt du trenger for å kompilere og kjøre programmet ditt er linket til i fotnotene.
+		
+		\subsubsection*{Kompilering og kjøring}
+		For å kompilere et NXT-program trenger du en egen kompilator, linker og et overføringsprogram spesielt for LeJOS. \texttt{Lego.java} kan enkelt kompileres og overføres til NXT slik: 
+		\begin{itemize}
+			\item[] \texttt{nxjc Lego.java} --- kompilerer
+			\item[] \texttt{nxj -r Lego} --- Linker de brukte delene av LeJOS-biblioteket inn i programmet og kompilerer det til en \texttt{.nxj}-fil. Overfører også programmet til NXT. Obs! Ha NXT-boksen påslått, og USB koblet til.
+		\end{itemize}
+		Når programmet er overført starter det av seg selv, og om ingen modifikasjoner er gjort kan det testes ved å ta hånden over avstandssensoren eller trykke på knappen.
+\pagebreak
+	\section{Troubleshooting}
+		\subsubsection*{Jeg får ikke kompilert/overført programmet!}
+		Får du denne feilmeldingen:
+		\begin{lstlisting}
+leJOS NXJ> Linking...
+leJOS NXJ> Uploading...
+leJOS NXJ> Searching for any NXT using Bluetooth inquiry
+BlueCove version 2.1.0 on winsock
+leJOS NXJ> Failed to find any NXTs
+leJOS NXJ> Failed to connect to any NXT
+No NXT found - is it switched on and plugged in (for USB)?
+BlueCove stack shutdown completed
+		\end{lstlisting}
+		betyr det enkelt og greit at du har glemt å skru på NXT-maskinen eller glemt å koble inn USB-ledningen.
+			
+			\subsubsection*{Jeg får ikke skrudd av roboten!}
+				\begin{itemize}
+					\item[] Reset ved å holde inne den oransje og den mørke knappen.
+					\item[] Ta ut et batteri!
+				\end{itemize}
+				
+			\subsubsection*{Roboten rører seg ikke!}
+			\subsubsection*{Roboten er treig!}		
+			\subsubsection*{Kastearmen er slapp!}
+			\subsubsection*{Ingenting virker!}
+				\begin{itemize}
+					\item[] Bytt batterier!
+				\end{itemize}
+	\subsection*{Fotnoter}
+		\begin{itemize}
+			\item[] LeJOS NXJ (API og executables for Javautvikling på Lego NXT): \texttt{http://bit.ly/MYml7i}
+			\item[] LeJOS NXJ API dokumentasjon: \texttt{http://bit.ly/5ib7zF}
+			\item[] Robotkoden i GitHub: \texttt{http://bit.ly/M6I6YY}
+			\item[] Hjelp til å kompilere, linke og kjøre: \texttt{http://bit.ly/8QSCWd}
+		\end{itemize}
+			\begin{center}
+					\includegraphics[width=100pt]{sterialogo.eps}
+			\end{center}
+	\includegraphics[width=150pt]{lejoslego.eps}
+\end{document}

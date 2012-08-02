@@ -1,0 +1,125 @@
+
+body {
+	background-color: #FFFFFF;
+	margin: 0;
+}
+
+#h1heading {
+	
+	height: 4em;
+	width: 100%;
+	text-align:center;
+	font-family: sans-serif;
+	font-size: 3em;
+	color: #FFFFFF;
+	background: #04315B;
+	font-weight:bolder;
+}
+
+#smallborder {
+	padding: 1em;
+	background: #04315B;	
+}
+
+
+#arrowed {
+	background-image: url('steria-arrow.png');
+	background-repeat:no-repeat;
+	background-position-x: 7em;
+	background-position-y: 0.1em;
+	width: 100px;
+	height: 100px;
+}
+
+#winnerheading {
+	font-family: sans-serif;
+	font-size: 2em;
+	color: #04315B;
+	height:2em;
+	/*document.styleSheets[0].insertRule('winnerheading { text-shadow: red 0em 0em 1em; text-transform:uppercase; height:100px; font-size: 2em}',*/
+	background: #ffffff;
+	font-weight:bolder;
+}
+
+
+#tabcontainer {
+	padding: 45px;
+	background: #ffffff;
+}
+
+#tab
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+	margin-top: 1em;
+	margin-bottom: 3em;
+	background: #f5f5f5;
+}
+#tab thead th
+{
+	padding: 8px;
+	font-weight: bold;
+	font-size: 1.75em;
+	color: #ffffff;
+	background: #fa5a00;
+}
+
+#tab thead th.right
+{
+	text-align:right;
+}
+
+#tab td
+{
+	padding: 8px;
+	border-top: 1px solid #fff;
+	color: #3333;
+	font-size: 1.25em;
+}
+
+
+#tab tr:hover td
+{
+	background: #666666;
+	color: #ffffff;
+	text-shadow: black 0em 0em 3em;
+}
+
+#persinfo
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-style:normal;
+	font-size: 14px;
+	width: 100%;
+	color: #33333;
+}
+
+#drawWinner
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-style:normal;
+	font-size: 14px;
+	width: 100%;
+	color: #33333;
+}
+
+#Btn
+{
+   font-size:14px;
+   font-family: Sans-Serif;
+   font-weight: bold;
+   color:#ffffff;
+   width:200px;
+   background-color:#666666;
+   border: hidden;
+   padding: 0.5em 0.5em; 
+}
+
+
+#Btn:hover
+{
+	background-color:#fa5a00;
+}

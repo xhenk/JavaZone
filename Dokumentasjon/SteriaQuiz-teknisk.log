@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=latex 2012.7.20)  27 JUL 2012 10:22
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/W32TeX) (format=latex 2012.7.20)  1 AUG 2012 14:15
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -114,21 +114,6 @@ Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 ))
-(c:/texlive/2012/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2008/07/08 v3.8m The Babel package
-
-(c:/texlive/2012/texmf-dist/tex/generic/babel/english.ldf
-Language: english 2005/03/30 v3.3o English support from the babel system
-
-(c:/texlive/2012/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2008/07/08 v3.8m Babel common definitions
-\babel@savecnt=\count99
-\U@D=\dimen112
-)
-\l@canadian = a dialect from \language\l@american 
-\l@australian = a dialect from \language\l@british 
-\l@newzealand = a dialect from \language\l@british 
-))
 (c:/texlive/2012/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
@@ -147,17 +132,17 @@ Package ifvtex Info: VTeX not detected.
 (c:/texlive/2012/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-\Gm@cnth=\count100
-\Gm@cntv=\count101
-\c@Gm@tempcnt=\count102
-\Gm@bindingoffset=\dimen113
-\Gm@wd@mp=\dimen114
-\Gm@odd@mp=\dimen115
-\Gm@even@mp=\dimen116
-\Gm@layoutwidth=\dimen117
-\Gm@layoutheight=\dimen118
-\Gm@layouthoffset=\dimen119
-\Gm@layoutvoffset=\dimen120
+\Gm@cnth=\count99
+\Gm@cntv=\count100
+\c@Gm@tempcnt=\count101
+\Gm@bindingoffset=\dimen112
+\Gm@wd@mp=\dimen113
+\Gm@odd@mp=\dimen114
+\Gm@even@mp=\dimen115
+\Gm@layoutwidth=\dimen116
+\Gm@layoutheight=\dimen117
+\Gm@layouthoffset=\dimen118
+\Gm@layoutvoffset=\dimen119
 \Gm@dimlist=\toks22
 )
 (c:/texlive/2012/texmf-dist/tex/latex/graphics/color.sty
@@ -188,8 +173,8 @@ Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
 
 (c:/texlive/2012/texmf-dist/tex/latex/tools/array.sty
 Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
-\col@sep=\dimen121
-\extrarowheight=\dimen122
+\col@sep=\dimen120
+\extrarowheight=\dimen121
 \NC@list=\toks23
 \extratabsurround=\skip46
 \backup@length=\skip47
@@ -198,7 +183,7 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \minrowclearance=\skip48
 )
 LaTeX Info: Redefining \color on input line 702.
-\rownum=\count103
+\rownum=\count102
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
 Package xcolor Info: Model `RGB' extended on input line 1353.
 Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
@@ -216,15 +201,15 @@ File: svgnam.def 2007/01/21 v2.11 Predefined colors according to SVG 1.1 (UK)
 ))
 (c:/texlive/2012/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count104
-\calc@Bcount=\count105
-\calc@Adimen=\dimen123
-\calc@Bdimen=\dimen124
+\calc@Acount=\count103
+\calc@Bcount=\count104
+\calc@Adimen=\dimen122
+\calc@Bdimen=\dimen123
 \calc@Askip=\skip49
 \calc@Bskip=\skip50
 LaTeX Info: Redefining \setlength on input line 76.
 LaTeX Info: Redefining \addtolength on input line 77.
-\calc@Ccount=\count106
+\calc@Ccount=\count105
 \calc@Cskip=\skip51
 )
 (c:/texlive/2012/texmf-dist/tex/latex/blindtext/blindtext.sty
@@ -233,24 +218,24 @@ Package: blindtext 2012/01/06 V2.0 blindtext-Package
 (c:/texlive/2012/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
 )
-\c@blindtext=\count107
-\c@Blindtext=\count108
-\c@blind@countparstart=\count109
-\blind@countxx=\count110
-\blindtext@numBlindtext=\count111
-\blind@countyy=\count112
-\c@blindlist=\count113
-\c@blindlistlevel=\count114
-\c@blindlist@level=\count115
-\blind@listitem=\count116
-\c@blind@listcount=\count117
-\c@blind@levelcount=\count118
-\blind@mathformula=\count119
-\blind@Mathformula=\count120
-\c@blind@randomcount=\count121
-\c@blind@randommax=\count122
-\c@blind@pangramcount=\count123
-\c@blind@pangrammax=\count124
+\c@blindtext=\count106
+\c@Blindtext=\count107
+\c@blind@countparstart=\count108
+\blind@countxx=\count109
+\blindtext@numBlindtext=\count110
+\blind@countyy=\count111
+\c@blindlist=\count112
+\c@blindlistlevel=\count113
+\c@blindlist@level=\count114
+\blind@listitem=\count115
+\c@blind@listcount=\count116
+\c@blind@levelcount=\count117
+\blind@mathformula=\count118
+\blind@Mathformula=\count119
+\c@blind@randomcount=\count120
+\c@blind@randommax=\count121
+\c@blind@pangramcount=\count122
+\c@blind@pangrammax=\count123
 )
 (c:/texlive/2012/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
@@ -266,52 +251,60 @@ File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: dvips.def on input line 91.
 )
-\Gin@req@height=\dimen125
-\Gin@req@width=\dimen126
+\Gin@req@height=\dimen124
+\Gin@req@width=\dimen125
 )
 (c:/texlive/2012/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2009/06/22 v3.00
 )
 (c:/texlive/2012/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count125
+\lst@mode=\count124
 \lst@gtempboxa=\box28
 \lst@token=\toks25
-\lst@length=\count126
-\lst@currlwidth=\dimen127
-\lst@column=\count127
-\lst@pos=\count128
-\lst@lostspace=\dimen128
-\lst@width=\dimen129
-\lst@newlines=\count129
-\lst@lineno=\count130
-\lst@maxwidth=\dimen130
+\lst@length=\count125
+\lst@currlwidth=\dimen126
+\lst@column=\count126
+\lst@pos=\count127
+\lst@lostspace=\dimen127
+\lst@width=\dimen128
+\lst@newlines=\count128
+\lst@lineno=\count129
+\lst@maxwidth=\dimen129
 
 (c:/texlive/2012/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
-\c@lstnumber=\count131
-\lst@skipnumbers=\count132
+\c@lstnumber=\count130
+\lst@skipnumbers=\count131
 \lst@framebox=\box29
 )
 (c:/texlive/2012/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
+\@indexfile=\write3
+\openout3 = `SteriaQuiz-teknisk.idx'.
 
-(./SteriaQuiz-teknisk.aux)
+
+Writing index file SteriaQuiz-teknisk.idx
+(./SteriaQuiz-teknisk.aux
+
+LaTeX Warning: Label `amb' multiply defined.
+
+)
 \openout1 = `SteriaQuiz-teknisk.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: dvips
@@ -349,62 +342,70 @@ LaTeX Font Info:    ... okay on input line 19.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count133
-LaTeX Font Info:    Try loading font information for U+msa on input line 20.
+\c@lstlisting=\count132
+LaTeX Font Info:    Try loading font information for U+msa on input line 22.
 (c:/texlive/2012/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 20.
+LaTeX Font Info:    Try loading font information for U+msb on input line 22.
 
 (c:/texlive/2012/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
 ]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 46.
+(./SteriaQuiz-teknisk.toc)
+\tf@toc=\write4
+\openout4 = `SteriaQuiz-teknisk.toc'.
+
+ [2]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 51.
 
 (c:/texlive/2012/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
+) [3]
 File: xml-fil.eps Graphic file (type eps)
- <xml-fil.eps> [2]
-[3] [4]
+ <xml-fil.eps>
+[4] [5] [6]
 File: scoreboard.eps Graphic file (type eps)
  <scoreboard.eps>
 File: scoreboard2.eps Graphic file (type eps)
  <scoreboard2.eps>
-Overfull \hbox (24.43846pt too wide) in paragraph at lines 102--115
+Overfull \hbox (24.43846pt too wide) in paragraph at lines 111--124
 [][][]   [] 
  []
 
 File: utsyn.eps Graphic file (type eps)
 <utsyn.eps>
 
-LaTeX Warning: Float too large for page by 32.8284pt on input line 125.
+LaTeX Warning: Float too large for page by 32.8284pt on input line 134.
 
-[5]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 135.
- [6] [7] [8]
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 144.
+[7] [8] [9] [10]
 File: sterialogo.eps Graphic file (type eps)
- <sterialogo.eps> [9]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 228.
+ <sterialogo.eps> [11] [12]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 239.
 
 
 (c:/texlive/2012/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 228.
- [10] [11]
-(./SteriaQuiz-teknisk.aux) ) 
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 239.
+ [13]
+(./SteriaQuiz-teknisk.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 5302 strings out of 493489
- 67844 string characters out of 3144771
- 178988 words of memory out of 3000000
- 8518 multiletter control sequences out of 15000+200000
+ 4998 strings out of 493489
+ 64222 string characters out of 3144771
+ 149499 words of memory out of 3000000
+ 8220 multiletter control sequences out of 15000+200000
  22300 words of font info for 58 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,8n,35p,780b,1624s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,8n,35p,780b,1260s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on SteriaQuiz-teknisk.dvi (11 pages, 33096 bytes).
+Output written on SteriaQuiz-teknisk.dvi (13 pages, 35252 bytes).

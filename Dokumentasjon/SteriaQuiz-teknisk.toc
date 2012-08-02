@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}SteriaQuiz}{3}
+\contentsline {section}{\numberline {2}Deploye p\r a server}{3}
+\contentsline {section}{\numberline {3}Quiz-fila}{4}
+\contentsline {section}{\numberline {4}Mobilsiden}{4}
+\contentsline {subsection}{\numberline {4.1}Kj\IeC {\o }ring}{4}
+\contentsline {subsection}{\numberline {4.2}Paneltyper}{6}
+\contentsline {section}{\numberline {5}Deltakerlisten}{7}
+\contentsline {section}{\numberline {6}Svakheter}{7}
+\contentsline {section}{\numberline {7}Kodekommentarer}{8}
+\contentsline {section}{\numberline {8}Mappestruktur i JavaZone-prosjektet}{12}
