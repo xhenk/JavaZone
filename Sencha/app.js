@@ -1,5 +1,5 @@
 // Globale variable for hver side og viktige elementer:
-var APACHE_AND_PHP = false;
+var APACHE_AND_PHP = true;
 var titlebar; // Titteltekst med hjem-knapp
 var currentPage; // Inneholder hvilken side man befinner seg i
 var firstPage; // Førstesiden med startknapp
@@ -19,6 +19,7 @@ var totQuestions = 0; // Totalt antall oppgaver i quiz-fila.
 var quizInfo, lastPageInfo, lastPageText; // Informasjon på første og siste side.
 var firstClick = true; // Hjelp til å håndtere klikking på Slider-oppgaver
 var QUIZ_PATH = '../Quiz/JavaZone2012.quiz'; // Adressen til quizfila.
+var iPhoneFix = false; // Må ha en fix for iPhone... Triste greier.
 
 /* Her starter alt! */
 Ext.application({
@@ -128,11 +129,13 @@ function RadioBtnQuestion(args) {
 			labelWidth : '90 %',
 			listeners : {
 				check : function(thisBox, e, eOpts) {
+
 					// Finner id på boksen det er trykket på.
 					var ids = thisBox.getId();
 					ids = ids.split("-");
 					var qnr = parseInt(ids[1]);
 					var anr = parseInt(ids[2]);
+					if (iPhoneFix) alert('Registrerer svar på boks ' + qnr + ' svar ' + anr);
 					answers[qnr] = anr;
 				}
 			}
@@ -626,7 +629,18 @@ function getQuestions(quizPath) {
 										localStorage['SteriaQuizAnswers'] = answers;
 										switchTo(regPage);
 									} else {
-										Ext.Msg.alert('Obs!', 'Du m&#xE5; svare p&#xE5; alle sp&#xF8;rsm&#xE5;l', Ext.emptyFn);
+										var txt = '';
+										for (var x = 0; x < answers.length; x++) {
+											if (answers[x] == undefined)
+												txt += x+',';
+										}
+										txt = txt.substr(0,txt.length-1);
+										var errmsg = '';
+										if (Ext.os.is.iOS) {
+											errmsg = 'iPhone har problemer med flervalgsspørsmålene. Du vil bli varslet når du har svart. Gå tilbake og prøv igjen.';
+											iPhoneFix=true;
+										}
+										Ext.Msg.alert('Obs!', 'Applikasjonen har ikke registrert svar på alle spørsmål! Du har svart på spørsmål ' + txt +'\n'+errmsg, Ext.emptyFn);
 									}
 								}
 							}
